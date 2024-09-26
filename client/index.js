@@ -41,6 +41,10 @@ let death
 let ak
 let cursor
 
+let recoilx = 0
+let recoily = 0
+
+
 let currentgun = 0
 
 function preload() {
@@ -74,10 +78,9 @@ socket.on("updatebullets", function(x) {
   bullets=(x)
 })
 
-
 function shoot() {
   if (currentgun == 1) {
-    if (delay>=weapons.glock.speed) {
+    // if (delay>=weapons.glock.speed) {
       if (positions[id][2]==0) {
         xdiff = (mouseX - width/2)
         ydiff = (mouseY - height/2)
@@ -96,7 +99,7 @@ function shoot() {
         socket.emit("bullet", newBullet);
       }
       delay = 0
-    }
+    // }
   }
   else {
     if (delay>=weapons.ak.speed) {
@@ -119,6 +122,8 @@ function shoot() {
       }
       delay = 0
     }
+    recoilx = -bulletxvel*2
+    recoily = -bulletyvel*2
   }
 }
 
@@ -138,14 +143,10 @@ function draw(){
   if (id != 99 && positions.length>id) {
     if (positions[id][2] == 0) { dead = false }
   }
-
   xoffset = (width/2)-myposx-(mouseX - windowWidth/2)/3
   yoffset = (height/2)-myposy-(mouseY - windowHeight/2)/3
-  
   background('white');
-  
   image(img, xoffset, yoffset, 2000, 2000);
-
   for (let b of bullets) {
     imageMode(CENTER)
     image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
@@ -155,16 +156,12 @@ function draw(){
     //     socket.emit("killme", id);
     //   }
     // }
-    
   }
-
   if (dead == false) {
     push()
     translate(xoffset+myposx, yoffset+myposy)
     rotate(Math.atan2(mouseY-(height/2), mouseX-(width/2)))
-
     translate(75,0)
-
     suicide = 0
     if(mouseX-(width/2)>=0){
       flipgun = 1
@@ -178,7 +175,6 @@ function draw(){
       suicide = 1
       scale(-1, 1);
     }
-
     if (currentgun == 1) {
       if (delay>=weapons.glock.speed) {
         image(pistol, 0, 0)
@@ -197,12 +193,9 @@ function draw(){
         image(ak, 10, 20)
       }
     }
-
     pop()
-
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
   }
-  
 
   for (i=0; i<len; i++) {
     if (i!=id) {
@@ -249,8 +242,6 @@ function draw(){
             else if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 < 0) { direction=cubeback }
           }
           image(direction, xoffset+myposx, yoffset+myposy);
-
-          
         }
       }
     }
@@ -258,7 +249,6 @@ function draw(){
   
   xvel = 0
   yvel = 0
-  
 
   if (keyIsDown(68) === true) { xvel += 10 }
   if (keyIsDown(65) === true) { xvel -= 10 }
@@ -273,7 +263,11 @@ function draw(){
     yvel *= 0.707
   }
 
-  
+  xvel += recoilx
+  recoilx = 0
+  yvel += recoily
+  recoily = 0
+
   // if (xvel != 0 || yvel != 0) {
     if (direction==cubefront) { mydirection = 0 }
     if (direction==cubeleft) { mydirection = 1 }
@@ -294,12 +288,8 @@ function draw(){
     textAlign(CENTER);
     text('SPACE to respawn', width/2, height/2)
   }
-  
-  image(cursor, mouseX, mouseY)
-  
+  image(cursor, mouseX, mouseY) 
 }
-
-
 
 function mouseWheel(event) {
   console.log(Object.keys(weapons).length)
@@ -335,7 +325,6 @@ socket.on("updatepositions", function(x) {
   len = x.length
   positions = x
 })
-
 
 setInterval(function myFunction(){
   if (delay<weapons.glock.speed) {
