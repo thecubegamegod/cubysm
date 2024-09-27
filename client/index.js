@@ -29,6 +29,7 @@ let bullets = []
 let localbullets = []
 
 let img;
+let bricks
 let cubefront;
 
 let bulletimage;
@@ -52,6 +53,7 @@ let currentgun = 0
 function preload() {
   img = loadImage('bg.png');
   cubefrontleft = loadImage('cubepixel2.png');
+  bricks = loadImage('brick.png');
   cubefrontright = loadImage('cubepixel1.png');
   cuberight = loadImage('cubepixel9.png');
   cubeleft = loadImage('cubepixel9.png');
@@ -196,7 +198,18 @@ function draw(){
   xoffset = (width/2)-myposx-(mouseX - windowWidth/2)/3
   yoffset = (height/2)-myposy-(mouseY - windowHeight/2)/3
   background('white');
+
+
+
   image(img, xoffset, yoffset, 2000, 2000);
+
+  // imageMode(CORNER)
+  // for (i=-1000; i<1000; i+=400) {
+  //   for (j=-1000; j<1000; j+=400) {
+  //     image(bricks, xoffset+i, yoffset+j,400,400);
+  //   }
+  // }
+  // imageMode(CENTER)
 
 
   for (let b of localbullets) {
