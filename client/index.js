@@ -16,6 +16,8 @@ let aksfx
 let glocksfx
 
 
+let skin = "cat"
+
 let weapons =  [
   { name: "ak", speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
   { name: "glock", speed: 12, auto: false, spread:0, recoil:0, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:0}
@@ -24,13 +26,14 @@ let weapons =  [
 let delay = 0
 
 let bullets = []
+let localbullets = []
 
 let img;
 let cubefront;
 
 let bulletimage;
 
-let direction = cubefront
+let direction = "front"
 let mydirection = 0
 
 
@@ -65,8 +68,8 @@ function preload() {
   glock = loadImage('pistol.png')
   glockgone = loadImage('pistolgone.png')
 
-  catleft = loadImage('catfront3.png');
-  catright = loadImage('catfront1.png');
+  catfrontleft = loadImage('catfront3.png');
+  catfrontright = loadImage('catfront1.png');
   catfront = loadImage('catfront2.png');
   catback = loadImage('catfront5.png');
   catbackleft = loadImage('catfront4.png');
@@ -74,7 +77,7 @@ function preload() {
   
 }
 function setup() {
-  frameRate(60)
+  frameRate(240)
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
   
@@ -99,6 +102,19 @@ function mousePressed() {
   }
 }
 
+
+function keyPressed() {
+  if (key === 'p') {
+    if (skin=="cube"){
+      skin = "cat"
+    }
+    else {
+      skin = "cube"
+    }
+  }
+}
+
+
 function shoot() {
   if (delay>=weapons[currentgun].speed || weapons[currentgun].auto == false) {
     // if (positions[id][2]==0) {
@@ -121,6 +137,7 @@ function shoot() {
 
       newBullet = { xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id}
       socket.emit("bullet", newBullet);
+      localbullets.push(newBullet)
     }
     delay = 0
     socket.emit("gunsfx", weapons[currentgun].name + "sfx")
@@ -137,7 +154,6 @@ function draw(){
   let dead = 1
 
   if (id != 99 && positions.length>id) {
-    // if (positions[id][2] == 0) { dead = false }
     if (positions[id].dead == 0) { dead = 0 }
   }
 
@@ -181,15 +197,27 @@ function draw(){
   yoffset = (height/2)-myposy-(mouseY - windowHeight/2)/3
   background('white');
   image(img, xoffset, yoffset, 2000, 2000);
+
+
+  for (let b of localbullets) {
+    b.ypos += b.bulletyvel*90
+    b.xpos += b.bulletxvel*90
+    if (b.xpos<-1000 || b.xpos>1000|| b.ypos<-1000 || b.ypos>1000) {
+      localbullets.splice(b, 1);
+    }
+    b.bulletyvel*=0.9
+    b.bulletxvel*=0.9
+    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+      localbullets.splice(b, 1);
+    }
+    image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
+  }
+
   for (let b of bullets) {
     imageMode(CENTER)
-    image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
-    // if (b.id != id) {
-    // if ((b.xpos < pos[i][0] + 50) && (b.xpos > pos[i][0] - 50) && (b.ypos < pos[i][1] + 50) && (b.ypos > pos[i][1] - 50)) {
-    //     dead = true
-    //     socket.emit("killme", id);
-    //   }
-    // }
+    if (b.id!=id) {
+      image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
+    }
   }
   if (dead == 0) {
     push()
@@ -225,32 +253,20 @@ function draw(){
 
   for (i=0; i<len; i++) {
     if (i!=id) {
-      // if (positions[i][2]==0) {
       if (positions[i].dead==0) {
-        otherimage = cubefront
-        if (positions[i].dir==0) { otherimage = cubefront }
-        if (positions[i].dir==1) { otherimage = cubefrontleft }
-        if (positions[i].dir==2) { otherimage = cubefrontright }
-        if (positions[i].dir==10) { otherimage = cubeback }
-        if (positions[i].dir==11) { otherimage = cubebackleft }
-        if (positions[i].dir==12) { otherimage = cubebackright }
-        image(otherimage, positions[i].xvel+xoffset, positions[i].yvel+yoffset)
+
+        image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
         fill('white')
 
         push()
         translate(positions[i].xvel+xoffset, positions[i].yvel+yoffset)
         rotate(positions[i].gundir)
         translate(75,0)
-        // if(positions[i][6]==1){ scale(-1, 1); }
         if(positions[i].flipgun==1){ scale(-1, 1); }
         else { scale(-1, -1); }
-        // if (positions[i][7]==1) { scale(-1, 1); }
         if (positions[i].suicide==1) { scale(-1, 1); }
-        // image(eval(weapons[positions[i][10]].name), 0, 0)
-
-
+        
         image(eval(weapons[positions[i].currentgun].name), 0, 0)
-
 
         pop()
         
@@ -258,61 +274,19 @@ function draw(){
     }
     else {
       if (i<len) {
-        // if (positions[id][2] == 0) {
-        //   imageMode(CENTER)
-        //   direction = cubefront
-        //   if (mouseX - xoffset-myposx > 50) {
-        //     if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 > -50) { direction=cuberight }
-        //     else { direction=cubebackright }
-        //   }
-        //   else if (mouseX - xoffset-myposx < -50) {
-        //     if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 > -50) { direction=cubeleft }
-        //     else { direction=cubebackleft }
-        //   }
-        //   else {
-        //     if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 > 0) { direction=cubefront }
-        //     else if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 < 0) { direction=cubeback }
-        //   }
-        //   image(direction, xoffset+myposx, yoffset+myposy);
-        // }
-        // if (positions[id][2] == 0) {
-        //   imageMode(CENTER)
-        //   direction = catfront
-        //   if (mouseX - xoffset-myposx > 50) {
-        //     if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 > -50) { direction=catright }
-        //     else { direction=catbackright }
-        //   }
-        //   else if (mouseX - xoffset-myposx < -50) {
-        //     if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 > -50) { direction=catleft }
-        //     else { direction=catbackleft }
-        //   }
-        //   else {
-        //     if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 > 0) { direction=catfront }
-        //     else if (mouseY - (height/2)-(mouseY - windowHeight/2)/3 < 0) { direction=catback }
-        //   }
-        //   image(direction, xoffset+myposx, yoffset+myposy);
-        //   console.log(Math.atan2(mouseY-(height/2), mouseX-(width/2)))
-        // }
-        // if (positions[id][2] == 0) {
         if (positions[id].dead == 0) {
           imageMode(CENTER)
-          direction = catfront
+          direction = "front"
           angle = Math.atan2(mouseY-(height/2), mouseX-(width/2))
-          // if (angle > 1.963) { direction = catleft }
-          // else if (angle > 1.178) { direction = catfront }
-          // else if (angle > 0) { direction = catright }
-          // else if (angle > -1.178) { direction = catbackright }
-          // else if (angle > -1.963) { direction = catback }
-          // else { direction = catbackleft }
 
-          if (angle > 1.963) { direction = cubefrontleft }
-          else if (angle > 1.178) { direction = cubefront }
-          else if (angle > 0.393) { direction = cubefrontright }
-          else if (angle > -1.178) { direction = cubebackright }
-          else if (angle > -1.963) { direction = cubeback }
-          else { direction = cubebackleft }
+          if (angle > 1.963) { direction = "frontleft" }
+          else if (angle > 1.178) { direction = "front" }
+          else if (angle > 0.393) { direction = "frontright" }
+          else if (angle > -1.178) { direction = "backright" }
+          else if (angle > -1.963) { direction = "back" }
+          else { direction = "backleft" }
 
-          image(direction, xoffset+myposx, yoffset+myposy);
+          image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
         }
       }
     }
@@ -356,13 +330,12 @@ function mouseWheel(event) {
       currentgun=0
     }
   }
-  // Uncomment to prevent any default behavior.
-  // return false;
+  return false;
 }
 
 
 setInterval(function myFunction(){
-  socket.volatile.emit("move", { xvel: myposx, yvel: myposy, id: id, dir: mydirection, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun});
+  socket.volatile.emit("move", { xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
   if (delay<weapons[currentgun].speed) {
     delay+=1
   };
@@ -379,7 +352,6 @@ socket.on("updatepositions", function(x) {
   len = x.length
   positions = x
 })
-
 
 socket.on("playdatgunsfx", function(y) {
   eval(y).play()
