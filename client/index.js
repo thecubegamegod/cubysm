@@ -2,7 +2,7 @@ const socket = io()
 
 let id = 99
 let len = 0
-let positions = [[0,0,0,0,0,0,0,0]]
+let positions = [[0,0,0,0,0,0,0,0,0,0,0,0,0]]
 
 let myposx = 0
 let myposy = 0
@@ -16,7 +16,7 @@ let glocksfx
 
 let weapons =  [
   { name: "ak", speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1.2, xoffset:10, yoffset:20},
-  { name: "glock", speed: 5, auto: true, spread:0.1, recoil:1, spriterecoil: 0.3, bulletspd: 1, xoffset:0, yoffset:0},
+  // { name: "glock", speed: 10, auto: true, spread:0.1, recoil:100, spriterecoil: 0.3, bulletspd: 1, xoffset:0, yoffset:0},
   { name: "glock", speed: 12, auto: false, spread:0, recoil:0, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:0}
 ]
 
@@ -157,7 +157,7 @@ function shoot() {
     // else {
     //   glocksfx.play()
     // }
-    eval(weapons[currentgun].name + "sfx").play()
+    socket.emit("gunsfx", weapons[currentgun].name + "sfx")
   }
   // recoilx = -bulletxvel*2
   // recoily = -bulletyvel*2
@@ -243,13 +243,10 @@ function draw(){
         translate(positions[i][0]+xoffset, positions[i][1]+yoffset)
         rotate(positions[i][5])
         translate(75,0)
-        if(positions[i][6]==1){ scale(-1, 1);
-        }
-        else { scale(-1, -1);
-        }
-        if (positions[i][7]==1) { scale(-1, 1);
-        }
-        image(glock, 0, 0)
+        if(positions[i][6]==1){ scale(-1, 1); }
+        else { scale(-1, -1); }
+        if (positions[i][7]==1) { scale(-1, 1); }
+        image(eval(weapons[positions[i][10]].name), 0, 0)
         pop()
         
       }
@@ -322,7 +319,6 @@ function draw(){
 }
 
 function mouseWheel(event) {
-  console.log(Object.keys(weapons).length)
   if (event.delta > 0) {
     if (currentgun > 0) {
       currentgun-=1
@@ -344,7 +340,7 @@ function mouseWheel(event) {
 
 
 setInterval(function myFunction(){
-  socket.volatile.emit("move", { xvel: myposx, yvel: myposy, id: id, dir: mydirection, gundir: weaponrotation, flipgun: flipgun, suicide:suicide});
+  socket.volatile.emit("move", { xvel: myposx, yvel: myposy, id: id, dir: mydirection, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun});
 }, 1000/60);
 
 socket.on("updatepositions", function(x) {
@@ -355,6 +351,12 @@ socket.on("updatepositions", function(x) {
   len = x.length
   positions = x
 })
+
+
+socket.on("playdatgunsfx", function(y) {
+  eval(y).play()
+})
+
 
 setInterval(function myFunction(){
   if (delay<weapons[currentgun].speed) {

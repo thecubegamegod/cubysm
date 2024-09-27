@@ -59,12 +59,18 @@ io.on("connection", function(socket) {
     if (pos.length-1 < arg) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
-      pos.push([0,0,0,arg,0,0,0,0])
+      pos.push([0,0,0,arg,0,0,0,0,0,0,0,0,0,0,0])
     }
   });
   socket.on("killme", function(arg) {
     pos[arg][2] = 1
   });
+
+
+  socket.on("gunsfx", function(x) {
+    io.sockets.emit("playdatgunsfx", x)
+  });
+
   socket.on("move", function(arg) {
     if (arg.id<pos.length) {
       pos[arg.id][0]=arg.xvel
@@ -75,6 +81,7 @@ io.on("connection", function(socket) {
       pos[arg.id][7]=arg.suicide
       pos[arg.id][8]=arg.xpos
       pos[arg.id][9]=arg.ypos
+      pos[arg.id][10]=arg.currentgun
     }
   });
   socket.on("bullet", function(arg) {
