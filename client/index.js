@@ -11,6 +11,8 @@ let xvel = 0
 let yvel = 0
 
 
+let kills = 0
+
 let reloading = 0
 
 
@@ -454,6 +456,7 @@ function draw(){
   fill(255);
   stroke(0);
   text("FPS: " + fps.toFixed(0), 10, height - 10);
+  text("Kills: " + kills, 40, height - 40);
 
   textSize(40)
   text(weapons[currentgun].ammo + "/" + weapons[currentgun].maxammo, width-60, height-40)
@@ -482,7 +485,7 @@ function mouseWheel(event) {
 
 
 setInterval(function myFunction(){
-  socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
+  socket.volatile.emit("move", { name: username, kills:kills, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
   if (delay<weapons[currentgun].speed) {
     delay+=1
     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT) {
