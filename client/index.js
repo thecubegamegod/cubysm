@@ -115,6 +115,11 @@ function setup() {
   noCursor();
   myposx = Math.floor(Math.random() * (1000 + 1000)) + -1000;
   myposy = Math.floor(Math.random() * (1000 + 1000)) + -1000;
+
+  nameField = createInput('')
+  nameField.attribute('placeholder', 'username')
+  nameField.position(width+100, height-100)
+  nameField.size(100)
 }
 
 socket.on("updatebullets", function(x) {
@@ -216,6 +221,7 @@ function windowResized() {
 }
 
 function draw(){
+  username = nameField.value()
 
   let dead = 1
 
@@ -399,12 +405,6 @@ function draw(){
     fill('white')
     image(death,0,0,10000,10000)
     textAlign(CENTER);
-
-    nameField = createInput('')
-    nameField.attribute('placeholder', 'username')
-    nameField.position(width/2, height/2+150)
-    nameField.size(100)
-    username = nameField.value()
 
     if (chance==2) {
       chance = Math.random();
