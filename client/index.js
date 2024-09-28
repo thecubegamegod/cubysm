@@ -10,18 +10,22 @@ let myposy = 0
 let xvel = 0
 let yvel = 0
 
+
+let reloading = 0
+
+
+let deathangle = 0
+
 let chance = 2
 
 let aksfx
 let glocksfx
 
-
-
 let skin = "cat"
 
 let weapons =  [
-  { name: "ak", speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "glock", speed: 12, auto: false, spread:0, recoil:0, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:0}
+  { name: "ak", reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "glock", reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:0, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15}
 ]
 
 let delay = 0
@@ -39,6 +43,8 @@ let direction = "front"
 let mydirection = 0
 
 
+let username = "fellow"
+
 let weaponrotation = 0
 let suicide = 0
 let flipgun = 0
@@ -51,6 +57,9 @@ let recoily = 0
 
 let currentgun = 0
 
+
+
+
 function preload() {
   img = loadImage('bg.png');
   cubefrontleft = loadImage('cubepixel2.png');
@@ -62,14 +71,16 @@ function preload() {
   cubeback = loadImage('cubepixel4.png');
   cubebackleft = loadImage('cubepixel5.png');
   cubebackright = loadImage('cubepixel6.png');
+  arrow = loadImage('arrow.png');
+  arrowgone = loadImage('arrowempty.png');
 
   bulletimage = loadImage('bullet.png');
   cursor = loadImage('crosshair.png')
   ak = loadImage('ak.png')
   akgone = loadImage('ak.png')
   death = loadImage('death.png')
-  glock = loadImage('pistol.png')
-  glockgone = loadImage('pistolgone.png')
+  glock = loadImage('pistolold.png')
+  glockgone = loadImage('pistolgoneold.png')
 
   catfrontleft = loadImage('catfront3.png');
   catfrontright = loadImage('catfront1.png');
@@ -79,6 +90,17 @@ function preload() {
   catbackright = loadImage('catfront6.png');
   
 }
+
+
+function respawnMe(){
+  socket.emit("addme", id);
+  myposx = Math.floor(Math.random() * (1000 + 1000)) + -1000;
+  myposy = Math.floor(Math.random() * (1000 + 1000)) + -1000;
+  for(i=0; i<weapons.length; i++) {
+    weapons[i].ammo = weapons[i].maxammo
+  }
+}
+
 function setup() {
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
@@ -100,14 +122,34 @@ socket.on("updatebullets", function(x) {
 })
 
 function mousePressed() {
-  if (mouseButton === LEFT) {
-    shoot()
+  if (positions[id].dead == 0) {
+    if (mouseButton === LEFT) {
+      shoot()
+    }
+  }
+  else {
+    if ((width/2)+150<mouseX && (width/2)+250>mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50) {
+      if(skin=="cube") {
+        skin = "cat"
+      }
+      else {
+        skin = "cube"
+      }
+    }
+    if ((width/2-150)>mouseX && (width/2-250)<mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50) {
+      if(skin=="cube") {
+        skin = "cat"
+      }
+      else {
+        skin = "cube"
+      }
+    }
   }
 }
 
 
 function keyPressed() {
-  if (key === 'p') {
+  if ((key === 'p') && (positions[id].dead == 1)) {
     if (skin=="cube"){
       skin = "cat"
     }
@@ -115,38 +157,58 @@ function keyPressed() {
       skin = "cube"
     }
   }
+  if (reloading == 0) {
+    if (key === '1') {
+      currentgun=0
+    }
+    if (key === '2') {
+      currentgun=1
+    }
+    if (key === 'r') {
+      weapons[currentgun].ammo = 0
+      reloading = 1
+      setTimeout(function myFunction(){
+        weapons[currentgun].ammo = weapons[currentgun].maxammo
+        reloading = 0
+      }, weapons[currentgun].reloadspeed*1000);
+    }
+  }
 }
 
 
 function shoot() {
-  if (delay>=weapons[currentgun].speed || weapons[currentgun].auto == false) {
-    // if (positions[id][2]==0) {
-    if (positions[id].dead==0) {
-      xdiff = (mouseX - width/2)
-      ydiff = (mouseY - height/2)
-
-      if (keyIsDown(SHIFT)) {
-        bulletxvel = - ((xdiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff))) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
-        bulletyvel = - ((ydiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff))) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
-        socket.emit("killme", id);
+  console.log(weapons[currentgun].ammo)
+  if (weapons[currentgun].ammo>0) {
+    if (delay>=weapons[currentgun].speed || weapons[currentgun].auto == false) {
+      // if (positions[id][2]==0) {
+      if (positions[id].dead==0) {
+        xdiff = (mouseX - width/2)
+        ydiff = (mouseY - height/2)
+  
+        if (keyIsDown(SHIFT)) {
+          bulletxvel = - ((xdiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff))) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
+          bulletyvel = - ((ydiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff))) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
+          socket.emit("killme", id);
+        }
+        else {
+          bulletxvel = (xdiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff)) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
+          bulletyvel = (ydiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff)) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
+        }
+  
+        // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
+        // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
+  
+        newBullet = { xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id}
+        socket.emit("bullet", newBullet);
+        localbullets.push(newBullet)
+        weapons[currentgun].ammo-=1
+        delay = 0
+        socket.emit("gunsfx", weapons[currentgun].name + "sfx")
       }
-      else {
-        bulletxvel = (xdiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff)) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
-        bulletyvel = (ydiff/Math.sqrt((xdiff*xdiff)+(ydiff*ydiff)) + (Math.random()-0.5)*weapons[currentgun].spread) * weapons[currentgun].bulletspd
-      }
-
-      // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
-      // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
-
-      newBullet = { xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id}
-      socket.emit("bullet", newBullet);
-      localbullets.push(newBullet)
     }
-    delay = 0
-    socket.emit("gunsfx", weapons[currentgun].name + "sfx")
+    recoilx = -bulletxvel*weapons[currentgun].recoil
+    recoily = -bulletyvel*weapons[currentgun].recoil
   }
-  recoilx = -bulletxvel*weapons[currentgun].recoil
-  recoily = -bulletyvel*weapons[currentgun].recoil
 }
 
 function windowResized() {
@@ -170,7 +232,10 @@ function draw(){
   if (keyIsDown(87) === true) { yvel -= 10 }
   if (keyIsDown(83) === true) { yvel += 10 }
   if (dead == 1) {
-    if (keyIsDown(32) === true) { window.location.reload() }
+    if (keyIsDown(32) === true) {
+      // window.location.reload()
+      respawnMe()
+    }
   }
 
   if ((Math.abs(xvel) != 0) && (Math.abs(yvel) != 0)) {
@@ -260,13 +325,27 @@ function draw(){
     }
 
 
-    if (delay>=weapons[currentgun].speed) {
-      image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
+    if (reloading == 0) {
+      if (delay>=weapons[currentgun].speed) {
+        image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
+      }
+      else {
+        rotate(weapons[currentgun].spriterecoil/delay)
+        image(eval(weapons[currentgun].name+"gone"), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
+      }  
     }
     else {
+      push()
       rotate(weapons[currentgun].spriterecoil/delay)
+      rotate(1)
+      scale(0.75);
+      translate(0,-50)
       image(eval(weapons[currentgun].name+"gone"), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
+      pop()
     }
+
+
+
 
     pop()
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
@@ -275,8 +354,11 @@ function draw(){
   for (i=0; i<len; i++) {
     if (i!=id) {
       if (positions[i].dead==0) {
-
-        image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
+        if((positions[i].skin+positions[i].dir) != NaN) {
+          image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
+          textSize(15)
+          text(positions[i].name, positions[i].xvel+xoffset, positions[i].yvel+yoffset-50)
+        }
         fill('white')
 
         push()
@@ -317,16 +399,54 @@ function draw(){
     fill('white')
     image(death,0,0,10000,10000)
     textAlign(CENTER);
+
+    nameField = createInput('')
+    nameField.attribute('placeholder', 'username')
+    nameField.position(width/2, height/2+150)
+    nameField.size(100)
+    username = nameField.value()
+
     if (chance==2) {
       chance = Math.random();
     }
     if (chance>=0.9) {
-      text("Stroke. He couldn't move. He went cold. And just stopped moving. 🤯", width/2, height/2)
+      text("Stroke. He couldn't move. He went cold. And just stopped moving. 🤯", width/2, height/2+100)
     }
     else {
-      text('SPACE to respawn', width/2, height/2)
+      text('SPACE to respawn', width/2, height/2+100)
     }
+
+    imageMode(CENTER)
+    direction = "front"
+    angle = mouseX-(width/2)
+
+    if (angle > 100) { direction = "frontright" }
+    else if (angle < -100) { direction = "frontleft" }
+    else { direction = "front" }
+
+    image(eval(skin+direction), width/2, height/2,200,200);
+
+
+
+    if ((width/2)+150<mouseX && (width/2)+250>mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50 && !mouseIsPressed) {
+      image(arrowgone, width/2+200, height/2);
+    }
+    else {
+      image(arrow, width/2+200, height/2);
+    }
+
+    push()
+    scale(-1, 1);
+    if ((width/2-150)>mouseX && (width/2-250)<mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50 && !mouseIsPressed) {
+      image(arrowgone, -(width/2-200), height/2,);
+    }
+    else {
+      image(arrow, -(width/2-200), height/2,);
+    }
+    pop()
+    
   }
+
   image(cursor, mouseX, mouseY) 
 
   let fps = frameRate();
@@ -334,36 +454,40 @@ function draw(){
   stroke(0);
   text("FPS: " + fps.toFixed(0), 10, height - 10);
 
+  textSize(40)
+  text(weapons[currentgun].ammo + "/" + weapons[currentgun].maxammo, width-60, height-40)
 }
 
 function mouseWheel(event) {
-  if (event.delta > 0) {
-    if (currentgun > 0) {
-      currentgun-=1
+  if (reloading == 0) {
+    if (event.delta > 0) {
+      if (currentgun > 0) {
+        currentgun-=1
+      }
+      else {
+        currentgun=Object.keys(weapons).length-1
+      }
+    } else {
+      if (currentgun < Object.keys(weapons).length-1) {
+        currentgun+=1
+      }
+      else {
+        currentgun=0
+      }
     }
-    else {
-      currentgun=Object.keys(weapons).length-1
-    }
-  } else {
-    if (currentgun < Object.keys(weapons).length-1) {
-      currentgun+=1
-    }
-    else {
-      currentgun=0
-    }
+    return false;
   }
-  return false;
 }
 
 
 setInterval(function myFunction(){
-  socket.volatile.emit("move", { xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
+  socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
   if (delay<weapons[currentgun].speed) {
     delay+=1
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT) {
+      shoot()
+    }
   };
-  if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT) {
-    shoot()
-  }
 }, 1000/60);
 
 socket.on("updatepositions", function(x) {
