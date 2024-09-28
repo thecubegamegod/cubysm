@@ -118,7 +118,7 @@ function setup() {
 
   nameField = createInput('')
   nameField.attribute('placeholder', 'username')
-  nameField.position(width+100, height-100)
+  nameField.position(100, height-100)
   nameField.size(100)
 }
 
