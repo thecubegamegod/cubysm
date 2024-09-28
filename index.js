@@ -31,11 +31,15 @@ function update_dic(a,b){
 
 
 io.on("connection", function(socket) {
+
   socket.on("addme", function(arg) {
     if (pos.length-1 < arg) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
-      pos.push({xvel: arg.xvel, yvel: arg.yvel, id: arg.id, dir:arg.dir, dead:0, gundir: arg.gundir, flipgun: arg.flipgun, suicide:arg.suicide, currentgun:arg.currentgun})
+      pos.push({name: "fellow", xvel: 0, yvel: 0, id: arg, dir:"front", skin:"cat", dead:0, gundir: 0, flipgun: 0, suicide:0, currentgun:0})
+    }
+    else {
+      pos[arg].dead = 0
     }
   });
   socket.on("killme", function(arg) {
