@@ -394,6 +394,7 @@ function draw(){
           else if (angle > -1.178) { direction = "backright" }
           else if (angle > -1.963) { direction = "back" }
           else { direction = "backleft" }
+          textSize(15)
           text(username, myposx+xoffset, myposy+yoffset-50)
           image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
         }
