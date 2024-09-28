@@ -16,6 +16,7 @@ let aksfx
 let glocksfx
 
 
+
 let skin = "cat"
 
 let weapons =  [
@@ -79,11 +80,11 @@ function preload() {
   
 }
 function setup() {
-  frameRate(240)
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
   
   createCanvas(window.innerWidth, window.innerHeight);
+  frameRate(60)
   pixelDensity(1);
   noSmooth()
   document.addEventListener('contextmenu', event => event.preventDefault());
@@ -153,6 +154,7 @@ function windowResized() {
 }
 
 function draw(){
+
   let dead = 1
 
   if (id != 99 && positions.length>id) {
@@ -201,7 +203,13 @@ function draw(){
 
 
 
+  noStroke()
+  // fill('#da0063')
+  image(img, width/2, height/2, width+4, height+4);
   image(img, xoffset, yoffset, 2000, 2000);
+  // rect(0, 0, width, height);
+  // fill('#652cb3')
+  // rect(xoffset-1000, yoffset-1000, 2000, 2000);
 
   // imageMode(CORNER)
   // for (i=-1000; i<1000; i+=400) {
@@ -325,6 +333,7 @@ function draw(){
   fill(255);
   stroke(0);
   text("FPS: " + fps.toFixed(0), 10, height - 10);
+
 }
 
 function mouseWheel(event) {
