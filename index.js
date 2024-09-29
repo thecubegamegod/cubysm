@@ -45,6 +45,7 @@ io.on("connection", function(socket) {
   socket.on("killme", function(arg) {
     // pos[arg][2] = 1
     pos[arg].dead = 1
+    pos[i].kills = 0
   });
 
 
