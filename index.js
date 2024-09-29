@@ -38,7 +38,7 @@ io.on("connection", function(socket) {
     if (pos.length-1 < arg) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
-      pos.push({name: "fellow", kills:0, xvel: 0, yvel: 0, id: arg, dir:"front", skin:"cat", dead:0, gundir: 0, flipgun: 0, suicide:0, currentgun:0})
+      pos.push({name: "fellow", kills:0, xvel: 0, yvel: 0, id: arg, dir:"front", skin:"cat", dead:1, gundir: 0, flipgun: 0, suicide:0, currentgun:0})
     }
     else {
       pos[arg].dead = 0

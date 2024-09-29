@@ -13,6 +13,10 @@ let yvel = 0
 let reloading = 0
 
 
+let firstspawn = 1
+
+
+
 let deathangle = 0
 
 let aksfx
@@ -247,6 +251,7 @@ function draw(){
   if (dead == 1) {
     if (keyIsDown(32) === true) {
       // window.location.reload()
+      firstspawn = 0
       respawnMe()
     }
   }
@@ -427,8 +432,15 @@ function draw(){
     textAlign(CENTER);
     textSize(25)
 
-    text('YOU DIED', width/2, height/2+150)
-    text('SPACE to respawn', width/2, height/2+300)
+
+    if (firstspawn == 1) {
+      text('WELCOME', width/2, height/2+150)
+      text('SPACE to start', width/2, height/2+300)
+    }
+    else {
+      text('YOU DIED', width/2, height/2+150)
+      text('SPACE to respawn', width/2, height/2+300)
+    }
 
 
     imageMode(CENTER)
