@@ -31,6 +31,8 @@ function update_dic(a,b){
 
 
 io.on("connection", function(socket) {
+  var address = socket.handshake.address;
+  console.log('New connection from ' + address.address + ':' + address.port);
 
   socket.on("addme", function(arg) {
     if (pos.length-1 < arg) {

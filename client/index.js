@@ -15,8 +15,6 @@ let reloading = 0
 
 let deathangle = 0
 
-let chance = 2
-
 let aksfx
 let glocksfx
 
@@ -24,7 +22,7 @@ let skin = "cat"
 
 let weapons =  [
   { name: "ak", reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "glock", reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:0, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15}
+  { name: "glock", reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15}
 ]
 
 let delay = 0
@@ -56,6 +54,18 @@ let recoily = 0
 
 let currentgun = 0
 
+
+
+socket.on("connect_error", (err) => {
+  // the reason of the error, for example "xhr poll error"
+  console.log(err.message);
+
+  // some additional description, for example the status code of the initial HTTP response
+  console.log(err.description);
+
+  // some additional context, for example the XMLHttpRequest object
+  console.log(err.context);
+});
 
 
 
@@ -110,15 +120,12 @@ function setup() {
   noSmooth()
   document.addEventListener('contextmenu', event => event.preventDefault());
   
-  socket.emit("addme", id);
   noCursor();
-  myposx = Math.floor(Math.random() * (1000 + 1000)) + -1000;
-  myposy = Math.floor(Math.random() * (1000 + 1000)) + -1000;
 
   nameField = createInput('')
   nameField.attribute('placeholder', 'username')
-  nameField.position(100, height-100)
   nameField.size(100)
+  respawnMe()
 }
 
 socket.on("updatebullets", function(x) {
@@ -220,7 +227,12 @@ function windowResized() {
 }
 
 function draw(){
-  username = nameField.value()
+  if (nameField.value()!="") {
+    username = nameField.value()
+  }
+  else {
+    username = "fellow"
+  }
 
   let dead = 1
 
@@ -232,15 +244,17 @@ function draw(){
   xvel = 0
   yvel = 0
 
-  if (keyIsDown(68) === true) { xvel += 10 }
-  if (keyIsDown(65) === true) { xvel -= 10 }
-  if (keyIsDown(87) === true) { yvel -= 10 }
-  if (keyIsDown(83) === true) { yvel += 10 }
   if (dead == 1) {
     if (keyIsDown(32) === true) {
       // window.location.reload()
       respawnMe()
     }
+  }
+  else {
+    if (keyIsDown(68) === true) { xvel += 10 }
+    if (keyIsDown(65) === true) { xvel -= 10 }
+    if (keyIsDown(87) === true) { yvel -= 10 }
+    if (keyIsDown(83) === true) { yvel += 10 }
   }
 
   if ((Math.abs(xvel) != 0) && (Math.abs(yvel) != 0)) {
@@ -311,6 +325,8 @@ function draw(){
     }
   }
   if (dead == 0) {
+    // nameField.position(-300, 100)
+    nameField.position(25, 25)
     push()
     translate(xoffset+myposx, yoffset+myposy)
     rotate(Math.atan2(mouseY-(height/2), mouseX-(width/2)))
@@ -355,19 +371,13 @@ function draw(){
     pop()
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
     
-    text("Kill streak: " + positions[id].kills, 100, height - 40);
+    textSize(30)
+    text("💀 " + positions[id].kills, width-75, 50);
   }
 
   for (i=0; i<len; i++) {
     if (i!=id) {
       if (positions[i].dead==0) {
-        if((positions[i].skin+positions[i].dir) != NaN) {
-          image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
-          textSize(15)
-          text(positions[i].name, positions[i].xvel+xoffset, positions[i].yvel+yoffset-50)
-        }
-        fill('white')
-
         push()
         translate(positions[i].xvel+xoffset, positions[i].yvel+yoffset)
         rotate(positions[i].gundir)
@@ -379,6 +389,13 @@ function draw(){
         image(eval(weapons[positions[i].currentgun].name), 0, 0)
 
         pop()
+
+        if((positions[i].skin+positions[i].dir) != NaN) {
+          image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
+          textSize(15)
+          text(positions[i].name + " | 💀 " + String(positions[i].kills), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
+        }
+        fill('white')
         
       }
     }
@@ -391,12 +408,12 @@ function draw(){
 
           if (angle > 1.963) { direction = "frontleft" }
           else if (angle > 1.178) { direction = "front" }
-          else if (angle > 0.393) { direction = "frontright" }
+          else if (angle > 0) { direction = "frontright" }
           else if (angle > -1.178) { direction = "backright" }
           else if (angle > -1.963) { direction = "back" }
           else { direction = "backleft" }
           textSize(15)
-          text(username, myposx+xoffset, myposy+yoffset-50)
+          text(username + " | 💀 " + String(positions[id].kills), myposx+xoffset, myposy+yoffset-60)
           image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
         }
       }
@@ -404,19 +421,15 @@ function draw(){
   }
 
   if (dead == 1) {
+    // nameField.position(width/2, height/2+225)
     fill('white')
     image(death,0,0,10000,10000)
     textAlign(CENTER);
+    textSize(25)
 
-    if (chance==2) {
-      chance = Math.random();
-    }
-    if (chance>=0.9) {
-      text("Stroke. He couldn't move. He went cold. And just stopped moving. 🤯", width/2, height/2+100)
-    }
-    else {
-      text('SPACE to respawn', width/2, height/2+100)
-    }
+    text('YOU DIED', width/2, height/2+150)
+    text('SPACE to respawn', width/2, height/2+300)
+
 
     imageMode(CENTER)
     direction = "front"
@@ -454,10 +467,18 @@ function draw(){
   let fps = frameRate();
   fill(255);
   stroke(0);
-  text("FPS: " + fps.toFixed(0), 10, height - 10);
+  textSize(15)
+  text(fps.toFixed(0)+"FPS", 35, height - 10);
 
   textSize(40)
-  text(weapons[currentgun].ammo + "/" + weapons[currentgun].maxammo, width-60, height-40)
+  if (weapons[currentgun].ammo >=10) {
+    text(weapons[currentgun].ammo, width-90, height-25)
+  }
+  else {
+    text("  " + weapons[currentgun].ammo, width-90, height-25)
+  }
+  textSize(20)
+  text("/" + weapons[currentgun].maxammo, width-50, height-25)
 }
 
 function mouseWheel(event) {
