@@ -355,7 +355,7 @@ function draw(){
     pop()
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
     
-    text("Kills: " + positions[id].kills, 40, height - 40);
+    text("Kill streak: " + positions[id].kills, 100, height - 40);
   }
 
   for (i=0; i<len; i++) {
