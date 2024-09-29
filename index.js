@@ -88,8 +88,11 @@ setInterval(function myFunction(){
         // if ((b.xpos < pos[i][0] + 50) && (b.xpos > pos[i][0] - 50) && (b.ypos < pos[i][1] + 50) && (b.ypos > pos[i][1] - 50)) {
         if ((b.xpos < pos[i].xvel + 50) && (b.xpos > pos[i].xvel - 50) && (b.ypos < pos[i].yvel + 50) && (b.ypos > pos[i].yvel - 50)) {
           // pos[i][2] = 1
+	  if (pos[i].dead == 0) {
+            pos[b.id].kills += 1
+	  }
           pos[i].dead = 1
-	  pos[b.id].kills += 1
+	  pos[i].kills = 0
         }
       }
     }
