@@ -354,6 +354,8 @@ function draw(){
 
     pop()
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
+    
+    text("Kills: " + positions[id].kills, 40, height - 40);
   }
 
   for (i=0; i<len; i++) {
@@ -453,7 +455,6 @@ function draw(){
   fill(255);
   stroke(0);
   text("FPS: " + fps.toFixed(0), 10, height - 10);
-  text("Kills: " + positions[id].kills, 40, height - 40);
 
   textSize(40)
   text(weapons[currentgun].ammo + "/" + weapons[currentgun].maxammo, width-60, height-40)
