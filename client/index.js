@@ -16,6 +16,8 @@ let reloading = 0
 let firstspawn = 1
 
 
+let prevkills = 0
+
 let flash = 0
 
 
@@ -25,6 +27,7 @@ let aksfx
 let glocksfx
 let deaglesfx
 let snipersfx
+let hitsfx
 let uzisfx
 
 let skin = "cat"
@@ -136,6 +139,8 @@ function setup() {
   uzisfx = loadSound('uzi.mp3');
   deaglesfx = loadSound('deagle.mp3');
   snipersfx = loadSound('sniper.mp3');
+  hitsfx = loadSound('hit.mp3');
+
   
   createCanvas(window.innerWidth, window.innerHeight);
   frameRate(60)
@@ -415,6 +420,12 @@ function draw(){
     textAlign(LEFT)
     text("❤️ " + positions[id].hp, 25, height-110);
     pop()
+
+
+    if (prevkills<positions[id].kills) {
+      hitsfx.play()
+    }
+    prevkills = positions[id].kills
  
   }
 
