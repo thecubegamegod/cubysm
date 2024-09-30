@@ -37,7 +37,7 @@ let weapons =  [
   { name: "uzi", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
   { name: "glock", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", dropoff:0.9, zoom:3, damage: 50, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
-  { name: "sniper", dropoff:1, zoom:3, damage: 100, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 0.5, xoffset:30, yoffset:15}
+  { name: "sniper", dropoff:1, zoom:1, damage: 100, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15}
 ]
 
 let delay = 0
@@ -192,12 +192,6 @@ function keyPressed() {
     }
   }
   if (reloading == 0) {
-    if (key === '1') {
-      currentgun=0
-    }
-    if (key === '2') {
-      currentgun=1
-    }
     if (key === 'r') {
       weapons[currentgun].ammo = 0
       reloading = 1
@@ -205,6 +199,11 @@ function keyPressed() {
         weapons[currentgun].ammo = weapons[currentgun].maxammo
         reloading = 0
       }, weapons[currentgun].reloadspeed*1000);
+    }
+    if (typeof eval(key) === 'number') {
+      if (eval(key)<=weapons.length && eval(key)>0) {
+        currentgun=eval(key)-1
+      }
     }
   }
 }
@@ -333,8 +332,8 @@ function draw(){
     if (b.xpos<-1000 || b.xpos>1000|| b.ypos<-1000 || b.ypos>1000) {
       localbullets.splice(b, 1);
     }
-    b.bulletyvel*=b.dropoff
-    b.bulletxvel*=b.dropoff
+    b.bulletyvel*=0.9
+    b.bulletxvel*=0.9
     
     if (Math.sqrt((b.bulletyvel)*(b.bulletyvel)+(b.bulletxvel)*(b.bulletxvel))<=0.1) {
       localbullets.splice(b, 1);
