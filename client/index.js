@@ -43,7 +43,6 @@ let cubefront;
 let bulletimage;
 
 let direction = "front"
-let mydirection = 0
 
 
 let username = "fellow"
@@ -276,18 +275,10 @@ function draw(){
   yvel += recoily
   recoily = 0
 
-  // if (xvel != 0 || yvel != 0) {
-    if (direction==cubefront) { mydirection = 0 }
-    if (direction==cubefrontleft) { mydirection = 1 }
-    if (direction==cubefrontright) { mydirection = 2 }
-    if (direction==cubeback) { mydirection = 10 }
-    if (direction==cubebackleft) { mydirection = 11 }
-    if (direction==cubebackright) { mydirection = 12 }
-    myposx += xvel
-    myposy += yvel
-    myposx = constrain(myposx, -1000, 1000)
-    myposy = constrain(myposy, -1000, 1000)
-  // }
+  myposx += xvel
+  myposy += yvel
+  myposx = constrain(myposx, -1000, 1000)
+  myposy = constrain(myposy, -1000, 1000)
 
 
   xoffset = (width/2)-myposx-(mouseX - windowWidth/2)/3
