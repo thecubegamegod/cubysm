@@ -16,6 +16,8 @@ let reloading = 0
 let firstspawn = 1
 
 
+let flash = 0
+
 
 let deathangle = 0
 
@@ -25,8 +27,8 @@ let glocksfx
 let skin = "cat"
 
 let weapons =  [
-  { name: "ak", reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "glock", reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15}
+  { name: "ak", damage: 20, reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "glock", damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15}
 ]
 
 let delay = 0
@@ -212,8 +214,8 @@ function shoot() {
   
         // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
         // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
-  
-        newBullet = { xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id}
+
+        newBullet = { xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
         socket.emit("bullet", newBullet);
         localbullets.push(newBullet)
         weapons[currentgun].ammo-=1
@@ -231,6 +233,8 @@ function windowResized() {
 }
 
 function draw(){
+
+
   if (nameField.value()!="") {
     username = nameField.value()
   }
@@ -317,7 +321,8 @@ function draw(){
     }
     b.bulletyvel*=0.9
     b.bulletxvel*=0.9
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+    
+    if (Math.sqrt((b.bulletyvel)*(b.bulletyvel)+(b.bulletxvel)*(b.bulletxvel))<=0.1) {
       localbullets.splice(b, 1);
     }
     image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
@@ -330,6 +335,14 @@ function draw(){
     }
   }
   if (dead == 0) {
+    // if (positions[id].flash == 1) {
+    //   setTimeout(function myFunction(){
+    //     socket.volatile.emit("noflash", { id: id});
+    //   }, 100);
+    // }
+
+
+
     // nameField.position(-300, 100)
     nameField.position(25, 25)
     push()
@@ -376,8 +389,14 @@ function draw(){
     pop()
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
     
-    textSize(30)
-    text("💀 " + positions[id].kills, width-75, 50);
+    push()
+    textAlign(RIGHT)
+    textSize(25)
+    text("🔥 " + positions[id].streak, width-25, 50);
+    text("⚔️ " + positions[id].kills, width-25, 80);
+    text("💀 " + positions[id].deaths, width-25, 110);
+    pop()
+ 
   }
 
   for (i=0; i<len; i++) {
@@ -396,9 +415,13 @@ function draw(){
         pop()
 
         if((positions[i].skin+positions[i].dir) != NaN) {
+          if (positions[i].flash == 1) {
+            tint(218, 0, 99);
+          }
           image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
+          noTint()
           textSize(15)
-          text(positions[i].name + " | 💀 " + String(positions[i].kills), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
+          text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
         }
         fill('white')
         
@@ -418,7 +441,13 @@ function draw(){
           else if (angle > -1.963) { direction = "back" }
           else { direction = "backleft" }
           textSize(15)
-          text(username + " | 💀 " + String(positions[id].kills), myposx+xoffset, myposy+yoffset-60)
+          text(username + " | 🔥" + String(positions[id].streak), myposx+xoffset, myposy+yoffset-60)
+          if (positions[id].flash == 1) {
+            tint(218, 0, 99);
+          }
+          else {
+            noTint()
+          }
           image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
         }
       }
@@ -533,6 +562,17 @@ socket.on("updatepositions", function(x) {
   len = x.length
   positions = x
 })
+
+
+// socket.on("flash", function(p) {
+//   if (id==p) {
+//     flash = 1
+//     setTimeout(function myFunction(){
+//       flash = 0
+//     }, 100);
+//   }
+// })
+
 
 socket.on("playdatgunsfx", function(y) {
   eval(y).play()

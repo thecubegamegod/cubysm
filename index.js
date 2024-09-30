@@ -31,23 +31,22 @@ function update_dic(a,b){
 
 
 io.on("connection", function(socket) {
-  var address = socket.handshake.address;
-  console.log('New connection from ' + address.address + ':' + address.port);
-
   socket.on("addme", function(arg) {
     if (pos.length-1 < arg) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
-      pos.push({name: "fellow", kills:0, xvel: 0, yvel: 0, id: arg, dir:"front", skin:"cat", dead:1, gundir: 0, flipgun: 0, suicide:0, currentgun:0})
+      pos.push({name: "fellow", hp:100, streak:0, kills:0, deaths:0, xvel: 0, yvel: 0, id: arg, dir:"front", skin:"cat", dead:1, gundir: 0, flipgun: 0, suicide:0, currentgun:0, socketid: socket.id})
     }
     else {
       pos[arg].dead = 0
+      pos[arg].hp = 100
     }
   });
   socket.on("killme", function(arg) {
     // pos[arg][2] = 1
     pos[arg].dead = 1
-    pos[arg].kills = 0
+    pos[arg].deaths += 1
+    pos[arg].streak = 0
   });
 
 
@@ -72,7 +71,7 @@ io.on("connection", function(socket) {
     }
   });
   socket.on("bullet", function(arg) {
-    bullets.push({xpos: arg.xpos, ypos: arg.ypos, bulletxvel: arg.bulletxvel, bulletyvel: arg.bulletyvel, id: arg.id })
+    bullets.push({dmg:arg.dmg, xpos: arg.xpos, ypos: arg.ypos, bulletxvel: arg.bulletxvel, bulletyvel: arg.bulletyvel, id: arg.id })
   });
 });
 
@@ -91,11 +90,27 @@ setInterval(function myFunction(){
         // if ((b.xpos < pos[i][0] + 50) && (b.xpos > pos[i][0] - 50) && (b.ypos < pos[i][1] + 50) && (b.ypos > pos[i][1] - 50)) {
         if ((b.xpos < pos[i].xvel + 50) && (b.xpos > pos[i].xvel - 50) && (b.ypos < pos[i].yvel + 50) && (b.ypos > pos[i].yvel - 50)) {
           // pos[i][2] = 1
-	  if (pos[i].dead == 0) {
-            pos[b.id].kills += 1
-	  }
-          pos[i].dead = 1
-	  pos[i].kills = 0
+          const index = bullets.indexOf(b);
+          if (index > -1) {
+            bullets.splice(index, 1);
+          }
+          pos[i].hp-=b.dmg
+          pos[i].flash = 1
+          setTimeout(function myFunction(){
+            if (pos.length-1 >= i) {
+              pos[i].flash = 0
+            }
+          }, 100);
+
+          if (pos[i].hp<=0) {
+            if (pos[i].dead == 0) {
+              pos[b.id].streak += 1
+              pos[b.id].kills += 1
+              pos[i].deaths += 1
+            }
+            pos[i].dead = 1
+            pos[i].streak = 0
+          }
         }
       }
     }
