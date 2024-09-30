@@ -78,6 +78,14 @@ io.on("connection", function(socket) {
 
 
 setInterval(function myFunction(){
+
+
+  for (i=0; i<pos.length; i++) {
+    if (pos[i].flash > 0) {
+      pos[i].flash -= 15
+    }
+  }
+
   io.sockets.emit("updatepositions", pos);
   io.sockets.emit("updatebullets", bullets);
   
@@ -95,12 +103,7 @@ setInterval(function myFunction(){
             bullets.splice(index, 1);
           }
           pos[i].hp-=b.dmg
-          pos[i].flash = 1
-          setTimeout(function myFunction(){
-            if (pos.length-1 >= i) {
-              pos[i].flash = 0
-            }
-          }, 100);
+          pos[i].flash = 100
 
           if (pos[i].hp<=0) {
             if (pos[i].dead == 0) {

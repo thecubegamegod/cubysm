@@ -193,7 +193,6 @@ function keyPressed() {
 
 
 function shoot() {
-  console.log(weapons[currentgun].ammo)
   if (weapons[currentgun].ammo>0) {
     if (delay>=weapons[currentgun].speed || weapons[currentgun].auto == false) {
       // if (positions[id][2]==0) {
@@ -232,8 +231,6 @@ function windowResized() {
 }
 
 function draw(){
-
-
   if (nameField.value()!="") {
     username = nameField.value()
   }
@@ -247,6 +244,14 @@ function draw(){
     if (positions[id].dead == 0) { dead = 0 }
   }
 
+  if (dead == 0) {
+    if (positions[id].flash > 0) {
+      tint(218, 0, 99);
+    }
+    else {
+      noTint()
+    }
+  }
   
   xvel = 0
   yvel = 0
@@ -392,7 +397,7 @@ function draw(){
 
   for (i=0; i<len; i++) {
     if (i!=id) {
-      if (positions[i].dead==0) {
+      if (positions[i].dead==0 && dead==0) {
         push()
         translate(positions[i].xvel+xoffset, positions[i].yvel+yoffset)
         rotate(positions[i].gundir)
@@ -405,12 +410,21 @@ function draw(){
 
         pop()
 
+
         if((positions[i].skin+positions[i].dir) != NaN) {
-          if (positions[i].flash == 1) {
+          if (positions[i].flash > 0) {
             tint(218, 0, 99);
           }
           image(eval(positions[i].skin+positions[i].dir), positions[i].xvel+xoffset, positions[i].yvel+yoffset)
           noTint()
+          if (dead == 0) {
+            if (positions[id].flash > 0) {
+              tint(218, 0, 99);
+            }
+            else {
+              noTint()
+            }
+          }
           textSize(15)
           text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
         }
@@ -433,12 +447,6 @@ function draw(){
           else { direction = "backleft" }
           textSize(15)
           text(username + " | 🔥" + String(positions[id].streak), myposx+xoffset, myposy+yoffset-60)
-          if (positions[id].flash == 1) {
-            tint(218, 0, 99);
-          }
-          else {
-            noTint()
-          }
           image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
         }
       }
@@ -446,6 +454,7 @@ function draw(){
   }
 
   if (dead == 1) {
+    noTint()
     // nameField.position(width/2, height/2+225)
     fill('white')
     image(death,0,0,10000,10000)
