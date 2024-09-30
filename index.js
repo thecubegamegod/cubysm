@@ -71,7 +71,7 @@ io.on("connection", function(socket) {
     }
   });
   socket.on("bullet", function(arg) {
-    bullets.push({dmg:arg.dmg, xpos: arg.xpos, ypos: arg.ypos, bulletxvel: arg.bulletxvel, bulletyvel: arg.bulletyvel, id: arg.id })
+    bullets.push(arg)
   });
 });
 
@@ -123,8 +123,8 @@ setInterval(function myFunction(){
         bullets.splice(index, 1);
       }
     }
-    b.bulletyvel*=0.9
-    b.bulletxvel*=0.9
+    b.bulletyvel*=b.dropoff
+    b.bulletxvel*=b.dropoff
     if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
       const index = bullets.indexOf(b);
       if (index > -1) {

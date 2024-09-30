@@ -23,12 +23,21 @@ let deathangle = 0
 
 let aksfx
 let glocksfx
+let deaglesfx
+let snipersfx
+let uzisfx
 
 let skin = "cat"
 
+
+// to get speed do 3600/RPM
+
 let weapons =  [
-  { name: "ak", zoom:3, damage: 20, reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "glock", zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15}
+  { name: "ak", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "uzi", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
+  { name: "glock", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
+  { name: "deagle", dropoff:0.9, zoom:3, damage: 50, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
+  { name: "sniper", dropoff:1, zoom:3, damage: 100, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 0.5, xoffset:30, yoffset:15}
 ]
 
 let delay = 0
@@ -92,6 +101,12 @@ function preload() {
   cursor = loadImage('crosshair.png')
   ak = loadImage('ak.png')
   akgone = loadImage('ak.png')
+  sniper = loadImage('sniper.png')
+  snipergone = loadImage('sniper.png')
+  deagle = loadImage('deagle.png')
+  deaglegone = loadImage('deaglegone.png')
+  uzi = loadImage('uzi.png')
+  uzigone = loadImage('uzi.png')
   death = loadImage('death.png')
   glock = loadImage('pistolold.png')
   glockgone = loadImage('pistolgoneold.png')
@@ -118,6 +133,9 @@ function respawnMe(){
 function setup() {
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
+  uzisfx = loadSound('uzi.mp3');
+  deaglesfx = loadSound('deagle.mp3');
+  snipersfx = loadSound('sniper.mp3');
   
   createCanvas(window.innerWidth, window.innerHeight);
   frameRate(60)
@@ -213,7 +231,7 @@ function shoot() {
         // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
         // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
 
-        newBullet = { xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
+        newBullet = { dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
         socket.emit("bullet", newBullet);
         localbullets.push(newBullet)
         weapons[currentgun].ammo-=1
@@ -315,8 +333,8 @@ function draw(){
     if (b.xpos<-1000 || b.xpos>1000|| b.ypos<-1000 || b.ypos>1000) {
       localbullets.splice(b, 1);
     }
-    b.bulletyvel*=0.9
-    b.bulletxvel*=0.9
+    b.bulletyvel*=b.dropoff
+    b.bulletxvel*=b.dropoff
     
     if (Math.sqrt((b.bulletyvel)*(b.bulletyvel)+(b.bulletxvel)*(b.bulletxvel))<=0.1) {
       localbullets.splice(b, 1);
