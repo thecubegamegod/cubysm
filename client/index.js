@@ -192,6 +192,7 @@ function keyPressed() {
     }
   }
   if (reloading == 0) {
+    console.log(key)
     if (key === 'r') {
       weapons[currentgun].ammo = 0
       reloading = 1
@@ -200,9 +201,12 @@ function keyPressed() {
         reloading = 0
       }, weapons[currentgun].reloadspeed*1000);
     }
-    if (typeof eval(key) === 'number') {
-      if (eval(key)<=weapons.length && eval(key)>0) {
-        currentgun=eval(key)-1
+    if (keyCode>=48 && keyCode <= 57) {
+      if (keyCode == 48) {
+        keyCode = 58
+      }
+      if (keyCode-48<=weapons.length) {
+        currentgun=keyCode-49
       }
     }
   }
