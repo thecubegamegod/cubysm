@@ -136,6 +136,8 @@ function respawnMe(){
 }
 
 function setup() {
+  skinnum = Math.floor(Math.random()*skinslist.length)
+  skin = skinslist[skinnum]
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
   uzisfx = loadSound('uzi.mp3');
