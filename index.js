@@ -109,6 +109,7 @@ setInterval(function myFunction(){
             if (pos[i].dead == 0) {
               pos[b.id].streak += 1
               pos[b.id].kills += 1
+	      pos[b.id].khp = 100
               pos[i].deaths += 1
             }
             pos[i].dead = 1
