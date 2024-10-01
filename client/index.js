@@ -542,6 +542,9 @@ function draw(){
     
   }
 
+
+
+
   image(cursor, mouseX, mouseY) 
 
   let fps = frameRate();
