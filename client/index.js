@@ -30,7 +30,16 @@ let snipersfx
 let hitsfx
 let uzisfx
 
-let skin = "cat"
+let nahsfx
+let ahsfx
+let yeowchsfx
+let owsfx
+let euhsfx
+
+let reloadtimerid
+
+let skin = "cube"
+let skinnum = 0
 
 
 // to get speed do 3600/RPM
@@ -40,8 +49,10 @@ let weapons =  [
   { name: "uzi", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
   { name: "glock", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", dropoff:0.9, zoom:3, damage: 60, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
-  { name: "sniper", dropoff:1, zoom:1, damage: 100, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15}
+  { name: "sniper", dropoff:1, zoom:1, damage: 60, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15}
 ]
+
+let skinslist = ["cube", "cat", "bird"]
 
 let delay = 0
 
@@ -70,21 +81,6 @@ let recoilx = 0
 let recoily = 0
 
 let currentgun = 0
-
-
-
-socket.on("connect_error", (err) => {
-  // the reason of the error, for example "xhr poll error"
-  console.log(err.message);
-
-  // some additional description, for example the status code of the initial HTTP response
-  console.log(err.description);
-
-  // some additional context, for example the XMLHttpRequest object
-  console.log(err.context);
-});
-
-
 
 function preload() {
   img = loadImage('bg.png');
@@ -120,7 +116,13 @@ function preload() {
   catback = loadImage('catfront5.png');
   catbackleft = loadImage('catfront4.png');
   catbackright = loadImage('catfront6.png');
-  
+
+  birdfrontleft = loadImage('bill6.png');
+  birdfrontright = loadImage('bill4.png');
+  birdfront = loadImage('bill3.png');
+  birdback = loadImage('bill2.png');
+  birdbackleft = loadImage('bill1.png');
+  birdbackright = loadImage('bill5.png');
 }
 
 
@@ -140,6 +142,12 @@ function setup() {
   deaglesfx = loadSound('deagle.mp3');
   snipersfx = loadSound('sniper.mp3');
   hitsfx = loadSound('hit.mp3');
+  
+  nahsfx = loadSound('nah.mp3');
+  ahsfx = loadSound('ah.mp3');
+  yeowchsfx = loadSound('yeowch.mp3');
+  owsfx = loadSound('ow.mp3');
+  euhsfx = loadSound('euh.mp3');
 
   
   createCanvas(window.innerWidth, window.innerHeight);
@@ -168,20 +176,22 @@ function mousePressed() {
   }
   else {
     if ((width/2)+150<mouseX && (width/2)+250>mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50) {
-      if(skin=="cube") {
-        skin = "cat"
+      if (skinnum<skinslist.length-1) {
+        skinnum+=1
       }
       else {
-        skin = "cube"
+        skinnum = 0
       }
+      skin = skinslist[skinnum]
     }
     if ((width/2-150)>mouseX && (width/2-250)<mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50) {
-      if(skin=="cube") {
-        skin = "cat"
+      if (skinnum>0) {
+        skinnum-=1
       }
       else {
-        skin = "cube"
+        skinnum = skinslist.length-1
       }
+      skin = skinslist[skinnum]
     }
   }
 }
@@ -199,19 +209,25 @@ function keyPressed() {
   if (reloading == 0) {
     console.log(key)
     if (key === 'r') {
-      weapons[currentgun].ammo = 0
-      reloading = 1
-      setTimeout(function myFunction(){
-        weapons[currentgun].ammo = weapons[currentgun].maxammo
-        reloading = 0
-      }, weapons[currentgun].reloadspeed*1000);
+      if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
+        weapons[currentgun].ammo = 0
+        reloading = 1
+        reloadtimerid = setTimeout(function myFunction(){
+          weapons[currentgun].ammo = weapons[currentgun].maxammo
+          reloading = 0
+        }, weapons[currentgun].reloadspeed*1000);
+      }
     }
     if (keyCode>=48 && keyCode <= 57) {
       if (keyCode == 48) {
         keyCode = 58
+        clearTimeout(reloadtimerid)
+        reloading = 0
       }
       if (keyCode-48<=weapons.length) {
         currentgun=keyCode-49
+        clearTimeout(reloadtimerid)
+        reloading = 0
       }
     }
   }
@@ -317,22 +333,9 @@ function draw(){
   background('white');
 
 
-
   noStroke()
-  // fill('#da0063')
   image(img, width/2, height/2, width+4, height+4);
   image(img, xoffset, yoffset, 2000, 2000);
-  // rect(0, 0, width, height);
-  // fill('#652cb3')
-  // rect(xoffset-1000, yoffset-1000, 2000, 2000);
-
-  // imageMode(CORNER)
-  // for (i=-1000; i<1000; i+=400) {
-  //   for (j=-1000; j<1000; j+=400) {
-  //     image(bricks, xoffset+i, yoffset+j,400,400);
-  //   }
-  // }
-  // imageMode(CENTER)
 
 
   for (let b of localbullets) {
@@ -362,9 +365,6 @@ function draw(){
     //     socket.volatile.emit("noflash", { id: id});
     //   }, 100);
     // }
-
-
-
     // nameField.position(-300, 100)
     nameField.position(25, 25)
     push()
@@ -385,7 +385,6 @@ function draw(){
       scale(-1, 1);
     }
 
-
     if (reloading == 0) {
       if (delay>=weapons[currentgun].speed) {
         image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
@@ -404,9 +403,6 @@ function draw(){
       image(eval(weapons[currentgun].name+"gone"), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       pop()
     }
-
-
-
 
     pop()
     weaponrotation = Math.atan2(mouseY-(height/2), mouseX-(width/2))
@@ -510,7 +506,6 @@ function draw(){
       text('SPACE to respawn', width/2, height/2+300)
     }
 
-
     imageMode(CENTER)
     direction = "front"
     angle = mouseX-(width/2)
@@ -520,8 +515,6 @@ function draw(){
     else { direction = "front" }
 
     image(eval(skin+direction), width/2, height/2,200,200);
-
-
 
     if ((width/2)+150<mouseX && (width/2)+250>mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50 && !mouseIsPressed) {
       image(arrowgone, width/2+200, height/2);
@@ -542,11 +535,7 @@ function draw(){
     
   }
 
-
-
-
   image(cursor, mouseX, mouseY) 
-
   let fps = frameRate();
   fill(255);
   stroke(0);
@@ -565,7 +554,7 @@ function draw(){
 }
 
 function mouseWheel(event) {
-  if (reloading == 0) {
+  // if (reloading == 0) {
     if (event.delta > 0) {
       if (currentgun > 0) {
         currentgun-=1
@@ -573,7 +562,8 @@ function mouseWheel(event) {
       else {
         currentgun=Object.keys(weapons).length-1
       }
-    } else {
+    }
+    else {
       if (currentgun < Object.keys(weapons).length-1) {
         currentgun+=1
       }
@@ -581,10 +571,11 @@ function mouseWheel(event) {
         currentgun=0
       }
     }
+    clearTimeout(reloadtimerid)
+    reloading = 0
     return false;
-  }
+  // }
 }
-
 
 setInterval(function myFunction(){
   socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
@@ -604,17 +595,6 @@ socket.on("updatepositions", function(x) {
   len = x.length
   positions = x
 })
-
-
-// socket.on("flash", function(p) {
-//   if (id==p) {
-//     flash = 1
-//     setTimeout(function myFunction(){
-//       flash = 0
-//     }, 100);
-//   }
-// })
-
 
 socket.on("playdatgunsfx", function(y) {
   eval(y).play()

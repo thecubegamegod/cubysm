@@ -105,10 +105,13 @@ setInterval(function myFunction(){
             bullets.splice(index, 1);
           }
           pos[i].hp-=b.dmg
+
+
           pos[i].flash = 100
 
           if (pos[i].hp<=0) {
             if (pos[i].dead == 0) {
+              io.sockets.emit("playdatgunsfx", "euhsfx")
               pos[b.id].streak += 1
               pos[b.id].kills += 1
 	      // pos[b.id].hp = 100
@@ -116,6 +119,16 @@ setInterval(function myFunction(){
             }
             pos[i].dead = 1
             pos[i].streak = 0
+          }
+          else {
+            let rand = Math.round(Math.floor(Math.random() * 2))
+            console.log(rand)
+            if (rand==0) {
+              io.sockets.emit("playdatgunsfx", "ahsfx")
+            }
+            if (rand==1) {
+              io.sockets.emit("playdatgunsfx", "owsfx")
+            }
           }
         }
       }
