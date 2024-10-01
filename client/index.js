@@ -39,7 +39,7 @@ let weapons =  [
   { name: "ak", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
   { name: "uzi", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
   { name: "glock", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
-  { name: "deagle", dropoff:0.9, zoom:3, damage: 50, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
+  { name: "deagle", dropoff:0.9, zoom:3, damage: 60, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
   { name: "sniper", dropoff:1, zoom:1, damage: 100, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15}
 ]
 
@@ -460,7 +460,9 @@ function draw(){
             }
           }
           textSize(15)
-          text(positions[i].name + " | 🔥" + String(positions[i].streak) + " ❤️ " + String(positions[i].hp), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
+          text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
+          textSize(13)
+          text("❤️".repeat(Math.round(positions[i].hp/20)) + "🤍".repeat(5-(Math.round(positions[i].hp/20))), positions[i].xvel+xoffset, positions[i].yvel+yoffset-80)
         }
         fill('white')
         
@@ -480,7 +482,10 @@ function draw(){
           else if (angle > -1.963) { direction = "back" }
           else { direction = "backleft" }
           textSize(15)
-          text(username + " | 🔥" + String(positions[id].streak) + " ❤️ " + String(positions[id].hp), myposx+xoffset, myposy+yoffset-60)
+          text(username + " | 🔥" + String(positions[id].streak), myposx+xoffset, myposy+yoffset-60)
+          textSize(13)
+          text("❤️".repeat(Math.round(positions[id].hp/20)) + "🤍".repeat(5-(Math.round(positions[id].hp/20))), myposx+xoffset, myposy+yoffset-80)
+          
           image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
         }
       }

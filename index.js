@@ -139,10 +139,10 @@ setInterval(function myFunction(){
 }, 1000/60);
 
 
-setInterval(function myFunction(){
-  for (i=0; i<pos.length; i++) {
-    if (pos[i].hp < 100) {
-      pos[i].hp += 1
-    }
-  }
-}, 1000);
+// setInterval(function myFunction(){
+//   for (i=0; i<pos.length; i++) {
+//     if (pos[i].hp < 100) {
+//       pos[i].hp += 1
+//     }
+//   }
+// }, 1000);
