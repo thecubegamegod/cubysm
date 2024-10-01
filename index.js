@@ -77,6 +77,8 @@ io.on("connection", function(socket) {
 
 
 
+
+
 setInterval(function myFunction(){
 
 
@@ -109,7 +111,7 @@ setInterval(function myFunction(){
             if (pos[i].dead == 0) {
               pos[b.id].streak += 1
               pos[b.id].kills += 1
-	      pos[b.id].hp = 100
+	      // pos[b.id].hp = 100
               pos[i].deaths += 1
             }
             pos[i].dead = 1
@@ -135,3 +137,12 @@ setInterval(function myFunction(){
   }
   
 }, 1000/60);
+
+
+setInterval(function myFunction(){
+  for (i=0; i<pos.length; i++) {
+    if (pos[i].hp < 100) {
+      pos[i].hp += 1
+    }
+  }
+}, 1000);
