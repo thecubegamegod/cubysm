@@ -45,14 +45,18 @@ let skinnum = 0
 // to get speed do 3600/RPM
 
 let weapons =  [
-  { name: "ak", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.5, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "uzi", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
+  { name: "ak", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "uzi", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
   { name: "glock", dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", dropoff:0.9, zoom:3, damage: 60, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
-  { name: "sniper", dropoff:1, zoom:1, damage: 60, reloadspeed: 5, ammo:5, maxammo:5, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15}
+  { name: "sniper", dropoff:1, zoom:1, damage: 100, reloadspeed: 0.7, ammo:1, maxammo:1, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15}
 ]
 
-let skinslist = ["cube", "cat", "bird"]
+let skinslist = [
+  {name: "cube", primary: 0, secondary: 2, speed:1 },
+  {name: "cat", primary: 4, secondary: 2, speed:0.8 },
+  {name: "bird", primary: 1, secondary: 3, speed:1.2 }
+]
 
 let delay = 0
 
@@ -110,6 +114,12 @@ function preload() {
   glock = loadImage('pistolold.png')
   glockgone = loadImage('pistolgoneold.png')
 
+  aktile = loadImage('aktile.png')
+  glocktile = loadImage('glocktile.png')
+  snipertile = loadImage('snipertile.png')
+  deagletile = loadImage('deagletile.png')
+  uzitile = loadImage('uzitile.png')
+
   catfrontleft = loadImage('catfront3.png');
   catfrontright = loadImage('catfront1.png');
   catfront = loadImage('catfront2.png');
@@ -128,6 +138,7 @@ function preload() {
 
 function respawnMe(){
   socket.emit("addme", id);
+  currentgun=skinslist[skinnum].primary
   myposx = Math.floor(Math.random() * (1000 + 1000)) + -1000;
   myposy = Math.floor(Math.random() * (1000 + 1000)) + -1000;
   for(i=0; i<weapons.length; i++) {
@@ -137,7 +148,8 @@ function respawnMe(){
 
 function setup() {
   skinnum = Math.floor(Math.random()*skinslist.length)
-  skin = skinslist[skinnum]
+  currentgun=skinslist[skinnum].primary
+  skin = skinslist[skinnum].name
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
   uzisfx = loadSound('uzi.mp3');
@@ -184,7 +196,7 @@ function mousePressed() {
       else {
         skinnum = 0
       }
-      skin = skinslist[skinnum]
+      skin = skinslist[skinnum].name
     }
     if ((width/2-150)>mouseX && (width/2-250)<mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50) {
       if (skinnum>0) {
@@ -193,7 +205,7 @@ function mousePressed() {
       else {
         skinnum = skinslist.length-1
       }
-      skin = skinslist[skinnum]
+      skin = skinslist[skinnum].name
     }
   }
 }
@@ -209,7 +221,6 @@ function keyPressed() {
     }
   }
   if (reloading == 0) {
-    console.log(key)
     if (key === 'r') {
       if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
         weapons[currentgun].ammo = 0
@@ -220,17 +231,27 @@ function keyPressed() {
         }, weapons[currentgun].reloadspeed*1000);
       }
     }
-    if (keyCode>=48 && keyCode <= 57) {
-      if (keyCode == 48) {
-        keyCode = 58
-        clearTimeout(reloadtimerid)
-        reloading = 0
-      }
-      if (keyCode-48<=weapons.length) {
-        currentgun=keyCode-49
-        clearTimeout(reloadtimerid)
-        reloading = 0
-      }
+    // if (keyCode>=48 && keyCode <= 57) {
+    //   if (keyCode == 48) {
+    //     keyCode = 58
+    //     clearTimeout(reloadtimerid)
+    //     reloading = 0
+    //   }
+    //   if (keyCode-48<=weapons.length) {
+    //     currentgun=keyCode-49
+    //     clearTimeout(reloadtimerid)
+    //     reloading = 0
+    //   }
+    // }
+    if (keyCode == 49) {
+      currentgun=skinslist[skinnum].primary
+      clearTimeout(reloadtimerid)
+      reloading = 0
+    }
+    if (keyCode == 50) {
+      currentgun=skinslist[skinnum].secondary
+      clearTimeout(reloadtimerid)
+      reloading = 0
     }
   }
 }
@@ -324,8 +345,8 @@ function draw(){
   yvel += recoily
   recoily = 0
 
-  myposx += xvel
-  myposy += yvel
+  myposx += xvel*skinslist[skinnum].speed
+  myposy += yvel*skinslist[skinnum].speed
   myposx = constrain(myposx, -1000, 1000)
   myposy = constrain(myposy, -1000, 1000)
 
@@ -438,9 +459,21 @@ function draw(){
         else { scale(-1, -1); }
         if (positions[i].suicide==1) { scale(-1, 1); }
         
+
         image(eval(weapons[positions[i].currentgun].name), 0, 0)
 
         pop()
+
+        // push()
+        // translate(positions[i].xvel+xoffset, positions[i].yvel+yoffset)
+        // rotate(1.5708)
+        // if (currentgun == skinslist[skinnum].primary) {
+        //   image(eval(weapons[skinslist[skinnum].secondary].name), 0, 0)
+        // }
+        // else {
+        //   image(eval(weapons[skinslist[skinnum].primary].name), 0, 0)
+        // }
+        // pop()
 
 
         if((positions[i].skin+positions[i].dir) != NaN) {
@@ -500,12 +533,12 @@ function draw(){
 
 
     if (firstspawn == 1) {
-      text('WELCOME', width/2, height/2+150)
-      text('SPACE to start', width/2, height/2+300)
+      text('WELCOME', width/2, height/2-250)
+      text('SPACE to start', width/2, height/2-200)
     }
     else {
-      text('YOU DIED', width/2, height/2+150)
-      text('SPACE to respawn', width/2, height/2+300)
+      text('YOU DIED', width/2, height/2-250)
+      text('SPACE to respawn', width/2, height/2-200)
     }
 
     imageMode(CENTER)
@@ -534,7 +567,13 @@ function draw(){
       image(arrow, -(width/2-200), height/2,);
     }
     pop()
+
+
+
+    image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height/2 +300);
+    image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height/2 +300);
     
+
   }
 
   image(cursor, mouseX, mouseY) 
@@ -555,29 +594,39 @@ function draw(){
   text("/" + weapons[currentgun].maxammo, width-50, height-25)
 }
 
+// function mouseWheel(event) {
+//     if (event.delta > 0) {
+//       if (currentgun > 0) {
+//         currentgun-=1
+//       }
+//       else {
+//         currentgun=Object.keys(weapons).length-1
+//       }
+//     }
+//     else {
+//       if (currentgun < Object.keys(weapons).length-1) {
+//         currentgun+=1
+//       }
+//       else {
+//         currentgun=0
+//       }
+//     }
+//     clearTimeout(reloadtimerid)
+//     reloading = 0
+//     return false;
+// }
 function mouseWheel(event) {
-  // if (reloading == 0) {
-    if (event.delta > 0) {
-      if (currentgun > 0) {
-        currentgun-=1
-      }
-      else {
-        currentgun=Object.keys(weapons).length-1
-      }
-    }
-    else {
-      if (currentgun < Object.keys(weapons).length-1) {
-        currentgun+=1
-      }
-      else {
-        currentgun=0
-      }
-    }
-    clearTimeout(reloadtimerid)
-    reloading = 0
-    return false;
-  // }
+  if (currentgun == skinslist[skinnum].primary) {
+    currentgun = skinslist[skinnum].secondary
+  }
+  else {
+    currentgun = skinslist[skinnum].primary
+  }
+  clearTimeout(reloadtimerid)
+  reloading = 0
+  return false;
 }
+
 
 setInterval(function myFunction(){
   socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});

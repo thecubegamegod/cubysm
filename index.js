@@ -114,7 +114,9 @@ setInterval(function myFunction(){
               io.sockets.emit("playdatgunsfx", "euhsfx")
               pos[b.id].streak += 1
               pos[b.id].kills += 1
-	      // pos[b.id].hp = 100
+              if (pos[b.id].hp + 20 <= 100) {
+                pos[b.id].hp += 20
+              }
               pos[i].deaths += 1
             }
             pos[i].dead = 1
@@ -122,7 +124,6 @@ setInterval(function myFunction(){
           }
           else {
             let rand = Math.round(Math.floor(Math.random() * 2))
-            console.log(rand)
             if (rand==0) {
               io.sockets.emit("playdatgunsfx", "ahsfx")
             }
