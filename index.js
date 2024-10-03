@@ -18,17 +18,7 @@ let bullets = []
 
 let timesUpdated = 0
 
-
 server.listen(port, function() { console.log("🟢 " + port); });
-
-
-function update_dic(a,b){
-  for(key in b){
-    a[key] = b[key]
-  }
-	return a;
-}
-
 
 io.on("connection", function(socket) {
   socket.on("addme", function(arg) {
@@ -56,15 +46,6 @@ io.on("connection", function(socket) {
 
   socket.on("move", function(arg) {
     if (arg.id<pos.length) {
-      // pos[arg.id][0]=arg.xvel
-      // pos[arg.id][1]=arg.yvel
-      // pos[arg.id][4]=arg.dir
-      // pos[arg.id][5]=arg.gundir
-      // pos[arg.id][6]=arg.flipgun
-      // pos[arg.id][7]=arg.suicide
-      // pos[arg.id][8]=arg.xpos
-      // pos[arg.id][9]=arg.ypos
-      // pos[arg.id][10]=arg.currentgun
       for (let key in arg) {
         pos[arg.id][key] = arg[key]
       }
@@ -77,11 +58,7 @@ io.on("connection", function(socket) {
 
 
 
-
-
 setInterval(function myFunction(){
-
-
   for (i=0; i<pos.length; i++) {
     if (pos[i].flash > 0) {
       pos[i].flash -= 15
@@ -92,21 +69,17 @@ setInterval(function myFunction(){
   io.sockets.emit("updatebullets", bullets);
   
   for (let b of bullets) {
+//MOVING AND COLLIDING BULLETS
     b.ypos += b.bulletyvel*90
     b.xpos += b.bulletxvel*90
     for (i=0; i<pos.length; i++) {
-      // if (b.id != pos[i][3]) {
       if (b.id != pos[i].id) {
-        // if ((b.xpos < pos[i][0] + 50) && (b.xpos > pos[i][0] - 50) && (b.ypos < pos[i][1] + 50) && (b.ypos > pos[i][1] - 50)) {
         if ((b.xpos < pos[i].xvel + 50) && (b.xpos > pos[i].xvel - 50) && (b.ypos < pos[i].yvel + 50) && (b.ypos > pos[i].yvel - 50)) {
-          // pos[i][2] = 1
           const index = bullets.indexOf(b);
           if (index > -1) {
             bullets.splice(index, 1);
           }
           pos[i].hp-=b.dmg
-
-
           pos[i].flash = 100
 
           if (pos[i].hp<=0) {
@@ -153,6 +126,7 @@ setInterval(function myFunction(){
 }, 1000/60);
 
 
+// HEALTH REGEN
 // setInterval(function myFunction(){
 //   for (i=0; i<pos.length; i++) {
 //     if (pos[i].hp < 100) {
