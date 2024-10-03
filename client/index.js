@@ -49,8 +49,8 @@ let weapons =  [
   { name: "uzi", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
   { name: "glock", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
-  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 0.7, ammo:1, maxammo:1, speed: 50, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15},
-  { name: "shorty", simul:8, dropoff:1, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 50, auto: false, spread:0.4, recoil:30, spriterecoil: 0.7, bulletspd: 0.6 , xoffset:0, yoffset:15},
+  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 0.7, ammo:5, maxammo:5, speed: 100, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15},
+  { name: "shorty", simul:8, dropoff:1, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 75, auto: false, spread:0.4, recoil:30, spriterecoil: 0.7, bulletspd: 0.6 , xoffset:0, yoffset:15},
   { name: "benelli", simul:6, dropoff:1, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 25, auto: true, spread:0.3, recoil:0, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
 ]
 
@@ -58,7 +58,7 @@ let skinslist = [
   {name: "cube", primary: 0, secondary: 2, speed:1.1 },
   {name: "cat", primary: 4, secondary: 5, speed:0.8 },
   {name: "bird", primary: 1, secondary: 3, speed:1.2 },
-  {name: "hamster", primary: 6, secondary: 3, speed:1.1 }
+  {name: "hamster", primary: 6, secondary: 2, speed:1.1 }
 ]
 
 let delay = 0
@@ -232,13 +232,15 @@ function mousePressed() {
 
 
 function reload() {
-  if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
-    weapons[currentgun].ammo = 0
-    reloading = 1
-    reloadtimerid = setTimeout(function myFunction(){
-      weapons[currentgun].ammo = weapons[currentgun].maxammo
-      reloading = 0
-    }, weapons[currentgun].reloadspeed*1000);
+  if (reloading == 0) {
+    if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
+      weapons[currentgun].ammo = 0
+      reloading = 1
+      reloadtimerid = setTimeout(function myFunction(){
+        weapons[currentgun].ammo = weapons[currentgun].maxammo
+        reloading = 0
+      }, weapons[currentgun].reloadspeed*1000);
+    }
   }
 }
 
@@ -285,7 +287,7 @@ function keyPressed() {
 function shoot() {
   if (weapons[currentgun].ammo>0) {
     if (delay>=weapons[currentgun].speed || weapons[currentgun].auto == false) {
-      // if (positions[id][2]==0) {
+    // if (delay>=weapons[currentgun].speed) {
       if (positions[id].dead==0) {
         xdiff = (mouseX - width/2)
         ydiff = (mouseY - height/2)
@@ -315,6 +317,9 @@ function shoot() {
     }
     recoilx = -bulletxvel*weapons[currentgun].recoil
     recoily = -bulletyvel*weapons[currentgun].recoil
+  }
+  else {
+    reload()
   }
 }
 
@@ -621,27 +626,6 @@ function draw(){
   text("/" + weapons[currentgun].maxammo, width-50, height-25)
 }
 
-// function mouseWheel(event) {
-//     if (event.delta > 0) {
-//       if (currentgun > 0) {
-//         currentgun-=1
-//       }
-//       else {
-//         currentgun=Object.keys(weapons).length-1
-//       }
-//     }
-//     else {
-//       if (currentgun < Object.keys(weapons).length-1) {
-//         currentgun+=1
-//       }
-//       else {
-//         currentgun=0
-//       }
-//     }
-//     clearTimeout(reloadtimerid)
-//     reloading = 0
-//     return false;
-// }
 function mouseWheel(event) {
   if (currentgun == skinslist[skinnum].primary) {
     currentgun = skinslist[skinnum].secondary
@@ -653,7 +637,6 @@ function mouseWheel(event) {
   reloading = 0
   return false;
 }
-
 
 setInterval(function myFunction(){
   socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
