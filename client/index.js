@@ -55,7 +55,8 @@ let weapons =  [
 let skinslist = [
   {name: "cube", primary: 0, secondary: 2, speed:1 },
   {name: "cat", primary: 4, secondary: 2, speed:0.8 },
-  {name: "bird", primary: 1, secondary: 3, speed:1.2 }
+  {name: "bird", primary: 1, secondary: 3, speed:1.2 },
+  {name: "hamster", primary: 1, secondary: 2, speed:1.2 }
 ]
 
 let delay = 0
@@ -133,6 +134,13 @@ function preload() {
   birdback = loadImage('bill2.png');
   birdbackleft = loadImage('bill1.png');
   birdbackright = loadImage('bill5.png');
+
+  hamsterfrontleft = loadImage('hamster.png');
+  hamsterfrontright = loadImage('hamster.png');
+  hamsterfront = loadImage('hamster.png');
+  hamsterback = loadImage('hamster.png');
+  hamsterbackleft = loadImage('hamster.png');
+  hamsterbackright = loadImage('hamster.png');
 }
 
 
