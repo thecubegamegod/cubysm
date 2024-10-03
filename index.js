@@ -8,6 +8,10 @@ const app = express();
 const server = http.createServer(app);
 const io = new socketio.Server(server);
 
+
+const fs = require("fs");
+
+
 app.use(express.static("client"));
 
 let number;
@@ -17,6 +21,7 @@ let pos = []
 let bullets = []
 
 let timesUpdated = 0
+
 
 server.listen(port, function() { console.log("🟢 " + port); });
 
@@ -87,10 +92,23 @@ setInterval(function myFunction(){
               io.sockets.emit("playdatgunsfx", "euhsfx")
               pos[b.id].streak += 1
               pos[b.id].kills += 1
+              
               if (pos[b.id].hp + 20 <= 100) {
                 pos[b.id].hp += 20
               }
               pos[i].deaths += 1
+
+              console.log(pos[b.id])
+              console.log(pos[i])
+              fs.appendFile(
+                "kills.txt",
+                (pos[b.id].skin)+"k", (err) => err && console.error(err)
+              );
+              fs.appendFile(
+                "kills.txt",
+                pos[i].skin+"d", (err) => err && console.error(err)
+              );
+
             }
             pos[i].dead = 1
             pos[i].streak = 0
