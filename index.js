@@ -98,8 +98,6 @@ setInterval(function myFunction(){
               }
               pos[i].deaths += 1
 
-              console.log(pos[b.id])
-              console.log(pos[i])
               fs.appendFile(
                 "kills.txt",
                 (pos[b.id].skin)+"k", (err) => err && console.error(err)
