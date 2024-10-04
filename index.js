@@ -70,8 +70,8 @@ setInterval(function myFunction(){
     }
   }
 
-  io.sockets.emit("updatepositions", pos);
-  io.sockets.emit("updatebullets", bullets);
+  io.volatile.sockets.emit("updatepositions", pos);
+  io.volatile.sockets.emit("updatebullets", bullets);
   
   for (let b of bullets) {
 //MOVING AND COLLIDING BULLETS
