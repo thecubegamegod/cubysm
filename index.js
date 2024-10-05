@@ -123,7 +123,7 @@ setInterval(function myFunction(){
         }
       }
     }
-    if (b.xpos<-1000 || b.xpos>1000|| b.ypos<-1000 || b.ypos>1000) {
+    if (b.xpos<-2000 || b.xpos>2000|| b.ypos<-2000 || b.ypos>2000) {
       const index = bullets.indexOf(b);
       if (index > -1) {
         bullets.splice(index, 1);
