@@ -239,7 +239,12 @@ function reload() {
     if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
       reloading = 1
       reloadtimerid = setTimeout(function myFunction(){
-        weapons[currentgun].ammo = weapons[currentgun].maxammo
+        if (weapons[currentgun].ammo==0) {
+          weapons[currentgun].ammo = weapons[currentgun].maxammo
+        }
+        else {
+          weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
+        }
         reloading = 0
       }, weapons[currentgun].reloadspeed*1000);
     }
