@@ -45,13 +45,13 @@ let skinnum = 0
 // to get speed do 3600/RPM
 
 let weapons =  [
-  { name: "ak", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "uzi", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 4.5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
-  { name: "glock", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 12, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
-  { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 1.5, ammo:7, maxammo:7, speed: 12, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
-  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 0.7, ammo:5, maxammo:5, speed: 100, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15},
-  { name: "shorty", simul:8, dropoff:1, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 75, auto: false, spread:0.4, recoil:30, spriterecoil: 0.7, bulletspd: 0.6 , xoffset:0, yoffset:15},
-  { name: "benelli", simul:6, dropoff:1, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 25, auto: true, spread:0.3, recoil:0, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
+  { name: "ak", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "uzi", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
+  { name: "glock", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.5, bulletspd: 0.8, xoffset:0, yoffset:15},
+  { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
+  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15},
+  { name: "shorty", simul:8, dropoff:1, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, bulletspd: 0.6 , xoffset:0, yoffset:15},
+  { name: "benelli", simul:6, dropoff:1, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
 ]
 
 let skinslist = [
@@ -61,7 +61,7 @@ let skinslist = [
   {name: "hamster", primary: 6, secondary: 2, speed:1.1 }
 ]
 
-let delay = 0
+let delay = 999
 
 let bullets = []
 let localbullets = []
@@ -83,6 +83,7 @@ let flipgun = 0
 
 let death
 let cursor
+let cursorgone
 
 let recoilx = 0
 let recoily = 0
@@ -105,6 +106,7 @@ function preload() {
 
   bulletimage = loadImage('bullet.png');
   cursor = loadImage('crosshair.png')
+  cursorgone = loadImage('crosshairgone.png')
   ak = loadImage('weapons/ak.png')
   akgone = loadImage('weapons/ak.png')
   sniper = loadImage('weapons/sniper.png')
@@ -117,7 +119,7 @@ function preload() {
   glock = loadImage('weapons/glock.png')
   glockgone = loadImage('weapons/glockgone.png')
   shorty = loadImage('weapons/shorty.png')
-  shortygone = loadImage('weapons/shorty.png')
+  shortygone = loadImage('weapons/shortygone.png')
   benelli = loadImage('weapons/benelli.png')
   benelligone = loadImage('weapons/benelli.png')
 
@@ -153,6 +155,7 @@ function preload() {
 
 
 function respawnMe(){
+  delay = 999
   socket.emit("addme", id);
   currentgun=skinslist[skinnum].primary
   myposx = Math.floor(Math.random() * (1000 + 1000)) + -1000;
@@ -236,7 +239,12 @@ function reload() {
     if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
       reloading = 1
       reloadtimerid = setTimeout(function myFunction(){
-        weapons[currentgun].ammo = weapons[currentgun].maxammo
+        if (weapons[currentgun].ammo==0) {
+          weapons[currentgun].ammo = weapons[currentgun].maxammo
+        }
+        else {
+          weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
+        }
         reloading = 0
       }, weapons[currentgun].reloadspeed*1000);
     }
@@ -284,8 +292,8 @@ function keyPressed() {
 
 
 function shoot() {
-  if (weapons[currentgun].ammo>0) {
-    if (delay>=weapons[currentgun].speed || weapons[currentgun].auto == false) {
+  if (weapons[currentgun].ammo>0 && reloading== 0) {
+    if (delay>=weapons[currentgun].speed) {
     // if (delay>=weapons[currentgun].speed) {
       if (positions[id].dead==0) {
         xdiff = (mouseX - width/2)
@@ -312,10 +320,16 @@ function shoot() {
         weapons[currentgun].ammo-=1
         delay = 0
         socket.emit("gunsfx", weapons[currentgun].name + "sfx")
+        if (weapons[currentgun].auto == 0) {
+          recoilx = -bulletxvel*weapons[currentgun].recoil
+          recoily = -bulletyvel*weapons[currentgun].recoil
+        }
       }
     }
-    recoilx = -bulletxvel*weapons[currentgun].recoil
-    recoily = -bulletyvel*weapons[currentgun].recoil
+    if (weapons[currentgun].auto == 1) {
+      recoilx = -bulletxvel*weapons[currentgun].recoil
+      recoily = -bulletyvel*weapons[currentgun].recoil
+    }
   }
   else {
     reload()
@@ -444,6 +458,7 @@ function draw(){
         image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       }
       else {
+        translate((weapons[currentgun].spriterecoil/delay)*30, 0)
         rotate(weapons[currentgun].spriterecoil/delay)
         image(eval(weapons[currentgun].name+"gone"), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       }  
@@ -452,7 +467,7 @@ function draw(){
       push()
       rotate(weapons[currentgun].spriterecoil/delay)
       rotate(1)
-      scale(0.75);
+      // scale(0.75);
       translate(0,-50)
       image(eval(weapons[currentgun].name+"gone"), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       pop()
@@ -608,6 +623,7 @@ function draw(){
   }
 
   image(cursor, mouseX, mouseY) 
+
   let fps = frameRate();
   fill(255);
   stroke(0);
@@ -641,7 +657,7 @@ setInterval(function myFunction(){
   socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide:suicide, currentgun: currentgun, skin: skin});
   if (delay<weapons[currentgun].speed) {
     delay+=1
-    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT) {
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading==false) {
       shoot()
     }
   };
