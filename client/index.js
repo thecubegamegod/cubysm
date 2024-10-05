@@ -158,8 +158,8 @@ function respawnMe(){
   delay = 999
   socket.emit("addme", id);
   currentgun=skinslist[skinnum].primary
-  myposx = Math.floor(Math.random() * (1000 + 1000)) + -1000;
-  myposy = Math.floor(Math.random() * (1000 + 1000)) + -1000;
+  myposx = Math.floor(Math.random() * (2000 + 2000)) + -2000;
+  myposy = Math.floor(Math.random() * (2000 + 2000)) + -2000;
   for(i=0; i<weapons.length; i++) {
     weapons[i].ammo = weapons[i].maxammo
   }
@@ -392,8 +392,8 @@ function draw(){
 
   myposx += xvel*skinslist[skinnum].speed
   myposy += yvel*skinslist[skinnum].speed
-  myposx = constrain(myposx, -1000, 1000)
-  myposy = constrain(myposy, -1000, 1000)
+  myposx = constrain(myposx, -2000, 2000)
+  myposy = constrain(myposy, -2000, 2000)
 
 
   xoffset = (width/2)-myposx-(mouseX - windowWidth/2)/weapons[currentgun].zoom
@@ -403,7 +403,7 @@ function draw(){
 
   noStroke()
   image(img, width/2, height/2, width+4, height+4);
-  image(img, xoffset, yoffset, 2000, 2000);
+  image(img, xoffset, yoffset, 4000, 4000);
 
 
   for (let b of localbullets) {
