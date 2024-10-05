@@ -234,7 +234,6 @@ function mousePressed() {
 function reload() {
   if (reloading == 0) {
     if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
-      weapons[currentgun].ammo = 0
       reloading = 1
       reloadtimerid = setTimeout(function myFunction(){
         weapons[currentgun].ammo = weapons[currentgun].maxammo
