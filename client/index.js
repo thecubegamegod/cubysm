@@ -91,6 +91,7 @@ let flipgun = 0
 
 let death
 let cursor
+let title
 let cursorgone
 
 let recoilx = 0
@@ -99,6 +100,7 @@ let recoily = 0
 let currentgun = 0
 
 function preload() {
+  titlepic = loadImage('title.png')
   img = loadImage('bg.png');
   cubefrontleft = loadImage('cubepixel2.png');
   bricks = loadImage('brick.png');
@@ -594,14 +596,10 @@ function draw(){
     textSize(25)
 
 
-    if (firstspawn == 1) {
-      text('WELCOME', width/2, height/2-250)
-      text('SPACE to start', width/2, height/2-200)
-    }
-    else {
-      text('YOU DIED', width/2, height/2-250)
-      text('SPACE to respawn', width/2, height/2-200)
-    }
+    image(titlepic, width/2, 200, 600, 200);
+
+
+    text('SPACE to spawn', width/2, height/2-140)
 
     imageMode(CENTER)
     direction = "front"

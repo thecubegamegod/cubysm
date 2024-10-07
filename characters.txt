@@ -5,3 +5,6 @@ piping bird
 super manki
 stroke hamster
 oggie's creation
+
+
+FONT IS ARIAL NB ON ASEPRITE
