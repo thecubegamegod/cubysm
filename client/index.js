@@ -102,6 +102,8 @@ let currentgun = 0
 
 function preload() {
   titlepic = loadImage('title.png')
+  onekey = loadImage('1.png')
+  twokey = loadImage('2.png')
   spawnpic = loadImage('spawn.png')
   img = loadImage('bg.png');
   cubefrontleft = loadImage('cubepixel2.png');
@@ -595,10 +597,12 @@ function draw(){
     fill('white')
     image(death,0,0,10000,10000)
     textAlign(CENTER);
+
+
     textSize(25)
 
 
-    image(titlepic, width/2, 200, 600, 200);
+    image(titlepic, width/2, 175, 600, 200);
     image(spawnpic, width/2, height/2-140, 400, 100);
 
 
@@ -655,8 +659,6 @@ function draw(){
   textSize(20)
   text("/" + weapons[currentgun].maxammo, width-50, height-25)
 
-
-
   if (currentgun == skinslist[skinnum].primary) {
     image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
   }
@@ -669,6 +671,7 @@ function draw(){
   else {
     image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125);
   }
+
 
 }
 
