@@ -580,13 +580,42 @@ function draw(){
           text("❤️".repeat(Math.round(positions[id].hp/20)) + "🤍".repeat(5-(Math.round(positions[id].hp/20))), myposx+xoffset, myposy+yoffset-80)
           
           image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
+
+          if (currentgun == skinslist[skinnum].primary) {
+            image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
+          }
+          else {
+            image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225);
+          }
+          if (currentgun == skinslist[skinnum].secondary) {
+            image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125, eval(weapons[skinslist[skinnum].secondary].name).width*1.5, eval(weapons[skinslist[skinnum].secondary].name).height*1.5);
+          }
+          else {
+            image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125);
+          }
+
+          let fps = frameRate();
+          fill(255);
+          stroke(0);
+          textSize(15)
+          text(fps.toFixed(0)+"FPS", 35, height - 10);
+        
+          textSize(40)
+          if (weapons[currentgun].ammo >=10) {
+            text(weapons[currentgun].ammo, width-90, height-25)
+          }
+          else {
+            text("  " + weapons[currentgun].ammo, width-90, height-25)
+          }
+          textSize(20)
+          text("/" + weapons[currentgun].maxammo, width-50, height-25)
         }
       }
     }
   }
 
   if (dead == 1) {
-    nameField.position((width/2)-50, height/2+125)
+    nameField.position((100)-50, height/2-125)
     if (nameField.value()!="") {
       username = nameField.value()
     }
@@ -603,7 +632,7 @@ function draw(){
 
 
     image(titlepic, width/2, 175, 600, 200);
-    image(spawnpic, width/2, height/2-140, 400, 100);
+    image(spawnpic, width/2, height/2+150, 400, 100);
 
 
     // text('SPACE to spawn', width/2, height/2-140)
@@ -636,42 +665,12 @@ function draw(){
     pop()
 
 
-    image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height/2 +300);
-    image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height/2 +300);
+    image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height - 125);
+    image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height - 125);
 
   }
 
   image(cursor, mouseX, mouseY) 
-
-  let fps = frameRate();
-  fill(255);
-  stroke(0);
-  textSize(15)
-  text(fps.toFixed(0)+"FPS", 35, height - 10);
-
-  textSize(40)
-  if (weapons[currentgun].ammo >=10) {
-    text(weapons[currentgun].ammo, width-90, height-25)
-  }
-  else {
-    text("  " + weapons[currentgun].ammo, width-90, height-25)
-  }
-  textSize(20)
-  text("/" + weapons[currentgun].maxammo, width-50, height-25)
-
-  if (currentgun == skinslist[skinnum].primary) {
-    image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
-  }
-  else {
-    image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225);
-  }
-  if (currentgun == skinslist[skinnum].secondary) {
-    image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125, eval(weapons[skinslist[skinnum].secondary].name).width*1.5, eval(weapons[skinslist[skinnum].secondary].name).height*1.5);
-  }
-  else {
-    image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125);
-  }
-
 
 }
 
