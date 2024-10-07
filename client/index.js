@@ -409,7 +409,7 @@ function draw(){
   for (let b of localbullets) {
     b.ypos += b.bulletyvel*90
     b.xpos += b.bulletxvel*90
-    if (b.xpos<-1000 || b.xpos>1000|| b.ypos<-1000 || b.ypos>1000) {
+    if (b.xpos<-2000 || b.xpos>2000|| b.ypos<-2000 || b.ypos>2000) {
       localbullets.splice(b, 1);
     }
     b.bulletyvel*=0.9
