@@ -129,8 +129,8 @@ setInterval(function myFunction(){
         bullets.splice(index, 1);
       }
     }
-    b.bulletyvel*=0.9
-    b.bulletxvel*=0.9
+    b.bulletyvel*=b.dropoff
+    b.bulletxvel*=b.dropoff
     if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
       const index = bullets.indexOf(b);
       if (index > -1) {
