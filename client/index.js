@@ -413,8 +413,8 @@ function draw(){
     if (b.xpos<-2000 || b.xpos>2000|| b.ypos<-2000 || b.ypos>2000) {
       localbullets.splice(b, 1);
     }
-    b.bulletyvel*=0.9
-    b.bulletxvel*=0.9
+    b.bulletyvel*=b.dropoff
+    b.bulletxvel*=b.dropoff
     
     if (Math.sqrt((b.bulletyvel)*(b.bulletyvel)+(b.bulletxvel)*(b.bulletxvel))<=0.1) {
       localbullets.splice(b, 1);
