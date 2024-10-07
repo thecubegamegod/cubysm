@@ -50,18 +50,24 @@ let weapons =  [
   { name: "glock", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
   { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15},
-  { name: "shorty", simul:8, dropoff:1, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, bulletspd: 0.6 , xoffset:0, yoffset:15},
-  { name: "benelli", simul:6, dropoff:1, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
+  { name: "shorty", simul:8, dropoff:0.9, zoom:5, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, bulletspd: 0.6 , xoffset:0, yoffset:15},
+  { name: "benelli", simul:6, dropoff:0.9, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15},
+  { name: "glock", simul:1, dropoff:0.5, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
 ]
 
 let skinslist = [
-  {name: "cube", primary: 0, secondary: 2, speed:1.1 },
-  {name: "cat", primary: 4, secondary: 5, speed:0.8 },
-  {name: "bird", primary: 1, secondary: 3, speed:1.2 },
-  {name: "hamster", primary: 6, secondary: 2, speed:1.1 }
+  {name: "cube", fullname: "Cube", primary: 0, secondary: 2, speed:1.1 },
+  {name: "cat", fullname: "Stealth Cat", primary: 4, secondary: 5, speed:0.8 },
+  {name: "bird", fullname: "Piping Bird", primary: 1, secondary: 3, speed:1.2 },
+  {name: "hamster", fullname: "Stroke Hamster", primary: 6, secondary: 2, speed:1.1 }
 ]
 
 let delay = 999
+
+
+
+let zoomsmoothed = 3
+let smoothfactor = 1
 
 let bullets = []
 let localbullets = []
@@ -74,12 +80,14 @@ let bulletimage;
 
 let direction = "front"
 
-
 let username = "fellow"
 
 let weaponrotation = 0
 let suicide = 0
 let flipgun = 0
+
+
+// p5.disableFriendlyErrors = true;
 
 let death
 let cursor
@@ -342,13 +350,6 @@ function windowResized() {
 }
 
 function draw(){
-  if (nameField.value()!="") {
-    username = nameField.value()
-  }
-  else {
-    username = "fellow"
-  }
-
   let dead = 1
 
   if (id != 99 && positions.length>id) {
@@ -397,8 +398,16 @@ function draw(){
   myposy = constrain(myposy, -2000, 2000)
 
 
-  xoffset = (width/2)-myposx-(mouseX - windowWidth/2)/weapons[currentgun].zoom
-  yoffset = (height/2)-myposy-(mouseY - windowHeight/2)/weapons[currentgun].zoom
+  if (zoomsmoothed >weapons[currentgun].zoom) {
+    zoomsmoothed-=0.5
+  }
+  else if (zoomsmoothed <weapons[currentgun].zoom) {
+    zoomsmoothed+=0.5
+  }
+
+
+  xoffset = (width/2)-myposx-(mouseX - windowWidth/2)/zoomsmoothed
+  yoffset = (height/2)-myposy-(mouseY - windowHeight/2)/zoomsmoothed
   background('white');
 
 
@@ -435,7 +444,7 @@ function draw(){
     //   }, 100);
     // }
     // nameField.position(-300, 100)
-    nameField.position(25, 25)
+    nameField.position(-300, 100)
     push()
     translate(xoffset+myposx, yoffset+myposy)
     rotate(Math.atan2(mouseY-(height/2), mouseX-(width/2)))
@@ -571,8 +580,14 @@ function draw(){
   }
 
   if (dead == 1) {
+    nameField.position((width/2)-50, height/2+125)
+    if (nameField.value()!="") {
+      username = nameField.value()
+    }
+    else {
+      username = skinslist[skinnum].fullname
+    }
     noTint()
-    // nameField.position(width/2, height/2+225)
     fill('white')
     image(death,0,0,10000,10000)
     textAlign(CENTER);
