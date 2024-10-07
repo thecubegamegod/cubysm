@@ -39,6 +39,8 @@ let euhsfx
 let reloadtimerid
 
 let skin = "cube"
+let sub = ""
+let subnum = 0
 let skinnum = 0
 
 
@@ -56,15 +58,13 @@ let weapons =  [
 ]
 
 let skinslist = [
-  {name: "cube", fullname: "Cube", primary: 0, secondary: 2, speed:1.1 },
-  {name: "cat", fullname: "Stealth Cat", primary: 4, secondary: 5, speed:0.8 },
-  {name: "bird", fullname: "Piping Bird", primary: 1, secondary: 3, speed:1.2 },
-  {name: "hamster", fullname: "Stroke Hamster", primary: 6, secondary: 2, speed:1.1 }
+  {name: "cube", fullname: "Cube", primary: 0, secondary: 2, speed:1.1, sub: [""] },
+  {name: "cat", fullname: "Stealth Cat", primary: 4, secondary: 5, speed:0.8, sub: ["", "hal"] },
+  {name: "bird", fullname: "Piping Bird", primary: 1, secondary: 3, speed:1.2, sub: [""] },
+  {name: "hamster", fullname: "Stroke Hamster", primary: 6, secondary: 2, speed:1.1, sub: [""] }
 ]
 
 let delay = 999
-
-
 
 let zoomsmoothed = 3
 let smoothfactor = 1
@@ -151,6 +151,13 @@ function preload() {
   catback = loadImage('catfront5.png');
   catbackleft = loadImage('catfront4.png');
   catbackright = loadImage('catfront6.png');
+
+  cathalfrontleft = loadImage('cathalfront3.png');
+  cathalfrontright = loadImage('cathalfront1.png');
+  cathalfront = loadImage('cathalfront2.png');
+  cathalback = loadImage('cathalfront5.png');
+  cathalbackleft = loadImage('cathalfront4.png');
+  cathalbackright = loadImage('cathalfront6.png');
 
   birdfrontleft = loadImage('bill6.png');
   birdfrontright = loadImage('bill4.png');
@@ -268,14 +275,18 @@ function reload() {
 
 function keyPressed() {
   key = key.toLowerCase()
-  if ((key === 'p') && (positions[id].dead == 1)) {
-    if (skin=="cube"){
-      skin = "cat"
+
+  if ((key === 'o') && (positions[id].dead == 1)) {
+    if (subnum<skinslist[skinnum].sub.length -1) {
+      subnum += 1
     }
     else {
-      skin = "cube"
+      subnum = 0
     }
+    sub = skinslist[skinnum].sub[subnum]
   }
+
+
   if (reloading == 0) {
     if (key === 'r') {
       reload()
@@ -579,7 +590,7 @@ function draw(){
           textSize(13)
           text("❤️".repeat(Math.round(positions[id].hp/20)) + "🤍".repeat(5-(Math.round(positions[id].hp/20))), myposx+xoffset, myposy+yoffset-80)
           
-          image(eval(skin+direction), xoffset+myposx, yoffset+myposy);
+          image(eval(skin+sub+direction), xoffset+myposx, yoffset+myposy);
 
           if (currentgun == skinslist[skinnum].primary) {
             image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
@@ -645,7 +656,8 @@ function draw(){
     else if (angle < -100) { direction = "frontleft" }
     else { direction = "front" }
 
-    image(eval(skin+direction), width/2, height/2,200,200);
+    image(eval(skin+sub+direction), width/2, height/2,eval(skin+sub+direction).width*2,eval(skin+sub+direction).height*2);
+
 
     if ((width/2)+150<mouseX && (width/2)+250>mouseX && (height/2)-50<mouseY && mouseY<(height/2)+50 && !mouseIsPressed) {
       image(arrowgone, width/2+200, height/2);
