@@ -253,6 +253,7 @@ function reload() {
 
 
 function keyPressed() {
+  key = key.toLowerCase()
   if ((key === 'p') && (positions[id].dead == 1)) {
     if (skin=="cube"){
       skin = "cat"
