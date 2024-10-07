@@ -46,10 +46,10 @@ let skinnum = 0
 
 let weapons =  [
   { name: "ak", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "uzi", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:0, yoffset:13},
+  { name: "uzi", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:-10, yoffset:13},
   { name: "glock", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, bulletspd: 0.8, xoffset:0, yoffset:15},
-  { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:30, yoffset:20},
-  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:30, yoffset:15},
+  { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:0, yoffset:20},
+  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:-30, yoffset:15},
   { name: "shorty", simul:8, dropoff:0.9, zoom:5, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, bulletspd: 0.6 , xoffset:0, yoffset:15},
   { name: "benelli", simul:6, dropoff:0.9, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15},
   { name: "glock", simul:1, dropoff:0.5, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
@@ -92,6 +92,7 @@ let flipgun = 0
 let death
 let cursor
 let title
+let spawn
 let cursorgone
 
 let recoilx = 0
@@ -101,6 +102,7 @@ let currentgun = 0
 
 function preload() {
   titlepic = loadImage('title.png')
+  spawnpic = loadImage('spawn.png')
   img = loadImage('bg.png');
   cubefrontleft = loadImage('cubepixel2.png');
   bricks = loadImage('brick.png');
@@ -597,9 +599,10 @@ function draw(){
 
 
     image(titlepic, width/2, 200, 600, 200);
+    image(spawnpic, width/2, height/2-140, 400, 100);
 
 
-    text('SPACE to spawn', width/2, height/2-140)
+    // text('SPACE to spawn', width/2, height/2-140)
 
     imageMode(CENTER)
     direction = "front"
@@ -629,10 +632,8 @@ function draw(){
     pop()
 
 
-
     image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height/2 +300);
     image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height/2 +300);
-    
 
   }
 
@@ -653,6 +654,22 @@ function draw(){
   }
   textSize(20)
   text("/" + weapons[currentgun].maxammo, width-50, height-25)
+
+
+
+  if (currentgun == skinslist[skinnum].primary) {
+    image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
+  }
+  else {
+    image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225);
+  }
+  if (currentgun == skinslist[skinnum].secondary) {
+    image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125, eval(weapons[skinslist[skinnum].secondary].name).width*1.5, eval(weapons[skinslist[skinnum].secondary].name).height*1.5);
+  }
+  else {
+    image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125);
+  }
+
 }
 
 function mouseWheel(event) {
