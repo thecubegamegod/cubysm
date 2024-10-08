@@ -188,8 +188,10 @@ function respawnMe(){
 
 function setup() {
   skinnum = Math.floor(Math.random()*skinslist.length)
+  subnum = Math.floor(Math.random()*skinslist[skinnum].sub.length)
   currentgun=skinslist[skinnum].primary
   skin = skinslist[skinnum].name
+  sun = skinslist[skinnum].sub[subnum]
   aksfx = loadSound('ak.mp3');
   glocksfx = loadSound('glock.mp3');
   uzisfx = loadSound('uzi.mp3');
