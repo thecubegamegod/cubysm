@@ -29,6 +29,7 @@ let deaglesfx
 let snipersfx
 let hitsfx
 let uzisfx
+let knifesfx
 
 let nahsfx
 let ahsfx
@@ -47,21 +48,21 @@ let skinnum = 0
 // to get speed do 3600/RPM
 
 let weapons =  [
-  { name: "ak", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "uzi", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, bulletspd: 0.8, xoffset:-10, yoffset:13},
-  { name: "glock", simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, bulletspd: 0.8, xoffset:0, yoffset:15},
-  { name: "deagle", simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, bulletspd: 1, xoffset:0, yoffset:20},
-  { name: "sniper", simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, bulletspd: 2 , xoffset:-30, yoffset:15},
-  { name: "shorty", simul:8, dropoff:0.9, zoom:5, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, bulletspd: 0.6 , xoffset:0, yoffset:15},
-  { name: "benelli", simul:6, dropoff:0.9, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15},
-  { name: "glock", simul:1, dropoff:0.5, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, bulletspd: 0.8 , xoffset:0, yoffset:15}
+  { name: "ak", hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "uzi", hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
+  { name: "glock", hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
+  { name: "deagle", hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
+  { name: "sniper", hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 2 , xoffset:-30, yoffset:15},
+  { name: "shorty", hidebullet:false, simul:8, dropoff:0.9, zoom:5, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.6 , xoffset:0, yoffset:15},
+  { name: "benelli", hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
+  { name: "knife", hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: false, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7}
 ]
 
 let skinslist = [
-  {name: "cube", fullname: "Cube", primary: 0, secondary: 2, speed:1.1, sub: [""] },
-  {name: "cat", fullname: "Stealth Cat", primary: 4, secondary: 5, speed:0.8, sub: ["", "hal"] },
-  {name: "bird", fullname: "Piping Bird", primary: 1, secondary: 3, speed:1.2, sub: [""] },
-  {name: "hamster", fullname: "Stroke Hamster", primary: 6, secondary: 2, speed:1.1, sub: [""] }
+  {name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 7, speed:1.1, sub: [""] },
+  {name: "cat", fullname: "Stealth Cat", primary: 4, secondary: 5, tertiary: 7, speed:0.8, sub: ["", "hal"] },
+  {name: "bird", fullname: "Piping Bird", primary: 1, secondary: 3, tertiary: 7, speed:1.2, sub: [""] },
+  {name: "hamster", fullname: "Stroke Hamster", primary: 6, secondary: 2, tertiary: 7, speed:1.1, sub: [""] }
 ]
 
 let delay = 999
@@ -134,6 +135,10 @@ function preload() {
   glockgone = loadImage('weapons/glockgone.png')
   shorty = loadImage('weapons/shorty.png')
   shortygone = loadImage('weapons/shortygone.png')
+
+  knife = loadImage('weapons/knife.png')
+  knifegone = loadImage('weapons/knife.png')
+
   benelli = loadImage('weapons/benelli.png')
   benelligone = loadImage('weapons/benelli.png')
 
@@ -144,6 +149,7 @@ function preload() {
   deagletile = loadImage('weapons/tiles/deagletile.png')
   uzitile = loadImage('weapons/tiles/uzitile.png')
   benellitile = loadImage('weapons/tiles/benellitile.png')
+  knifetile = loadImage('weapons/tiles/knifetile.png')
 
   catfrontleft = loadImage('catfront3.png');
   catfrontright = loadImage('catfront1.png');
@@ -199,6 +205,7 @@ function setup() {
   snipersfx = loadSound('sniper.mp3');
   shortysfx = loadSound('shorty.mp3');
   benellisfx = loadSound('shorty.mp3');
+  knifesfx = loadSound('knife.mp3');
 
   hitsfx = loadSound('hit.mp3');
   
@@ -315,6 +322,11 @@ function keyPressed() {
       clearTimeout(reloadtimerid)
       reloading = 0
     }
+    if (keyCode == 51) {
+      currentgun=skinslist[skinnum].tertiary
+      clearTimeout(reloadtimerid)
+      reloading = 0
+    }
   }
 }
 
@@ -341,7 +353,7 @@ function shoot() {
           // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
           // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
 
-          newBullet = { dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
+          newBullet = { hidebullet: weapons[currentgun].hidebullet, dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
           socket.emit("bullet", newBullet);
           localbullets.push(newBullet)
         }
@@ -447,13 +459,17 @@ function draw(){
     if (Math.sqrt((b.bulletyvel)*(b.bulletyvel)+(b.bulletxvel)*(b.bulletxvel))<=0.1) {
       localbullets.splice(b, 1);
     }
-    image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
+    if (b.hidebullet == false) {
+      image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
+    }
   }
 
   for (let b of bullets) {
     imageMode(CENTER)
     if (b.id!=id) {
-      image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
+      if (b.hidebullet == false) {
+        image(bulletimage, b.xpos + xoffset, b.ypos+yoffset)
+      }
     }
   }
   if (dead == 0) {
@@ -487,7 +503,7 @@ function draw(){
         image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       }
       else {
-        translate((weapons[currentgun].spriterecoil/delay)*30, 0)
+        translate((weapons[currentgun].spritehorizrecoil/delay)*30, 0)
         rotate(weapons[currentgun].spriterecoil/delay)
         image(eval(weapons[currentgun].name+"gone"), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       }  
@@ -595,16 +611,23 @@ function draw(){
           image(eval(skin+sub+direction), xoffset+myposx, yoffset+myposy);
 
           if (currentgun == skinslist[skinnum].primary) {
-            image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
+            image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-325, eval(weapons[skinslist[skinnum].primary].name).width*1.5, eval(weapons[skinslist[skinnum].primary].name).height*1.5);
           }
           else {
-            image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-225);
+            image(eval(weapons[skinslist[skinnum].primary].name), width-150, height-325);
           }
           if (currentgun == skinslist[skinnum].secondary) {
-            image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125, eval(weapons[skinslist[skinnum].secondary].name).width*1.5, eval(weapons[skinslist[skinnum].secondary].name).height*1.5);
+            image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-225, eval(weapons[skinslist[skinnum].secondary].name).width*1.5, eval(weapons[skinslist[skinnum].secondary].name).height*1.5);
           }
           else {
-            image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-125);
+            image(eval(weapons[skinslist[skinnum].secondary].name), width-150, height-225);
+          }
+
+          if (currentgun == skinslist[skinnum].tertiary) {
+            image(eval(weapons[skinslist[skinnum].tertiary].name), width-150, height-125, eval(weapons[skinslist[skinnum].tertiary].name).width*1.5, eval(weapons[skinslist[skinnum].tertiary].name).height*1.5);
+          }
+          else {
+            image(eval(weapons[skinslist[skinnum].tertiary].name), width-150, height-125);
           }
 
           let fps = frameRate();
@@ -614,14 +637,21 @@ function draw(){
           text(fps.toFixed(0)+"FPS", 35, height - 10);
         
           textSize(40)
-          if (weapons[currentgun].ammo >=10) {
-            text(weapons[currentgun].ammo, width-90, height-25)
+          if (weapons[currentgun].maxammo >= 999) {
+            text("  ∞", width-90, height-25)
+            textSize(20)
+            text("/∞", width-50, height-25)
           }
           else {
-            text("  " + weapons[currentgun].ammo, width-90, height-25)
+            if (weapons[currentgun].ammo >=10) {
+              text(weapons[currentgun].ammo, width-90, height-25)
+            }
+            else {
+              text("  " + weapons[currentgun].ammo, width-90, height-25)
+            }
+            textSize(20)
+            text("/" + weapons[currentgun].maxammo, width-50, height-25)
           }
-          textSize(20)
-          text("/" + weapons[currentgun].maxammo, width-50, height-25)
         }
       }
     }
@@ -679,8 +709,9 @@ function draw(){
     pop()
 
 
-    image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height - 125);
-    image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height - 125);
+    image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-208, height - 125);
+    image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2), height - 125);
+    image(eval(weapons[skinslist[skinnum].tertiary].name+"tile"), (width/2)+208, height - 125);
 
   }
 
@@ -689,15 +720,34 @@ function draw(){
 }
 
 function mouseWheel(event) {
-  if (currentgun == skinslist[skinnum].primary) {
-    currentgun = skinslist[skinnum].secondary
+  if (event.delta > 0) {
+    if (currentgun == skinslist[skinnum].primary) {
+      currentgun = skinslist[skinnum].secondary
+    }
+    else if (currentgun == skinslist[skinnum].secondary) {
+      currentgun = skinslist[skinnum].tertiary
+    }
+    else {
+      currentgun = skinslist[skinnum].primary
+    }
+    clearTimeout(reloadtimerid)
+    reloading = 0
+    return false;
   }
   else {
-    currentgun = skinslist[skinnum].primary
+    if (currentgun == skinslist[skinnum].primary) {
+      currentgun = skinslist[skinnum].tertiary
+    }
+    else if (currentgun == skinslist[skinnum].tertiary) {
+      currentgun = skinslist[skinnum].secondary
+    }
+    else {
+      currentgun = skinslist[skinnum].primary
+    }
+    clearTimeout(reloadtimerid)
+    reloading = 0
+    return false;
   }
-  clearTimeout(reloadtimerid)
-  reloading = 0
-  return false;
 }
 
 setInterval(function myFunction(){
