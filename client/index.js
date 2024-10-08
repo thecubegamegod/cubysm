@@ -568,7 +568,7 @@ function draw(){
           textSize(15)
           text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel+xoffset, positions[i].yvel+yoffset-60)
           textSize(13)
-          text("❤️".repeat(Math.round(positions[i].hp/20)) + "🤍".repeat(5-(Math.round(positions[i].hp/20))), positions[i].xvel+xoffset, positions[i].yvel+yoffset-80)
+          text("❤️".repeat(Math.round(positions[i].hp/20)) + "💜".repeat(5-(Math.round(positions[i].hp/20))), positions[i].xvel+xoffset, positions[i].yvel+yoffset-80)
         }
         fill('white')
         
@@ -590,7 +590,7 @@ function draw(){
           textSize(15)
           text(username + " | 🔥" + String(positions[id].streak), myposx+xoffset, myposy+yoffset-60)
           textSize(13)
-          text("❤️".repeat(Math.round(positions[id].hp/20)) + "🤍".repeat(5-(Math.round(positions[id].hp/20))), myposx+xoffset, myposy+yoffset-80)
+          text("❤️".repeat(Math.round(positions[id].hp/20)) + "💜".repeat(5-(Math.round(positions[id].hp/20))), myposx+xoffset, myposy+yoffset-80)
           
           image(eval(skin+sub+direction), xoffset+myposx, yoffset+myposy);
 
