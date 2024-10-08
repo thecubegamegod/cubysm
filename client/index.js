@@ -53,16 +53,16 @@ let weapons =  [
   { name: "glock", hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
   { name: "sniper", hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 2 , xoffset:-30, yoffset:15},
-  { name: "shorty", hidebullet:false, simul:8, dropoff:0.9, zoom:5, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.6 , xoffset:0, yoffset:15},
+  { name: "shorty", hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.6 , xoffset:0, yoffset:15},
   { name: "benelli", hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
   { name: "knife", hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: false, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7}
 ]
 
 let skinslist = [
   {name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 7, speed:1.1, sub: [""] },
-  {name: "cat", fullname: "Stealth Cat", primary: 4, secondary: 5, tertiary: 7, speed:0.8, sub: ["", "hal"] },
-  {name: "bird", fullname: "Piping Bird", primary: 1, secondary: 3, tertiary: 7, speed:1.2, sub: [""] },
-  {name: "hamster", fullname: "Stroke Hamster", primary: 6, secondary: 2, tertiary: 7, speed:1.1, sub: [""] }
+  {name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed:0.8, sub: ["", "hal"] },
+  {name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 7, speed:1.2, sub: [""] },
+  {name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed:1.1, sub: [""] }
 ]
 
 let delay = 999
@@ -125,7 +125,7 @@ function preload() {
   ak = loadImage('weapons/ak.png')
   akgone = loadImage('weapons/ak.png')
   sniper = loadImage('weapons/sniper.png')
-  snipergone = loadImage('weapons/sniper.png')
+  snipergone = loadImage('weapons/snipergone.png')
   deagle = loadImage('weapons/deagle.png')
   deaglegone = loadImage('weapons/deaglegone.png')
   uzi = loadImage('weapons/uzi.png')
@@ -269,12 +269,12 @@ function reload() {
     if (weapons[currentgun].ammo<weapons[currentgun].maxammo) {
       reloading = 1
       reloadtimerid = setTimeout(function myFunction(){
-        if (weapons[currentgun].ammo==0) {
+        // if (weapons[currentgun].ammo==0) {
           weapons[currentgun].ammo = weapons[currentgun].maxammo
-        }
-        else {
-          weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
-        }
+        // }
+        // else {
+        //   weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
+        // }
         reloading = 0
       }, weapons[currentgun].reloadspeed*1000);
     }
