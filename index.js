@@ -60,6 +60,8 @@ io.on("connection", function(socket) {
   socket.on("bullet", function(arg) {
     bullets.push(arg)
   });
+
+
 });
 
 
@@ -78,6 +80,7 @@ setInterval(function myFunction(){
 //MOVING AND COLLIDING BULLETS
     b.ypos += b.bulletyvel*90
     b.xpos += b.bulletxvel*90
+    
     for (i=0; i<pos.length; i++) {
       if (b.id != pos[i].id) {
         if ((b.xpos < pos[i].xvel + 50) && (b.xpos > pos[i].xvel - 50) && (b.ypos < pos[i].yvel + 50) && (b.ypos > pos[i].yvel - 50)) {
