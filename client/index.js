@@ -709,6 +709,10 @@ function draw(){
     pop()
 
 
+
+    // image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height - 125);
+    // image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height - 125);
+
     image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-208, height - 125);
     image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2), height - 125);
     image(eval(weapons[skinslist[skinnum].tertiary].name+"tile"), (width/2)+208, height - 125);

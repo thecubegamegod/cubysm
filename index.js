@@ -42,6 +42,7 @@ io.on("connection", function(socket) {
     pos[arg].dead = 1
     pos[arg].deaths += 1
     pos[arg].streak = 0
+    io.sockets.emit("playdatgunsfx", "euhsfx")
   });
 
 
