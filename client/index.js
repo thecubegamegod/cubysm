@@ -34,26 +34,26 @@ let knifesfx
 
 
 let map = [
-  ["X", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+  ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", "X", "X", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", "X", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", "X", "X", "X", "X", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", "X", "X", "X", " ", " ", " ", " ", " ", "X", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", "X", "X", "X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
 ]
 
 
@@ -81,7 +81,7 @@ let weapons =  [
   { name: "sniper", hitscan:true, laser:true, hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:-30, yoffset:20},
   { name: "shorty", hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 50, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.6 , xoffset:0, yoffset:15},
   { name: "benelli", hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 30, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
-  { name: "knife", hitscan:false, laser:false, hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: false, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7}
+  { name: "knife", hitscan:false, laser:false, hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7}
 ]
 
 let skinslist = [
@@ -461,15 +461,39 @@ function draw() {
 
 
 
-  for (i = 0; i < 15; i++) {
-    for (j = 0; j < 15; j++) {
+  for (i = 0; i < 20; i++) {
+    for (j = 0; j < 20; j++) {
       if (map[j][i] == "X") {
-        console.log("map: "+ String((j * 100) - 2000))
-        console.log("player: "+myposy)
+        // console.log("map: "+ String((i * 100) - 2000))
+        // console.log("player: "+myposx)
 
-        if ((i * 100 - 2000 >= myposx+200) && ((j * 100 - 2000 >= myposy) && (j * 100 -2000 <= myposy+100)) && xvel < 0) {
-          xvel = 0
+        if ((myposx+xvel>=(i * 100) - 2000) && (myposx+xvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= myposy) && ((j * 100) -2000 +100 >= myposy) && xvel != 0 ) {
+          if (myposx+xvel>=(i * 100) - 2000 + 50) {
+            if (xvel<0) {
+              xvel = 0
+            }
+          }
+          else{
+            if (xvel>0) {
+              xvel = 0
+            }
+          }
         }
+
+        if ((myposy+yvel>=(j * 100) - 2000) && (myposy+yvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= myposx) && ((i * 100) -2000 +100 >= myposx) && yvel != 0 ) {
+          if (myposy+yvel>=(j * 100) - 2000 + 50) {
+            if (yvel<0) {
+              yvel = 0
+            }
+          }
+          else{
+            if (yvel>0) {
+              yvel = 0
+            }
+          }
+        }
+
+
         // if ((i * 100 - 2000 +200  <= myposx - 100) && ((j * 100 - 2000 < myposy + 50) && (j * 100 -2000 > myposy - 50)) && xvel > 0) {
         //   xvel = 0
         // }
@@ -502,17 +526,62 @@ function draw() {
   image(img, width / 2, height / 2, width + 4, height + 4);
   image(img, xoffset, yoffset, 4000, 4000);
 
-  for (i = 0; i < 15; i++) {
-    for (j = 0; j < 15; j++) {
-      if (map[j][i] == "X") {
-        rect((i * 100) +xoffset -2000, (j * 100) + yoffset-2000, 100, 100)
-      }
-    }
-  }
-
-
 
   for (let b of localbullets) {
+
+
+    for (i = 0; i < 20; i++) {
+      for (j = 0; j < 20; j++) {
+        if (map[j][i] == "X") {
+          // console.log("map: "+ String((i * 100) - 2000))
+          // console.log("player: "+myposx)
+  
+          if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
+            if (b.xpos+b.bulletxvel>=(i * 100) - 2000 + 50) {
+              if (b.bulletxvel<0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+            else{
+              if (b.bulletxvel>0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+          }
+  
+          if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
+            if (b.ypos+b.bulletyvel>=(j * 100) - 2000 + 50) {
+              if (b.bulletyvel<0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+            else{
+              if (b.bulletyvel>0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+          }
+  
+  
+        }
+      }
+    }
+
+
+
+
     b.ypos += b.bulletyvel * 90
     b.xpos += b.bulletxvel * 90
     if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
@@ -686,6 +755,19 @@ function draw() {
 
           image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
 
+
+          for (i = 0; i < 20; i++) {
+            for (j = 0; j < 20; j++) {
+              if (map[j][i] == "X") {
+                strokeWeight(3)
+                fill('#da0063')
+                stroke('#da0063')
+                rect((i * 100) +xoffset -2000, (j * 100) + yoffset-2000, 100, 100)
+              }
+            }
+          }
+
+
           if (currentgun == skinslist[skinnum].primary) {
             image(eval(weapons[skinslist[skinnum].primary].name), width - 150, height - 325, eval(weapons[skinslist[skinnum].primary].name).width * 1.5, eval(weapons[skinslist[skinnum].primary].name).height * 1.5);
           }
@@ -705,6 +787,9 @@ function draw() {
           else {
             image(eval(weapons[skinslist[skinnum].tertiary].name), width - 150, height - 125);
           }
+
+
+          
 
           let fps = frameRate();
           fill(255);

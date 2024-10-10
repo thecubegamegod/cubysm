@@ -22,6 +22,29 @@ let bullets = []
 
 let timesUpdated = 0
 
+let map = [
+  ["X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X", "X"],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", "X", "X", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", "X", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", "X", "X", "X", "X", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", "X", "X", "X", " ", " ", " ", " ", " ", "X", "X", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", "X", "X", "X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", "X", " ", " ", "X", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+]
+
 
 server.listen(port, function() { console.log("🟢 " + port); });
 
@@ -77,6 +100,60 @@ setInterval(function myFunction(){
   io.sockets.emit("updatebullets", bullets);
   
   for (let b of bullets) {
+
+    for (i = 0; i < 20; i++) {
+      for (j = 0; j < 20; j++) {
+        if (map[j][i] == "X") {
+          // console.log("map: "+ String((i * 100) - 2000))
+          // console.log("player: "+myposx)
+  
+          if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
+            if (b.xpos+b.bulletxvel>=(i * 100) - 2000 + 50) {
+              if (b.bulletxvel<0) {
+                const index = bullets.indexOf(b);
+                if (index > -1) {
+                  console.log(bullets)
+                  bullets.splice(index, 1);
+                  console.log(bullets)
+                }
+              }
+            }
+            else{
+              if (b.bulletxvel>0) {
+                const index = bullets.indexOf(b);
+                if (index > -1) {
+                  bullets.splice(index, 1);
+                }
+              }
+            }
+          }
+  
+          if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
+            if (b.ypos+b.bulletyvel>=(j * 100) - 2000 + 50) {
+              if (b.bulletyvel<0) {
+                const index = bullets.indexOf(b);
+                if (index > -1) {
+                  bullets.splice(index, 1);
+                }
+              }
+            }
+            else{
+              if (b.bulletyvel>0) {
+                const index = bullets.indexOf(b);
+                if (index > -1) {
+                  bullets.splice(index, 1);
+                }
+              }
+            }
+          }
+  
+  
+        }
+      }
+    }
+
+
+
 //MOVING AND COLLIDING BULLETS
     b.ypos += b.bulletyvel*90
     b.xpos += b.bulletxvel*90
@@ -141,6 +218,9 @@ setInterval(function myFunction(){
         bullets.splice(index, 1);
       }
     }
+
+    
+
   }
   
 }, 1000/60);
