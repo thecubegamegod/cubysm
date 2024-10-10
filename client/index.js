@@ -34,7 +34,7 @@ let knifesfx
 
 
 let map = [
-  ["X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
+  ["X", " ", " ", "X", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
   [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "],
@@ -457,6 +457,25 @@ function draw() {
   yvel += recoily
   recoily = 0
 
+
+
+  for (i = 0; i < 15; i++) {
+    for (j = 0; j < 15; j++) {
+      if (map[j][i] == "X") {
+        console.log("map: "+ String((j * 100) - 2000))
+        console.log("player: "+myposy)
+
+        if ((i * 100 - 2000 >= myposx+200) && ((j * 100 - 2000 >= myposy) && (j * 100 -2000 <= myposy+100)) && xvel < 0) {
+          xvel = 0
+        }
+        // if ((i * 100 - 2000 +200  <= myposx - 100) && ((j * 100 - 2000 < myposy + 50) && (j * 100 -2000 > myposy - 50)) && xvel > 0) {
+        //   xvel = 0
+        // }
+      }
+    }
+  }
+  
+
   myposx += xvel * skinslist[skinnum].speed
   myposy += yvel * skinslist[skinnum].speed
   myposx = constrain(myposx, -2000, 2000)
@@ -476,6 +495,7 @@ function draw() {
   background('white');
 
 
+
   noStroke()
   image(img, width / 2, height / 2, width + 4, height + 4);
   image(img, xoffset, yoffset, 4000, 4000);
@@ -483,10 +503,11 @@ function draw() {
   for (i = 0; i < 15; i++) {
     for (j = 0; j < 15; j++) {
       if (map[j][i] == "X") {
-        rect(i * 100, j * 100, 100, 100)
+        rect((i * 100) +xoffset -2000, (j * 100) + yoffset-2000, 100, 100)
       }
     }
   }
+
 
 
   for (let b of localbullets) {
