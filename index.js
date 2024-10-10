@@ -112,9 +112,7 @@ setInterval(function myFunction(){
               if (b.bulletxvel<0) {
                 const index = bullets.indexOf(b);
                 if (index > -1) {
-                  console.log(bullets)
                   bullets.splice(index, 1);
-                  console.log(bullets)
                 }
               }
             }
