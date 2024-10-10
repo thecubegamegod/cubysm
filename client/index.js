@@ -192,6 +192,14 @@ function respawnMe(){
   }
 }
 
+
+function changeTitle(newTitle) {
+  if (document.title != newTitle) {
+    document.title = newTitle;
+  }
+}
+
+
 function setup() {
   skinnum = Math.floor(Math.random()*skinslist.length)
   subnum = Math.floor(Math.random()*skinslist[skinnum].sub.length)
@@ -473,6 +481,7 @@ function draw(){
     }
   }
   if (dead == 0) {
+    changeTitle("CUBYSM")
     // if (positions[id].flash == 1) {
     //   setTimeout(function myFunction(){
     //     socket.volatile.emit("noflash", { id: id});
@@ -658,6 +667,7 @@ function draw(){
   }
 
   if (dead == 1) {
+    changeTitle("CUBYSM 💀")
     nameField.position((100)-50, height/2-125)
     if (nameField.value()!="") {
       username = nameField.value()
