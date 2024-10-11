@@ -105,16 +105,16 @@ setInterval(function myFunction(){
           // console.log("player: "+myposx)
   
           if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
-            const index = localbullets.indexOf(b);
+            const index = bullets.indexOf(b);
             if (index > -1) {
-              localbullets.splice(index, 1);
+              bullets.splice(index, 1);
             }
           }
   
           if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
-            const index = localbullets.indexOf(b);
+            const index = bullets.indexOf(b);
             if (index > -1) {
-              localbullets.splice(index, 1);
+              bullets.splice(index, 1);
             }
           }
   
