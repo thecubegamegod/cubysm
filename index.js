@@ -96,9 +96,6 @@ setInterval(function myFunction(){
     }
   }
 
-  io.sockets.emit("updatepositions", pos);
-  io.sockets.emit("updatebullets", bullets);
-  
   for (let b of bullets) {
 
     // for (i = 0; i < 20; i++) {
@@ -218,9 +215,10 @@ setInterval(function myFunction(){
       }
     }
 
-    
-
   }
+
+  io.sockets.emit("updatepositions", pos);
+  io.sockets.emit("updatebullets", bullets);
   
 }, 1000/60);
 
