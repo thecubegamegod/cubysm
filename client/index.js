@@ -330,7 +330,7 @@ function keyPressed() {
   }
 
   if (key == "z") {
-    socket.emit("addme", id+50);
+    console.log(positions)
   }
 
   if (reloading == 0) {
@@ -461,40 +461,40 @@ function draw() {
 
 
 
-  // for (i = 0; i < 20; i++) {
-  //   for (j = 0; j < 20; j++) {
-  //     if (map[j][i] == "X") {
+  for (i = 0; i < 20; i++) {
+    for (j = 0; j < 20; j++) {
+      if (map[j][i] == "X") {
 
-  //       if ((myposx+xvel>=(i * 100) - 2000) && (myposx+xvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= myposy) && ((j * 100) -2000 +100 >= myposy) && xvel != 0 ) {
-  //         if (myposx+xvel>=(i * 100) - 2000 + 50) {
-  //           if (xvel<0) {
-  //             xvel = 0
-  //           }
-  //         }
-  //         else{
-  //           if (xvel>0) {
-  //             xvel = 0
-  //           }
-  //         }
-  //       }
+        if ((myposx+xvel>=(i * 100) - 2000) && (myposx+xvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= myposy) && ((j * 100) -2000 +100 >= myposy) && xvel != 0 ) {
+          if (myposx+xvel>=(i * 100) - 2000 + 50) {
+            if (xvel<0) {
+              xvel = 0
+            }
+          }
+          else{
+            if (xvel>0) {
+              xvel = 0
+            }
+          }
+        }
 
-  //       if ((myposy+yvel>=(j * 100) - 2000) && (myposy+yvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= myposx) && ((i * 100) -2000 +100 >= myposx) && yvel != 0 ) {
-  //         if (myposy+yvel>=(j * 100) - 2000 + 50) {
-  //           if (yvel<0) {
-  //             yvel = 0
-  //           }
-  //         }
-  //         else{
-  //           if (yvel>0) {
-  //             yvel = 0
-  //           }
-  //         }
-  //       }
+        if ((myposy+yvel>=(j * 100) - 2000) && (myposy+yvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= myposx) && ((i * 100) -2000 +100 >= myposx) && yvel != 0 ) {
+          if (myposy+yvel>=(j * 100) - 2000 + 50) {
+            if (yvel<0) {
+              yvel = 0
+            }
+          }
+          else{
+            if (yvel>0) {
+              yvel = 0
+            }
+          }
+        }
 
 
-  //     }
-  //   }
-  // }
+      }
+    }
+  }
   
 
   myposx += xvel * skinslist[skinnum].speed
@@ -525,52 +525,52 @@ function draw() {
   for (let b of localbullets) {
 
 
-    // for (i = 0; i < 20; i++) {
-    //   for (j = 0; j < 20; j++) {
-    //     if (map[j][i] == "X") {
+    for (i = 0; i < 20; i++) {
+      for (j = 0; j < 20; j++) {
+        if (map[j][i] == "X") {
   
-    //       if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
-    //         if (b.xpos+b.bulletxvel>=(i * 100) - 2000 + 50) {
-    //           if (b.bulletxvel<0) {
-    //             const index = localbullets.indexOf(b);
-    //             if (index > -1) {
-    //               localbullets.splice(index, 1);
-    //             }
-    //           }
-    //         }
-    //         else{
-    //           if (b.bulletxvel>0) {
-    //             const index = localbullets.indexOf(b);
-    //             if (index > -1) {
-    //               localbullets.splice(index, 1);
-    //             }
-    //           }
-    //         }
-    //       }
+          if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
+            if (b.xpos+b.bulletxvel>=(i * 100) - 2000 + 50) {
+              if (b.bulletxvel<0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+            else{
+              if (b.bulletxvel>0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+          }
   
-    //       if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
-    //         if (b.ypos+b.bulletyvel>=(j * 100) - 2000 + 50) {
-    //           if (b.bulletyvel<0) {
-    //             const index = localbullets.indexOf(b);
-    //             if (index > -1) {
-    //               localbullets.splice(index, 1);
-    //             }
-    //           }
-    //         }
-    //         else{
-    //           if (b.bulletyvel>0) {
-    //             const index = localbullets.indexOf(b);
-    //             if (index > -1) {
-    //               localbullets.splice(index, 1);
-    //             }
-    //           }
-    //         }
-    //       }
+          if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
+            if (b.ypos+b.bulletyvel>=(j * 100) - 2000 + 50) {
+              if (b.bulletyvel<0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+            else{
+              if (b.bulletyvel>0) {
+                const index = localbullets.indexOf(b);
+                if (index > -1) {
+                  localbullets.splice(index, 1);
+                }
+              }
+            }
+          }
   
   
-    //     }
-    //   }
-    // }
+        }
+      }
+    }
 
 
 
