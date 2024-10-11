@@ -749,13 +749,13 @@ function draw() {
           image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
 
 
-          for (i = 0; i < 20; i++) {
-            for (j = 0; j < 20; j++) {
-              if (map[j][i] == "X") {
+          for (k = 0; k < 20; k++) {
+            for (l = 0; l < 20; l++) {
+              if (map[l][k] == "X") {
                 strokeWeight(3)
                 fill('#da0063')
                 stroke('#da0063')
-                rect((i * 100) +xoffset -2000, (j * 100) + yoffset-2000, 100, 100)
+                rect((k * 100) +xoffset -2000, (l * 100) + yoffset-2000, 100, 100)
               }
             }
           }
