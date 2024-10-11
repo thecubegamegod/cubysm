@@ -170,8 +170,8 @@ setInterval(function myFunction(){
       }
     }
 
-    for (i = 0; i < 20; i++) {
-      for (j = 0; j < 20; j++) {
+    for (i = 0; i < 40; i++) {
+      for (j = 0; j < 40; j++) {
         if (map[j][i] == "X") {
           // console.log("map: "+ String((i * 100) - 2000))
           // console.log("player: "+myposx)

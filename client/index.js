@@ -481,8 +481,8 @@ function draw() {
 
 
 
-  for (i = 0; i < 20; i++) {
-    for (j = 0; j < 20; j++) {
+  for (i = 0; i < 40; i++) {
+    for (j = 0; j < 40; j++) {
       if (map[j][i] == "X") {
 
         if ((myposx+xvel>=(i * 100) - 2000) && (myposx+xvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= myposy) && ((j * 100) -2000 +100 >= myposy) && xvel != 0 ) {
@@ -550,8 +550,8 @@ function draw() {
     b.xpos += b.bulletxvel * 90
 
 
-    for (i = 0; i < 20; i++) {
-      for (j = 0; j < 20; j++) {
+    for (i = 0; i < 40; i++) {
+      for (j = 0; j < 40; j++) {
         if (map[j][i] == "X") {
   
           if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
@@ -747,8 +747,8 @@ function draw() {
           image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
 
 
-          for (k = 0; k < 20; k++) {
-            for (l = 0; l < 20; l++) {
+          for (k = 0; k < 40; k++) {
+            for (l = 0; l < 40; l++) {
               if (map[l][k] == "X") {
                 strokeWeight(3)
                 fill('#da0063')
