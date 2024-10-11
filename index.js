@@ -98,32 +98,6 @@ setInterval(function myFunction(){
 
   for (let b of bullets) {
 
-    for (i = 0; i < 20; i++) {
-      for (j = 0; j < 20; j++) {
-        if (map[j][i] == "X") {
-          // console.log("map: "+ String((i * 100) - 2000))
-          // console.log("player: "+myposx)
-  
-          if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
-            const index = bullets.indexOf(b);
-            if (index > -1) {
-              bullets.splice(index, 1);
-            }
-          }
-  
-          if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
-            const index = bullets.indexOf(b);
-            if (index > -1) {
-              bullets.splice(index, 1);
-            }
-          }
-  
-  
-        }
-      }
-    }
-
-
 
 //MOVING AND COLLIDING BULLETS
     b.ypos += b.bulletyvel*90
@@ -175,6 +149,34 @@ setInterval(function myFunction(){
         }
       }
     }
+
+    for (i = 0; i < 20; i++) {
+      for (j = 0; j < 20; j++) {
+        if (map[j][i] == "X") {
+          // console.log("map: "+ String((i * 100) - 2000))
+          // console.log("player: "+myposx)
+  
+          if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
+            const index = bullets.indexOf(b);
+            if (index > -1) {
+              bullets.splice(index, 1);
+            }
+          }
+  
+          if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
+            const index = bullets.indexOf(b);
+            if (index > -1) {
+              bullets.splice(index, 1);
+            }
+          }
+  
+  
+        }
+      }
+    }
+
+
+    
     if (b.xpos<-2000 || b.xpos>2000|| b.ypos<-2000 || b.ypos>2000) {
       const index = bullets.indexOf(b);
       if (index > -1) {

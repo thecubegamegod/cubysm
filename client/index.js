@@ -525,6 +525,11 @@ function draw() {
   for (let b of localbullets) {
 
 
+
+    b.ypos += b.bulletyvel * 90
+    b.xpos += b.bulletxvel * 90
+
+
     for (i = 0; i < 20; i++) {
       for (j = 0; j < 20; j++) {
         if (map[j][i] == "X") {
@@ -550,9 +555,6 @@ function draw() {
 
 
 
-
-    b.ypos += b.bulletyvel * 90
-    b.xpos += b.bulletxvel * 90
     if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
       localbullets.splice(b, 1);
     }
