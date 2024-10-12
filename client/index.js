@@ -707,7 +707,7 @@ function draw() {
           if (positions[i].flash > 0) {
             tint(218, 0, 99);
           }
-          image(eval(positions[i].skin + positions[i].dir), positions[i].xvel + xoffset, positions[i].yvel + yoffset)
+          image(eval(positions[i].skin + positions[i].sub + positions[i].dir), positions[i].xvel + xoffset, positions[i].yvel + yoffset)
           noTint()
           if (dead == 0) {
             if (positions[id].flash > 0) {
@@ -909,7 +909,7 @@ function mouseWheel(event) {
 }
 
 setInterval(function myFunction() {
-  socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide: suicide, currentgun: currentgun, skin: skin });
+  socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide: suicide, currentgun: currentgun, skin: skin, sub:sub });
   if (delay < weapons[currentgun].speed) {
     delay += 1
     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
