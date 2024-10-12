@@ -227,11 +227,30 @@ function preload() {
 
 
 function respawnMe() {
+  let stuck = true
   delay = 999
   socket.emit("addme", id);
   currentgun = skinslist[skinnum].primary
-  myposx = Math.floor(Math.random() * (2000 + 2000)) + -2000;
-  myposy = Math.floor(Math.random() * (2000 + 2000)) + -2000;
+  
+  while (stuck == true) {
+    stuck = false
+    myposx = Math.floor(Math.random() * (2000 + 2000)) + -2000;
+    myposy = Math.floor(Math.random() * (2000 + 2000)) + -2000;
+    for (i = 0; i < 40; i++) {
+      for (j = 0; j < 40; j++) {
+        if (map[j][i] == 1) {
+          if ((myposx>=(i * 100) - 2000) && (myposx<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= myposy) && ((j * 100) -2000 +100 >= myposy)) {
+            stuck = true
+          }
+  
+          if ((myposy>=(j * 100) - 2000) && (myposy<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= myposx) && ((i * 100) -2000 +100 >= myposx)) {
+            stuck = true
+          }
+        }
+      }
+    }
+  }
+
   for (i = 0; i < weapons.length; i++) {
     weapons[i].ammo = weapons[i].maxammo
   }
