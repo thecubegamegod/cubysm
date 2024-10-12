@@ -12,6 +12,8 @@ let yvel = 0
 
 let reloading = 0
 
+let leaderboard = []
+
 
 let firstspawn = 1
 
@@ -310,6 +312,18 @@ socket.on("updatebullets", function (x) {
   bullets = (x)
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
 function mousePressed() {
   if (positions[id].dead == 0) {
     if (mouseButton === LEFT) {
@@ -368,10 +382,6 @@ function keyPressed() {
       subnum = 0
     }
     sub = skinslist[skinnum].sub[subnum]
-  }
-
-  if (key == "z") {
-    console.log(positions)
   }
 
   if (reloading == 0) {
@@ -629,6 +639,20 @@ function draw() {
     // nameField.position(-300, 100)
     image(shadow, xoffset+myposx, yoffset+myposy);
     nameField.position(-300, 100)
+
+    for (k = 0; k < 40; k++) {
+      for (l = 0; l < 40; l++) {
+        if (map[l][k] == 1) {
+          strokeWeight(3)
+          fill('#da0063')
+          stroke('#da0063')
+          rect((k * 100) +xoffset -2000, (l * 100) + yoffset-2000, 100, 100)
+          strokeWeight(0)
+          fill('white')
+        }
+      }
+    }
+
     push()
     translate(xoffset + myposx, yoffset + myposy)
     rotate(Math.atan2(mouseY - (height / 2), mouseX - (width / 2)))
@@ -656,7 +680,7 @@ function draw() {
           strokeWeight(1)
           stroke('white')
           line(0, 0, -5000, 0)
-          noStroke()
+          strokeWeight(0)
         }
         image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       }
@@ -767,19 +791,7 @@ function draw() {
           text("❤️".repeat(Math.round(positions[id].hp / 20)) + "💜".repeat(5 - (Math.round(positions[id].hp / 20))), myposx + xoffset, myposy + yoffset - 80)
 
           image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
-
-
-          for (k = 0; k < 40; k++) {
-            for (l = 0; l < 40; l++) {
-              if (map[l][k] == 1) {
-                strokeWeight(3)
-                fill('#da0063')
-                stroke('#da0063')
-                rect((k * 100) +xoffset -2000, (l * 100) + yoffset-2000, 100, 100)
-                noStroke()
-              }
-            }
-          }
+          image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
 
 
           if (currentgun == skinslist[skinnum].primary) {
@@ -810,6 +822,10 @@ function draw() {
           stroke(0);
           textSize(15)
           text(fps.toFixed(0) + "FPS", 35, height - 10);
+
+          for (p=0; p<=4; p++) {
+            text(leaderboard[p], 50, p*20 +20);
+          }
 
           textSize(40)
           if (weapons[currentgun].maxammo >= 999) {
@@ -953,3 +969,29 @@ socket.on("updatepositions", function (x) {
 socket.on("playdatgunsfx", function (y) {
   eval(y).play()
 })
+
+
+
+setInterval(function myFunction() {
+  leaderboard = []
+  max=9999
+  tempmax=0
+  for (m=0; m <= max; m++) {
+    for (j=0; j <= positions.length-1; j++) {
+      if (positions[j].kills==m) {
+        if (positions[j].id == id) {
+          leaderboard.unshift("[ " + positions[j].name + " - " + positions[j].kills + " ]")
+        }
+        else {
+          leaderboard.unshift(positions[j].name + " - " + positions[j].kills)
+        }
+      }
+      if (max!=tempmax) {
+        if (positions[j].kills>tempmax) {
+          tempmax=positions[j].kills
+        }
+      }
+    }
+    max = tempmax
+  }
+}, 500);
