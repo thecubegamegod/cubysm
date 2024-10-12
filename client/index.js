@@ -250,7 +250,7 @@ function respawnMe() {
         }
       }
     }
-    if (stuckloop == true) {
+    if (stuckloop == false) {
       stuck = false
     }
   }
