@@ -635,6 +635,7 @@ function draw() {
           strokeWeight(1)
           stroke('white')
           line(0, 0, -5000, 0)
+          noStroke()
         }
         image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset)
       }
@@ -754,6 +755,7 @@ function draw() {
                 fill('#da0063')
                 stroke('#da0063')
                 rect((k * 100) +xoffset -2000, (l * 100) + yoffset-2000, 100, 100)
+                noStroke()
               }
             }
           }
