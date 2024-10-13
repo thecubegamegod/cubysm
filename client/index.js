@@ -32,6 +32,8 @@ let snipersfx
 let hitsfx
 let uzisfx
 let knifesfx
+let shrapnelsfx
+let grenadesfx
 
 
 
@@ -94,18 +96,19 @@ let skinnum = 0
 // to get speed do 3600/RPM
 
 let weapons =  [
-  { name: "ak", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1, xoffset:10, yoffset:20},
-  { name: "uzi", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
-  { name: "glock", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
-  { name: "deagle", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
-  { name: "sniper", hitscan:true, laser:true, hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:-30, yoffset:20},
-  { name: "shorty", hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.6 , xoffset:0, yoffset:15},
-  { name: "benelli", hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:6, maxammo:6, speed: 9, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
-  { name: "knife", hitscan:false, laser:false, hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7}
+  { name: "ak", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "uzi", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
+  { name: "glock", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
+  { name: "deagle", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
+  { name: "sniper", type: "gun", hitscan:true, laser:true, hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:-30, yoffset:20},
+  { name: "shorty", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.5 , xoffset:0, yoffset:15},
+  { name: "benelli", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:6, maxammo:6, speed: 13, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
+  { name: "knife", type: "knife", hitscan:false, laser:false, hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7},
+  { name: "grenade", type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 0, ammo:3, maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7}
 ]
 
 let skinslist = [
-  { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 7, speed: 1.1, sub: [""] },
+  { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: [""] },
   { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.8, sub: ["", "hal"] },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 7, speed: 1.2, sub: [""] },
   { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: [""] }
@@ -186,6 +189,9 @@ function preload() {
   knife = loadImage('weapons/knife.png')
   knifegone = loadImage('weapons/knife.png')
 
+  grenade = loadImage('weapons/grenade.png')
+  grenadegone = loadImage('weapons/nothing.png')
+
   benelli = loadImage('weapons/benelli.png')
   benelligone = loadImage('weapons/benelli.png')
 
@@ -197,6 +203,7 @@ function preload() {
   uzitile = loadImage('weapons/tiles/uzitile.png')
   benellitile = loadImage('weapons/tiles/benellitile.png')
   knifetile = loadImage('weapons/tiles/knifetile.png')
+  grenadetile = loadImage('weapons/tiles/grenadetile.png')
 
   catfrontleft = loadImage('catfront3.png');
   catfrontright = loadImage('catfront1.png');
@@ -284,6 +291,8 @@ function setup() {
   shortysfx = loadSound('shorty.mp3');
   benellisfx = loadSound('shorty.mp3');
   knifesfx = loadSound('knife.mp3');
+  shrapnelsfx = loadSound('grenade.mp3');
+  grenadesfx = loadSound('knife.mp3');
 
   hitsfx = loadSound('hit.mp3');
 
@@ -311,18 +320,6 @@ function setup() {
 socket.on("updatebullets", function (x) {
   bullets = (x)
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 function mousePressed() {
   if (positions[id].dead == 0) {
@@ -354,18 +351,20 @@ function mousePressed() {
 
 
 function reload() {
-  if (reloading == 0) {
-    if (weapons[currentgun].ammo < weapons[currentgun].maxammo) {
-      reloading = 1
-      reloadtimerid = setTimeout(function myFunction() {
-        // if (weapons[currentgun].ammo==0) {
-        weapons[currentgun].ammo = weapons[currentgun].maxammo
-        // }
-        // else {
-        //   weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
-        // }
-        reloading = 0
-      }, weapons[currentgun].reloadspeed * 1000);
+  if (weapons[currentgun].type == "gun") {
+    if (reloading == 0) {
+      if (weapons[currentgun].ammo < weapons[currentgun].maxammo) {
+        reloading = 1
+        reloadtimerid = setTimeout(function myFunction() {
+          // if (weapons[currentgun].ammo==0) {
+          weapons[currentgun].ammo = weapons[currentgun].maxammo
+          // }
+          // else {
+          //   weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
+          // }
+          reloading = 0
+        }, weapons[currentgun].reloadspeed * 1000);
+      }
     }
   }
 }
@@ -419,6 +418,22 @@ function keyPressed() {
 }
 
 
+
+function nadesplode(x,y) {
+  socket.emit("gunsfx", "shrapnelsfx")
+  for (i = 0; i < 20; i++) {
+    bulletxvel = (Math.random() - 0.5) * 0.6
+    bulletyvel = (Math.random() - 0.5) * 0.6
+    // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
+    // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
+
+    newBullet = { type: "shrapnel", hitscan: false, hidebullet: false, dropoff: 0.9, xpos: x, ypos: y, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: 40}
+    socket.emit("bullet", newBullet);
+    localbullets.push(newBullet)
+  }
+}
+
+
 function shoot() {
   if (weapons[currentgun].ammo > 0 && reloading == 0) {
     if (delay >= weapons[currentgun].speed) {
@@ -441,7 +456,7 @@ function shoot() {
           // endofgunx = myposx + bulletxvel/(abs(bulletxvel)+abs(bulletyvel))*300
           // endofguny = myposy + bulletyvel/(abs(bulletxvel)+abs(bulletyvel))*300
 
-          newBullet = { hitscan: weapons[currentgun].hitscan, hidebullet: weapons[currentgun].hidebullet, dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
+          newBullet = { type: weapons[currentgun].type, hitscan: weapons[currentgun].hitscan, hidebullet: weapons[currentgun].hidebullet, dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
           socket.emit("bullet", newBullet);
           localbullets.push(newBullet)
         }
@@ -467,6 +482,8 @@ function shoot() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
+
 
 function draw() {
   let dead = 1
@@ -575,8 +592,6 @@ function draw() {
 
   for (let b of localbullets) {
 
-
-
     b.ypos += b.bulletyvel * 90
     b.xpos += b.bulletxvel * 90
 
@@ -588,6 +603,9 @@ function draw() {
           if ((b.xpos+b.bulletxvel>=(i * 100) - 2000) && (b.xpos+b.bulletxvel<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
             const index = localbullets.indexOf(b);
             if (index > -1) {
+              if (b.type == "grenade") {
+                nadesplode(b.xpos, b.ypos)
+              }
               localbullets.splice(index, 1);
             }
           }
@@ -595,6 +613,9 @@ function draw() {
           if ((b.ypos+b.bulletyvel>=(j * 100) - 2000) && (b.ypos+b.bulletyvel<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
             const index = localbullets.indexOf(b);
             if (index > -1) {
+              if (b.type == "grenade") {
+                nadesplode(b.xpos, b.ypos)
+              }
               localbullets.splice(index, 1);
             }
           }
@@ -605,18 +626,41 @@ function draw() {
     }
 
 
-
     if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
-      localbullets.splice(b, 1);
+      const index = localbullets.indexOf(b);
+      localbullets.splice(index, 1);
     }
     b.bulletyvel *= b.dropoff
     b.bulletxvel *= b.dropoff
 
-    if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
-      localbullets.splice(b, 1);
+
+
+    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
+      if (b.type != "grenade") {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
     }
+
+    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
+    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
+      if (b.type == "grenade") {
+        nadesplode(b.xpos, b.ypos)
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    }
+
+
+
     if (b.hidebullet == false) {
-      image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
+      if (b.type == "grenade") {
+        image(grenade, b.xpos + xoffset, b.ypos + yoffset)
+      }
+      else {
+        image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
+      }
     }
   }
 
@@ -624,7 +668,12 @@ function draw() {
     imageMode(CENTER)
     if (b.id != id) {
       if (b.hidebullet == false) {
-        image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
+        if (b.type == "grenade") {
+          image(grenade, b.xpos + xoffset, b.ypos + yoffset)
+        }
+        else {
+          image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
+        }
       }
     }
   }
@@ -903,12 +952,12 @@ function draw() {
 
 
 
-    image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height - 125);
-    image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height - 125);
+    // image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height - 125);
+    // image(eval(weapons[skinslist[skinnum].secondary].name+"tile"), (width/2)+104, height - 125);
 
-    // image(eval(weapons[skinslist[skinnum].primary].name + "tile"), (width / 2) - 208, height - 125);
-    // image(eval(weapons[skinslist[skinnum].secondary].name + "tile"), (width / 2), height - 125);
-    // image(eval(weapons[skinslist[skinnum].tertiary].name + "tile"), (width / 2) + 208, height - 125);
+    image(eval(weapons[skinslist[skinnum].primary].name + "tile"), (width / 2) - 208, height - 125);
+    image(eval(weapons[skinslist[skinnum].secondary].name + "tile"), (width / 2), height - 125);
+    image(eval(weapons[skinslist[skinnum].tertiary].name + "tile"), (width / 2) + 208, height - 125);
 
   }
 

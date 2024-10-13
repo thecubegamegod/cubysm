@@ -122,7 +122,7 @@ setInterval(function myFunction(){
     b.xpos += b.bulletxvel*90
     
     for (i=0; i<pos.length; i++) {
-      if (b.id != pos[i].id) {
+      if (b.id != pos[i].id || b.type == "shrapnel") {
         if ((b.xpos < pos[i].xvel + 50) && (b.xpos > pos[i].xvel - 50) && (b.ypos < pos[i].yvel + 50) && (b.ypos > pos[i].yvel - 50)) {
           const index = bullets.indexOf(b);
           if (index > -1) {
@@ -178,6 +178,7 @@ setInterval(function myFunction(){
             const index = bullets.indexOf(b);
             if (index > -1) {
               bullets.splice(index, 1);
+              console.log("bye")
             }
           }
   
@@ -185,6 +186,7 @@ setInterval(function myFunction(){
             const index = bullets.indexOf(b);
             if (index > -1) {
               bullets.splice(index, 1);
+              console.log("bye")
             }
           }
   
@@ -203,12 +205,27 @@ setInterval(function myFunction(){
     }
     b.bulletyvel*=b.dropoff
     b.bulletxvel*=b.dropoff
+
     if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
-      const index = bullets.indexOf(b);
-      if (index > -1) {
-        bullets.splice(index, 1);
+      // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
+        if (b.type != "grenade") {
+          const index = bullets.indexOf(b);
+          if (index > -1) {
+            bullets.splice(index, 1);
+          }
+        }
       }
-    }
+  
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
+      // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
+        if (b.type == "grenade") {
+          const index = bullets.indexOf(b);
+          if (index > -1) {
+            bullets.splice(index, 1);
+          }
+        }
+      }
+    
 
   }
 
