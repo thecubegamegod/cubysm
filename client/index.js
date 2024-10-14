@@ -111,7 +111,7 @@ let weapons =  [
 let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: [""] },
   { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.8, sub: ["", "hal"] },
-  { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 9, speed: 1.2, sub: [""] },
+  { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""] },
   { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: [""] }
 ]
 
@@ -400,6 +400,7 @@ function keyPressed() {
         }
       }
     }
+    socket.emit
   }
 
   if (reloading == 0) {
@@ -865,6 +866,7 @@ function draw() {
           else if (angle > -1.178) { direction = "backright" }
           else if (angle > -1.963) { direction = "back" }
           else { direction = "backleft" }
+          
           textSize(15)
           text(username + " | 🔥" + String(positions[id].streak), myposx + xoffset, myposy + yoffset - 60)
           textSize(13)
