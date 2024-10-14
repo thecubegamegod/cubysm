@@ -114,7 +114,8 @@ setInterval(function myFunction(){
     }
   }
 
-  for (let b of bullets) {
+  for (let p = bullets.length - 1; p >= 0; p--) {
+    b = bullets[p]
 
 
 //MOVING AND COLLIDING BULLETS
@@ -208,7 +209,7 @@ setInterval(function myFunction(){
 
     if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
       // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
-        if (b.type != "grenade") {
+        if (b.type == "gun") {
           const index = bullets.indexOf(b);
           if (index > -1) {
             bullets.splice(index, 1);
@@ -219,6 +220,12 @@ setInterval(function myFunction(){
       if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
       // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
         if (b.type == "grenade") {
+          const index = bullets.indexOf(b);
+          if (index > -1) {
+            bullets.splice(index, 1);
+          }
+        }
+        if (b.type == "shrapnel") {
           const index = bullets.indexOf(b);
           if (index > -1) {
             bullets.splice(index, 1);
