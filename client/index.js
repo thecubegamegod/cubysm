@@ -231,12 +231,12 @@ function preload() {
   birdbackleft = loadImage('bill1.png');
   birdbackright = loadImage('bill5.png');
 
-  hamsterfrontleft = loadImage('hamster.png');
-  hamsterfrontright = loadImage('hamster.png');
-  hamsterfront = loadImage('hamster.png');
-  hamsterback = loadImage('hamster.png');
-  hamsterbackleft = loadImage('hamster.png');
-  hamsterbackright = loadImage('hamster.png');
+  hamsterfrontleft = loadImage('hamster1.png');
+  hamsterfrontright = loadImage('hamster3.png');
+  hamsterfront = loadImage('hamster2.png');
+  hamsterback = loadImage('hamster5.png');
+  hamsterbackleft = loadImage('hamster6.png');
+  hamsterbackright = loadImage('hamster4.png');
 }
 
 
