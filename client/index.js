@@ -112,7 +112,7 @@ let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: [""] },
   { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"] },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""] },
-  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: [""] }
+  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: ["", "al"] }
 ]
 
 let delay = 999
@@ -237,6 +237,13 @@ function preload() {
   hamsterback = loadImage('hamster5.png');
   hamsterbackleft = loadImage('hamster6.png');
   hamsterbackright = loadImage('hamster4.png');
+
+  hamsteralfrontleft = loadImage('hamsteral1.png');
+  hamsteralfrontright = loadImage('hamsteral3.png');
+  hamsteralfront = loadImage('hamsteral2.png');
+  hamsteralback = loadImage('hamsteral5.png');
+  hamsteralbackleft = loadImage('hamsteral6.png');
+  hamsteralbackright = loadImage('hamsteral4.png');
 }
 
 
@@ -341,6 +348,8 @@ function mousePressed() {
         skinnum = 0
       }
       skin = skinslist[skinnum].name
+      subnum=0
+      sub = skinslist[skinnum].sub[subnum]
     }
     if ((width / 2 - 150) > mouseX && (width / 2 - 250) < mouseX && (height / 2) - 50 < mouseY && mouseY < (height / 2) + 50) {
       if (skinnum > 0) {
@@ -350,6 +359,8 @@ function mousePressed() {
         skinnum = skinslist.length - 1
       }
       skin = skinslist[skinnum].name
+      subnum=0
+      sub = skinslist[skinnum].sub[subnum]
     }
   }
 }
