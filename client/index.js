@@ -96,7 +96,7 @@ let skinnum = 0
 // to get speed do 3600/RPM
 
 let weapons =  [
-  { name: "ak", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 40, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1, xoffset:10, yoffset:20},
+  { name: "ak", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1.1, xoffset:10, yoffset:20},
   { name: "uzi", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
   { name: "glock", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
@@ -109,10 +109,10 @@ let weapons =  [
 ]
 
 let skinslist = [
-  { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: [""] },
-  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"] },
-  { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""] },
-  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: ["", "al"] }
+  { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: ["", "freak"], currentsub:0 },
+  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"], currentsub:0 },
+  { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
+  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
 ]
 
 let delay = 999
@@ -158,17 +158,28 @@ function preload() {
   twokey = loadImage('2.png')
   spawnpic = loadImage('spawn.png')
   img = loadImage('bg.png');
-  cubefrontleft = loadImage('cubepixel2.png');
   bricks = loadImage('brick.png');
+
   cubefrontright = loadImage('cubepixel1.png');
   cuberight = loadImage('cubepixel9.png');
-  cubeleft = loadImage('cubepixel9.png');
+  cubefrontleft = loadImage('cubepixel2.png');
   cubefront = loadImage('cubepixel3.png');
   cubeback = loadImage('cubepixel4.png');
   cubebackleft = loadImage('cubepixel5.png');
   cubebackright = loadImage('cubepixel6.png');
+
+
+  cubefreakfrontright = loadImage('cubefreak1.png');
+  cubefreakfrontleft = loadImage('cubefreak2.png');
+  cubefreakfront = loadImage('cubefreak3.png');
+  cubefreakback = loadImage('cubefreak4.png');
+  cubefreakbackleft = loadImage('cubefreak5.png');
+  cubefreakbackright = loadImage('cubefreak6.png');
+
   arrow = loadImage('arrow.png');
   arrowgone = loadImage('arrowempty.png');
+  switchimg = loadImage('switch.png');
+  switchimggone = loadImage('switchgone.png');
 
   bulletimage = loadImage('bullet.png');
   cursor = loadImage('crosshair.png')
@@ -348,8 +359,18 @@ function mousePressed() {
         skinnum = 0
       }
       skin = skinslist[skinnum].name
-      subnum=0
+      subnum = skinslist[skinnum].currentsub
       sub = skinslist[skinnum].sub[subnum]
+    }
+    if ((width / 2) + 150 < mouseX && (width / 2) + 250 > mouseX && (height / 2) + 30 < mouseY && mouseY < (height / 2) + 130) {
+      if (subnum < skinslist[skinnum].sub.length - 1) {
+        subnum += 1
+      }
+      else {
+        subnum = 0
+      }
+      sub = skinslist[skinnum].sub[subnum]
+      skinslist[skinnum].currentsub = subnum
     }
     if ((width / 2 - 150) > mouseX && (width / 2 - 250) < mouseX && (height / 2) - 50 < mouseY && mouseY < (height / 2) + 50) {
       if (skinnum > 0) {
@@ -359,7 +380,7 @@ function mousePressed() {
         skinnum = skinslist.length - 1
       }
       skin = skinslist[skinnum].name
-      subnum=0
+      subnum = skinslist[skinnum].currentsub
       sub = skinslist[skinnum].sub[subnum]
     }
   }
@@ -390,15 +411,6 @@ function keyPressed() {
   
   key = key.toLowerCase()
 
-  if ((key === 'o') && (positions[id].dead == 1)) {
-    if (subnum < skinslist[skinnum].sub.length - 1) {
-      subnum += 1
-    }
-    else {
-      subnum = 0
-    }
-    sub = skinslist[skinnum].sub[subnum]
-  }
 
 
   if ((key === 't') && weapons[currentgun].type=="c4") {
@@ -1000,6 +1012,15 @@ function draw() {
     }
     pop()
 
+    if (skinslist[skinnum].sub.length > 1) {
+      if ((width / 2) + 150 < mouseX && (width / 2) + 250 > mouseX && (height / 2) + 30 < mouseY && mouseY < (height / 2) + 130 && !mouseIsPressed) {
+        image(switchimggone, width / 2 + 195, height / 2 +80, 50,50);
+      }
+      else {
+        image(switchimg, width / 2 + 195, height / 2 +80, 50,50);
+      }
+  
+    }
 
 
     // image(eval(weapons[skinslist[skinnum].primary].name+"tile"), (width/2)-104, height - 125);
