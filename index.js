@@ -122,7 +122,6 @@ io.on("connection", function(socket) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
       pos.push({name: "fellow", hp:100, streak:0, kills:0, deaths:0, xvel: 10000, yvel: 10000, id: arg, dir:"front", skin:"cat", sub:"hal", dead:1, gundir: 0, flipgun: 0, suicide:0, currentgun:0, socketid: socket.id})
-      io.to(socket.id).emit("changemap", currentMap);;
     }
     else {
       pos[arg].dead = 0
@@ -250,7 +249,7 @@ setInterval(function myFunction(){
     }
   }
 
-}, 1000/240);
+}, 1000/120);
 
 
 

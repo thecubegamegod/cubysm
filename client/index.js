@@ -15,6 +15,7 @@ let reloading = 0
 let leaderboard = []
 
 
+
 let firstspawn = 1
 
 
@@ -129,17 +130,17 @@ let mapCountdown = 999
 // to get speed do 3600/RPM
 
 let weapons =  [
-  { name: "ak", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1.1, xoffset:10, yoffset:20},
-  { name: "uzi", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
-  { name: "glock", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
-  { name: "deagle", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
-  { name: "sniper", type: "gun", hitscan:true, laser:true, hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 1.2 , xoffset:-30, yoffset:20},
-  { name: "shorty", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.5 , xoffset:0, yoffset:15},
-  { name: "benelli", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:6, maxammo:6, speed: 13, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
-  { name: "knife", type: "knife", hitscan:false, laser:false, hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7},
-  { name: "grenade", type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 0, ammo:3, maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7},
-  { name: "c4", type: "c4", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 0, ammo:3, maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7},
-  { name: "skorpion", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:20, maxammo:20, speed: 4, auto: true, spread:0.1, recoil:1, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:10, yoffset:7}
+  { name: "ak",       type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2.4,  ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1.1, xoffset:10, yoffset:20},
+  { name: "uzi",      type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
+  { name: "glock",    type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.5,  ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
+  { name: "deagle",   type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60,  reloadspeed: 2.2,  ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
+  { name: "sniper",   type: "gun",     hitscan:true,  laser:true,  hidebullet:false, simul:1, dropoff:1,   zoom:1, damage: 100, reloadspeed: 3.7,  ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 1.2 , xoffset:-30, yoffset:20},
+  { name: "shorty",   type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1,    ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.5 , xoffset:0, yoffset:15},
+  { name: "benelli",  type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:6, maxammo:6, speed: 13, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
+  { name: "knife",    type: "knife",   hitscan:false, laser:false, hidebullet:true,  simul:1, dropoff:0.6, zoom:3, damage: 80,  reloadspeed: 0,    ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7},
+  { name: "grenade",  type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7},
+  { name: "c4",       type: "c4",      hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7},
+  { name: "skorpion", type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:20, maxammo:20, speed: 4, auto: true, spread:0.1, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:10, yoffset:18}
 ]
 
 let skinslist = [
@@ -302,14 +303,9 @@ function preload() {
   hamsteralbackright = loadImage('hamsteral4.png');
 }
 
-
-function respawnMe() {
+function checkStuck() {
   let stuck = true
   let stuckloop = false
-  delay = 999
-  socket.emit("addme", id);
-  currentgun = skinslist[skinnum].primary
-  
   while (stuck == true) {
     stuckloop = false
     myposx = Math.floor(Math.random() * (2000 + 2000)) + -2000;
@@ -331,7 +327,14 @@ function respawnMe() {
       stuck = false
     }
   }
+}
 
+
+function respawnMe() {
+  delay = 999
+  socket.emit("addme", id);
+  currentgun = skinslist[skinnum].primary
+  checkStuck()
   for (i = 0; i < weapons.length; i++) {
     weapons[i].ammo = weapons[i].maxammo
   }
@@ -346,6 +349,7 @@ function changeTitle(newTitle) {
 
 
 function setup() {
+
   map = maps[1]
   skinnum = Math.floor(Math.random() * skinslist.length)
   subnum = Math.floor(Math.random() * skinslist[skinnum].sub.length)
@@ -580,6 +584,8 @@ function windowResized() {
 
 
 function draw() {
+
+
   let dead = 1
 
   if (id != 99 && positions.length > id) {
@@ -1163,11 +1169,9 @@ socket.on("timeleft", function (y) {
   mapCountdown = y
 })
 
-
-
 socket.on("changemap", function (y) {
   map = maps[y]
-  respawnMe()
+  checkStuck()
 })
 
 
