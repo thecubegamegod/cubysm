@@ -188,14 +188,14 @@ setInterval(function myFunction(){
               }
               pos[i].deaths += 1
 
-              fs.appendFile(
-                "kills.txt",
-                (pos[b.id].skin)+"k", (err) => err && console.error(err)
-              );
-              fs.appendFile(
-                "kills.txt",
-                pos[i].skin+"d", (err) => err && console.error(err)
-              );
+              // fs.appendFile(
+              //   "kills.txt",
+              //   (pos[b.id].skin)+"k", (err) => err && console.error(err)
+              // );
+              // fs.appendFile(
+              //   "kills.txt",
+              //   pos[i].skin+"d", (err) => err && console.error(err)
+              // );
 
             }
             pos[i].dead = 1

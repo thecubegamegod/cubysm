@@ -995,11 +995,11 @@ function draw() {
 
           
 
-          let fps = frameRate();
-          fill(255);
-          stroke(0);
-          textSize(15)
-          text(fps.toFixed(0) + "FPS", 35, height - 10);
+          // let fps = frameRate();
+          // fill(255);
+          // stroke(0);
+          // textSize(15)
+          // text(fps.toFixed(0) + "FPS", 35, height - 10);
 
           for (p=0; p<=4; p++) {
             text(leaderboard[p], 50, p*20 +20);
