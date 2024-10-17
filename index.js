@@ -214,9 +214,25 @@ setInterval(function myFunction(){
     b.bulletyvel*=b.dropoff
     b.bulletxvel*=b.dropoff
 
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
-      // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
-      if (b.type == "gun") {
+
+    if (b.type == "shrapnel" || b.type == "grenade") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
+        const index = bullets.indexOf(b);
+        if (index > -1) {
+          bullets.splice(index, 1);
+        }
+      }
+    }
+    else if (b.type == "gun") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+        const index = bullets.indexOf(b);
+        if (index > -1) {
+          bullets.splice(index, 1);
+        }
+      }
+    }
+    else if (b.type == "knife") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.3) {
         const index = bullets.indexOf(b);
         if (index > -1) {
           bullets.splice(index, 1);
@@ -224,21 +240,7 @@ setInterval(function myFunction(){
       }
     }
 
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
-    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
-      if (b.type == "grenade") {
-        const index = bullets.indexOf(b);
-        if (index > -1) {
-          bullets.splice(index, 1);
-        }
-      }
-      if (b.type == "shrapnel") {
-        const index = bullets.indexOf(b);
-        if (index > -1) {
-          bullets.splice(index, 1);
-        }
-      }
-    }
+
   }
   io.sockets.emit("updatepositions", pos);
   io.sockets.emit("updatebullets", bullets);

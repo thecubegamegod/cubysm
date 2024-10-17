@@ -689,23 +689,30 @@ function draw() {
     b.bulletxvel *= b.dropoff
 
 
+    if (b.type == "gun") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      };
+    }
 
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
-    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
-      if (b.type == "gun") {
+    else if (b.type == "shrapnel") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
         const index = localbullets.indexOf(b);
         localbullets.splice(index, 1);
       }
     }
 
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
-    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
-      if (b.type == "grenade") {
+    else if (b.type == "grenade") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
         nadesplode(b.xpos, b.ypos)
         const index = localbullets.indexOf(b);
         localbullets.splice(index, 1);
       }
-      if (b.type == "shrapnel") {
+    }
+
+    else if (b.type == "knife") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.3) {
         const index = localbullets.indexOf(b);
         localbullets.splice(index, 1);
       }
