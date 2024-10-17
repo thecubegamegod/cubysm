@@ -25,7 +25,7 @@ let flash = 0
 
 let deathangle = 0
 
-let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx
+let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx
 
 
 
@@ -138,14 +138,15 @@ let weapons =  [
   { name: "benelli", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:6, maxammo:6, speed: 13, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
   { name: "knife", type: "knife", hitscan:false, laser:false, hidebullet:true, simul:1, dropoff:0.6, zoom:3, damage: 80, reloadspeed: 0, ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7},
   { name: "grenade", type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 0, ammo:3, maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7},
-  { name: "c4", type: "c4", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 0, ammo:3, maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7}
+  { name: "c4", type: "c4", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 0, ammo:3, maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7},
+  { name: "skorpion", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2, ammo:20, maxammo:20, speed: 4, auto: true, spread:0.1, recoil:1, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:10, yoffset:7}
 ]
 
 let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: ["", "freak"], currentsub:0 },
   { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal", "aug"], currentsub:0 },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
-  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
+  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
 ]
 
 let delay = 999
@@ -231,6 +232,9 @@ function preload() {
   shorty = loadImage('weapons/shorty.png')
   shortygone = loadImage('weapons/shorty.png')
 
+  skorpion = loadImage('weapons/skorpion.png')
+  skorpiongone = loadImage('weapons/skorpion.png')
+
   knife = loadImage('weapons/knife.png')
   knifegone = loadImage('weapons/knife.png')
 
@@ -253,6 +257,7 @@ function preload() {
   knifetile = loadImage('weapons/tiles/knifetile.png')
   grenadetile = loadImage('weapons/tiles/grenadetile.png')
   c4tile = loadImage('weapons/tiles/c4tile.png')
+  skorpiontile = loadImage('weapons/tiles/skorpiontile.png')
 
   catfrontleft = loadImage('catfront3.png');
   catfrontright = loadImage('catfront1.png');
@@ -357,6 +362,7 @@ function setup() {
   knifesfx = loadSound('knife.mp3');
   shrapnelsfx = loadSound('grenade.mp3');
   grenadesfx = loadSound('knife.mp3');
+  skorpionsfx = loadSound('skorpion.mp3');
 
   hitsfx = loadSound('hit.mp3');
 
