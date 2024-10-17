@@ -25,15 +25,7 @@ let flash = 0
 
 let deathangle = 0
 
-let aksfx
-let glocksfx
-let deaglesfx
-let snipersfx
-let hitsfx
-let uzisfx
-let knifesfx
-let shrapnelsfx
-let grenadesfx
+let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx
 
 
 
@@ -122,11 +114,7 @@ let maps = [
 
 ]
 
-let nahsfx
-let ahsfx
-let yeowchsfx
-let owsfx
-let euhsfx
+let nahsfx, ahsfx, yeowchsfx, owsfx, euhsfx
 
 let reloadtimerid
 
@@ -135,13 +123,15 @@ let sub = ""
 let subnum = 0
 let skinnum = 0
 
+let mapCountdown = 999
+
 
 // to get speed do 3600/RPM
 
 let weapons =  [
   { name: "ak", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 2.4, ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1.1, xoffset:10, yoffset:20},
   { name: "uzi", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
-  { name: "glock", type: "gun", hitscan:false, laser:true, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
+  { name: "glock", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1.5, ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60, reloadspeed: 2.2, ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
   { name: "sniper", type: "gun", hitscan:true, laser:true, hidebullet:false, simul:1, dropoff:1, zoom:1, damage: 100, reloadspeed: 3.7, ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 1.2 , xoffset:-30, yoffset:20},
   { name: "shorty", type: "gun", hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 20, reloadspeed: 1, ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.5 , xoffset:0, yoffset:15},
@@ -1019,6 +1009,14 @@ function draw() {
             textSize(20)
             text("/" + weapons[currentgun].maxammo, width - 50, height - 25)
           }
+          textSize(30)
+          let mins = Math.floor(mapCountdown/60)
+          let secs = mapCountdown - mins*60
+          if (secs<10) {
+            secs = "0"+secs
+          }
+          text(mins + ":" + secs, width/2, 40)
+          textSize(20)
         }
       }
     }
@@ -1155,6 +1153,16 @@ socket.on("playdatgunsfx", function (y) {
   eval(y).play()
 })
 
+socket.on("timeleft", function (y) {
+  mapCountdown = y
+})
+
+
+
+socket.on("changemap", function (y) {
+  map = maps[y]
+  respawnMe()
+})
 
 
 setInterval(function myFunction() {

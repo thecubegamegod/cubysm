@@ -20,6 +20,9 @@ let pos = []
 
 let bullets = []
 
+let mapCountdown = 300
+let currentMap = 0
+
 let timesUpdated = 0
 
 let maps = [
@@ -119,6 +122,7 @@ io.on("connection", function(socket) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
       pos.push({name: "fellow", hp:100, streak:0, kills:0, deaths:0, xvel: 10000, yvel: 10000, id: arg, dir:"front", skin:"cat", sub:"hal", dead:1, gundir: 0, flipgun: 0, suicide:0, currentgun:0, socketid: socket.id})
+      io.to(socket.id).emit("changemap", currentMap);;
     }
     else {
       pos[arg].dead = 0
@@ -292,6 +296,25 @@ setInterval(function myFunction(){
   io.sockets.emit("updatepositions", pos);
   io.sockets.emit("updatebullets", bullets);
 }, 1000/60);
+
+
+
+setInterval(function myFunction(){
+  if (mapCountdown>0) {
+    mapCountdown -= 1
+  }
+  else {
+    if (currentMap == 0){
+      currentMap = 1
+    }
+    else if (currentMap == 1){
+      currentMap = 0
+    }
+    mapCountdown = 300
+    io.sockets.emit("changemap", currentMap);
+  }
+  io.sockets.emit("timeleft", mapCountdown);
+}, 1000);
 
 
 // HEALTH REGEN
