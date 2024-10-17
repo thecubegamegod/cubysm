@@ -25,19 +25,12 @@ let flash = 0
 
 let deathangle = 0
 
-let aksfx
-let glocksfx
-let deaglesfx
-let snipersfx
-let hitsfx
-let uzisfx
-let knifesfx
-let shrapnelsfx
-let grenadesfx
+let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx
 
 
 
-let map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+let maps = [
+[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -76,14 +69,52 @@ let map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],
+
+[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1],
+[1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
+]
 
-let nahsfx
-let ahsfx
-let yeowchsfx
-let owsfx
-let euhsfx
+let nahsfx, ahsfx, yeowchsfx, owsfx, euhsfx
 
 let reloadtimerid
 
@@ -91,6 +122,8 @@ let skin = "cube"
 let sub = ""
 let subnum = 0
 let skinnum = 0
+
+let mapCountdown = 999
 
 
 // to get speed do 3600/RPM
@@ -110,7 +143,7 @@ let weapons =  [
 
 let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: ["", "freak"], currentsub:0 },
-  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"], currentsub:0 },
+  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal", "aug"], currentsub:0 },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
   { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
 ]
@@ -235,6 +268,13 @@ function preload() {
   cathalbackleft = loadImage('cathalfront4.png');
   cathalbackright = loadImage('cathalfront6.png');
 
+  cataugfrontleft = loadImage('cataug.png');
+  cataugfrontright = loadImage('cataug.png');
+  cataugfront = loadImage('cataug.png');
+  cataugback = loadImage('cataug.png');
+  cataugbackleft = loadImage('cataug.png');
+  cataugbackright = loadImage('cataug.png');
+
   birdfrontleft = loadImage('bill6.png');
   birdfrontright = loadImage('bill4.png');
   birdfront = loadImage('bill3.png');
@@ -301,6 +341,7 @@ function changeTitle(newTitle) {
 
 
 function setup() {
+  map = maps[1]
   skinnum = Math.floor(Math.random() * skinslist.length)
   subnum = Math.floor(Math.random() * skinslist[skinnum].sub.length)
   currentgun = skinslist[skinnum].primary
@@ -423,7 +464,6 @@ function keyPressed() {
         }
       }
     }
-    socket.emit
   }
 
   if (reloading == 0) {
@@ -506,7 +546,6 @@ function shoot() {
             newBullet = { type: weapons[currentgun].type, hitscan: weapons[currentgun].hitscan, hidebullet: weapons[currentgun].hidebullet, dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
             socket.emit("bullet", newBullet);
             localbullets.push(newBullet)
-
           }
         }
         weapons[currentgun].ammo -= 1
@@ -684,23 +723,30 @@ function draw() {
     b.bulletxvel *= b.dropoff
 
 
+    if (b.type == "gun") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      };
+    }
 
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
-    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
-      if (b.type == "gun") {
+    else if (b.type == "shrapnel") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
         const index = localbullets.indexOf(b);
         localbullets.splice(index, 1);
       }
     }
 
-    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
-    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
-      if (b.type == "grenade") {
+    else if (b.type == "grenade") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
         nadesplode(b.xpos, b.ypos)
         const index = localbullets.indexOf(b);
         localbullets.splice(index, 1);
       }
-      if (b.type == "shrapnel") {
+    }
+
+    else if (b.type == "knife") {
+      if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.3) {
         const index = localbullets.indexOf(b);
         localbullets.splice(index, 1);
       }
@@ -747,15 +793,24 @@ function draw() {
     //   }, 100);
     // }
     // nameField.position(-300, 100)
-    image(shadow, xoffset+myposx, yoffset+myposy);
+    image(shadow, xoffset+myposx, yoffset+myposy-2);
     nameField.position(-300, 100)
 
     for (k = 0; k < 40; k++) {
       for (l = 0; l < 40; l++) {
         if (map[l][k] == 1) {
           strokeWeight(3)
-          fill('#da0063')
-          stroke('#da0063')
+
+          const index = maps.indexOf(map);
+
+          // if (index==0) {
+            fill('#da0063')
+            stroke('#da0063')
+          // }
+          // else {
+          //   fill('#f24726')
+          //   stroke('#f24726')
+          // }
           rect((k * 100) +xoffset -2000, (l * 100) + yoffset-2000, 100, 100)
           strokeWeight(0)
           fill('white')
@@ -954,6 +1009,14 @@ function draw() {
             textSize(20)
             text("/" + weapons[currentgun].maxammo, width - 50, height - 25)
           }
+          textSize(30)
+          let mins = Math.floor(mapCountdown/60)
+          let secs = mapCountdown - mins*60
+          if (secs<10) {
+            secs = "0"+secs
+          }
+          text(mins + ":" + secs, width/2, 40)
+          textSize(20)
         }
       }
     }
@@ -1090,6 +1153,16 @@ socket.on("playdatgunsfx", function (y) {
   eval(y).play()
 })
 
+socket.on("timeleft", function (y) {
+  mapCountdown = y
+})
+
+
+
+socket.on("changemap", function (y) {
+  map = maps[y]
+  respawnMe()
+})
 
 
 setInterval(function myFunction() {
