@@ -110,7 +110,7 @@ let weapons =  [
 
 let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: ["", "freak"], currentsub:0 },
-  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"], currentsub:0 },
+  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal", "aug"], currentsub:0 },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
   { name: "hamster", fullname: "Hamster", primary: 6, secondary: 2, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
 ]
@@ -234,6 +234,13 @@ function preload() {
   cathalback = loadImage('cathalfront5.png');
   cathalbackleft = loadImage('cathalfront4.png');
   cathalbackright = loadImage('cathalfront6.png');
+
+  cataugfrontleft = loadImage('cataug.png');
+  cataugfrontright = loadImage('cataug.png');
+  cataugfront = loadImage('cataug.png');
+  cataugback = loadImage('cataug.png');
+  cataugbackleft = loadImage('cataug.png');
+  cataugbackright = loadImage('cataug.png');
 
   birdfrontleft = loadImage('bill6.png');
   birdfrontright = loadImage('bill4.png');
@@ -747,7 +754,7 @@ function draw() {
     //   }, 100);
     // }
     // nameField.position(-300, 100)
-    image(shadow, xoffset+myposx, yoffset+myposy);
+    image(shadow, xoffset+myposx, yoffset+myposy-2);
     nameField.position(-300, 100)
 
     for (k = 0; k < 40; k++) {
