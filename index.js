@@ -122,7 +122,6 @@ io.on("connection", function(socket) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
       pos.push({name: "fellow", hp:100, streak:0, kills:0, deaths:0, xvel: 10000, yvel: 10000, id: arg, dir:"front", skin:"cat", sub:"hal", dead:1, gundir: 0, flipgun: 0, suicide:0, currentgun:0, socketid: socket.id})
-      io.to(socket.id).emit("changemap", currentMap);;
     }
     else {
       pos[arg].dead = 0
@@ -158,6 +157,10 @@ io.on("connection", function(socket) {
 
 
 
+
+
+
+
 setInterval(function myFunction(){
 
   for (let p = bullets.length - 1; p >= 0; p--) {
@@ -165,8 +168,8 @@ setInterval(function myFunction(){
 
 
 //MOVING AND COLLIDING BULLETS
-    b.ypos += (b.bulletyvel*90)/4
-    b.xpos += (b.bulletxvel*90)/4
+    b.ypos += (b.bulletyvel*90)/2
+    b.xpos += (b.bulletxvel*90)/2
     
     for (i=0; i<pos.length; i++) {
       if (b.id != pos[i].id || b.type == "shrapnel") {
@@ -189,14 +192,14 @@ setInterval(function myFunction(){
               }
               pos[i].deaths += 1
 
-              fs.appendFile(
-                "kills.txt",
-                (pos[b.id].skin)+"k", (err) => err && console.error(err)
-              );
-              fs.appendFile(
-                "kills.txt",
-                pos[i].skin+"d", (err) => err && console.error(err)
-              );
+              // fs.appendFile(
+              //   "kills.txt",
+              //   (pos[b.id].skin)+"k", (err) => err && console.error(err)
+              // );
+              // fs.appendFile(
+              //   "kills.txt",
+              //   pos[i].skin+"d", (err) => err && console.error(err)
+              // );
 
             }
             pos[i].dead = 1
@@ -250,7 +253,7 @@ setInterval(function myFunction(){
     }
   }
 
-}, 1000/240);
+}, 1000/120);
 
 
 
