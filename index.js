@@ -164,8 +164,8 @@ setInterval(function myFunction(){
 
 
 //MOVING AND COLLIDING BULLETS
-    b.ypos += (b.bulletyvel*90)/4
-    b.xpos += (b.bulletxvel*90)/4
+    b.ypos += (b.bulletyvel*90)/2
+    b.xpos += (b.bulletxvel*90)/2
     
     for (i=0; i<pos.length; i++) {
       if (b.id != pos[i].id || b.type == "shrapnel") {
