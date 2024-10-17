@@ -646,92 +646,92 @@ function draw() {
   image(img, xoffset, yoffset, 4000, 4000);
 
 
-  // for (let p = localbullets.length - 1; p >= 0; p--) {
-  //   b = localbullets[p]
+  for (let p = localbullets.length - 1; p >= 0; p--) {
+    b = localbullets[p]
 
-  //   b.ypos += b.bulletyvel * 90
-  //   b.xpos += b.bulletxvel * 90
+    b.ypos += b.bulletyvel * 90
+    b.xpos += b.bulletxvel * 90
 
 
-  //   for (i = 0; i < 40; i++) {
-  //     for (j = 0; j < 40; j++) {
-  //       if (map[j][i] == 1) {
+    for (i = 0; i < 40; i++) {
+      for (j = 0; j < 40; j++) {
+        if (map[j][i] == 1) {
   
-  //         if ((b.xpos>=(i * 100) - 2000) && (b.xpos<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
-  //           const index = localbullets.indexOf(b);
-  //           if (index > -1) {
-  //             if (b.type == "grenade") {
-  //               nadesplode(b.xpos, b.ypos)
-  //             }
-  //             localbullets.splice(index, 1);
-  //           }
-  //         }
+          if ((b.xpos>=(i * 100) - 2000) && (b.xpos<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
+            const index = localbullets.indexOf(b);
+            if (index > -1) {
+              if (b.type == "grenade") {
+                nadesplode(b.xpos, b.ypos)
+              }
+              localbullets.splice(index, 1);
+            }
+          }
   
-  //         if ((b.ypos+b.bulletyvel*90>=(j * 100) - 2000) && (b.ypos+b.bulletyvel*90<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
-  //           const index = localbullets.indexOf(b);
-  //           if (index > -1) {
-  //             if (b.type == "grenade") {
-  //               nadesplode(b.xpos, b.ypos)
-  //             }
-  //             localbullets.splice(index, 1);
-  //           }
-  //         }
+          if ((b.ypos+b.bulletyvel*90>=(j * 100) - 2000) && (b.ypos+b.bulletyvel*90<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
+            const index = localbullets.indexOf(b);
+            if (index > -1) {
+              if (b.type == "grenade") {
+                nadesplode(b.xpos, b.ypos)
+              }
+              localbullets.splice(index, 1);
+            }
+          }
   
   
-  //       }
-  //     }
-  //   }
+        }
+      }
+    }
 
 
-  //   if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
-  //     const index = localbullets.indexOf(b);
-  //     localbullets.splice(index, 1);
-  //   }
-  //   b.bulletyvel *= b.dropoff
-  //   b.bulletxvel *= b.dropoff
-
-
-
-  //   if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
-  //   // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
-  //     if (b.type == "gun") {
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //   }
-
-  //   if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
-  //   // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
-  //     if (b.type == "grenade") {
-  //       nadesplode(b.xpos, b.ypos)
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //     if (b.type == "shrapnel") {
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //   }
+    if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
+      const index = localbullets.indexOf(b);
+      localbullets.splice(index, 1);
+    }
+    b.bulletyvel *= b.dropoff
+    b.bulletxvel *= b.dropoff
 
 
 
+    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.1) {
+    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.1) {
+      if (b.type == "gun") {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    }
 
-  //   if (b.hidebullet == false) {
-  //     if (b.type == "grenade") {
-  //       image(grenade, b.xpos + xoffset, b.ypos + yoffset)
-  //     }
-  //     else if (b.type == "c4") {
-  //       image(c4, b.xpos + xoffset, b.ypos + yoffset)
-  //     }
-  //     else {
-  //       image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
-  //     }
-  //   }
-  // }
+    if (Math.abs(b.bulletxvel)+Math.abs(b.bulletyvel)<=0.01) {
+    // if (Math.sqrt((b.bulletyvel) * (b.bulletyvel) + (b.bulletxvel) * (b.bulletxvel)) <= 0.01) {
+      if (b.type == "grenade") {
+        nadesplode(b.xpos, b.ypos)
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+      if (b.type == "shrapnel") {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    }
+
+
+
+
+    if (b.hidebullet == false) {
+      if (b.type == "grenade") {
+        image(grenade, b.xpos + xoffset, b.ypos + yoffset)
+      }
+      else if (b.type == "c4") {
+        image(c4, b.xpos + xoffset, b.ypos + yoffset)
+      }
+      else {
+        image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
+      }
+    }
+  }
 
   for (let b of bullets) {
     imageMode(CENTER)
-    // if (b.id != id) {
+    if (b.id != id) {
       if (b.hidebullet == false) {
         if (b.type == "grenade") {
           image(grenade, b.xpos + xoffset, b.ypos + yoffset)
@@ -743,7 +743,7 @@ function draw() {
           image(bulletimage, b.xpos + xoffset, b.ypos + yoffset)
         }
       }
-    // }
+    }
   }
 
   if (dead == 0) {
