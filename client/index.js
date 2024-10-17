@@ -430,7 +430,6 @@ function keyPressed() {
         }
       }
     }
-    socket.emit
   }
 
   if (reloading == 0) {
@@ -513,7 +512,6 @@ function shoot() {
             newBullet = { type: weapons[currentgun].type, hitscan: weapons[currentgun].hitscan, hidebullet: weapons[currentgun].hidebullet, dropoff: weapons[currentgun].dropoff, xpos: myposx, ypos: myposy, bulletxvel: bulletxvel, bulletyvel: bulletyvel, id: id, dmg: weapons[currentgun].damage}
             socket.emit("bullet", newBullet);
             localbullets.push(newBullet)
-
           }
         }
         weapons[currentgun].ammo -= 1
