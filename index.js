@@ -158,37 +158,6 @@ io.on("connection", function(socket) {
 
 
 
-setInterval(function myFunction() {
-  leaderboard = []
-  max=9999
-  tempmax=0
-  for (m=0; m <= max; m++) {
-    for (j=0; j <= pos.length-1; j++) {
-      if (pos[j].kills==m) {
-        if (pos[j].id == id) {
-          leaderboard.unshift("[ " + pos[j].name + " - " + pos[j].kills + " ]")
-        }
-        else {
-          leaderboard.unshift(pos[j].name + " - " + pos[j].kills)
-        }
-      }
-      if (max!=tempmax) {
-        if (pos[j].kills>tempmax) {
-          tempmax=pos[j].kills
-        }
-      }
-    }
-    max = tempmax
-  }
-  io.sockets.emit("leaderboardUpdate", leaderboard)
-}, 500);
-
-
-
-
-
-
-
 
 
 

@@ -1174,6 +1174,27 @@ socket.on("changemap", function (y) {
   checkStuck()
 })
 
-socket.on("leaderboardUpdate", function (y) {
-  leaderboard = y
-})
+
+setInterval(function myFunction() {
+  leaderboard = []
+  max=9999
+  tempmax=0
+  for (m=0; m <= max; m++) {
+    for (j=0; j <= positions.length-1; j++) {
+      if (positions[j].kills==m) {
+        if (positions[j].id == id) {
+          leaderboard.unshift("[ " + positions[j].name + " - " + positions[j].kills + " ]")
+        }
+        else {
+          leaderboard.unshift(positions[j].name + " - " + positions[j].kills)
+        }
+      }
+      if (max!=tempmax) {
+        if (positions[j].kills>tempmax) {
+          tempmax=positions[j].kills
+        }
+      }
+    }
+    max = tempmax
+  }
+}, 500);
