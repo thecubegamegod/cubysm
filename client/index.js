@@ -193,7 +193,7 @@ function preload() {
   onekey = loadImage('1.png')
   twokey = loadImage('2.png')
   spawnpic = loadImage('spawn.png')
-  img = loadImage('bgpix.png');
+  img = loadImage('bg.png');
   bricks = loadImage('brick.png');
 
   cubefrontright = loadImage('cubepixel1.png');
