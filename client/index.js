@@ -145,9 +145,10 @@ let weapons =  [
 
 let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: ["", "freak"], currentsub:0 },
-  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal", "aug"], currentsub:0 },
+  { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"], currentsub:0 },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
-  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
+  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 },
+  { name: "pman", fullname: "P-Man", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: [""], currentsub:0 }
 ]
 
 let delay = 999
@@ -301,6 +302,13 @@ function preload() {
   hamsteralback = loadImage('hamsteral5.png');
   hamsteralbackleft = loadImage('hamsteral6.png');
   hamsteralbackright = loadImage('hamsteral4.png');
+
+  pmanfrontleft = loadImage('pron3.png');
+  pmanfrontright = loadImage('pron3.png');
+  pmanfront = loadImage('pron3.png');
+  pmanback = loadImage('pron3.png');
+  pmanbackleft = loadImage('pron3.png');
+  pmanbackright = loadImage('pron3.png');
 }
 
 function checkStuck() {
@@ -378,7 +386,7 @@ function setup() {
 
 
   createCanvas(window.innerWidth, window.innerHeight);
-  frameRate(60)
+  // frameRate(60)
   pixelDensity(1);
   noSmooth()
   document.addEventListener('contextmenu', event => event.preventDefault());
@@ -389,6 +397,7 @@ function setup() {
   nameField.attribute('placeholder', 'username')
   nameField.size(100)
   respawnMe()
+
 }
 
 socket.on("updatebullets", function (x) {
@@ -492,21 +501,21 @@ function keyPressed() {
     //     reloading = 0
     //   }
     // }
-    if (keyCode == 49) {
-      currentgun = skinslist[skinnum].primary
-      clearTimeout(reloadtimerid)
-      reloading = 0
-    }
-    if (keyCode == 50) {
-      currentgun = skinslist[skinnum].secondary
-      clearTimeout(reloadtimerid)
-      reloading = 0
-    }
-    if (keyCode == 51) {
-      currentgun = skinslist[skinnum].tertiary
-      clearTimeout(reloadtimerid)
-      reloading = 0
-    }
+  }
+  if (keyCode == 49) {
+    currentgun = skinslist[skinnum].primary
+    clearTimeout(reloadtimerid)
+    reloading = 0
+  }
+  if (keyCode == 50) {
+    currentgun = skinslist[skinnum].secondary
+    clearTimeout(reloadtimerid)
+    reloading = 0
+  }
+  if (keyCode == 51) {
+    currentgun = skinslist[skinnum].tertiary
+    clearTimeout(reloadtimerid)
+    reloading = 0
   }
 }
 
@@ -1054,6 +1063,13 @@ function draw() {
 
 
     image(titlepic, width / 2, 175, 600, 200);
+    textSize(20)
+
+    // push()
+    // textAlign(RIGHT)
+    // text("TM", width/2 +270, 270)
+    // pop()
+
     image(spawnpic, width / 2, height / 2 + 150, 400, 100);
 
 
