@@ -134,9 +134,9 @@ let weapons =  [
   { name: "uzi",      type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
   { name: "glock",    type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.5,  ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle",   type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60,  reloadspeed: 2.2,  ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:20},
-  { name: "sniper",   type: "gun",     hitscan:true,  laser:true,  hidebullet:false, simul:1, dropoff:1,   zoom:1, damage: 100, reloadspeed: 3.7,  ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 1.2 , xoffset:-30, yoffset:20},
+  { name: "sniper",   type: "gun",     hitscan:true,  laser:true,  hidebullet:false, simul:1, dropoff:1,   zoom:1, damage: 100, reloadspeed: 3.7,  ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.3, spritehorizrecoil: 2, bulletspd: 1.2 , xoffset:-30, yoffset:20},
   { name: "shorty",   type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:8, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1,    ammo:12, maxammo:2, speed: 24, auto: false, spread:0.4, recoil:30, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 0.5 , xoffset:0, yoffset:15},
-  { name: "benelli",  type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:6, maxammo:6, speed: 13, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:0, yoffset:15},
+  { name: "benelli",  type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:6, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:6, maxammo:6, speed: 13, auto: false, spread:0.3, recoil:30, spriterecoil: 0.3, spritehorizrecoil: 1, bulletspd: 0.8 , xoffset:0, yoffset:15},
   { name: "knife",    type: "knife",   hitscan:false, laser:false, hidebullet:true,  simul:1, dropoff:0.6, zoom:3, damage: 80,  reloadspeed: 0,    ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:7},
   { name: "grenade",  type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7},
   { name: "c4",       type: "c4",      hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7},
@@ -690,12 +690,12 @@ function draw() {
 
   xoffset = (width / 2) - myposx - (mouseX - windowWidth / 2) / zoomsmoothed
   yoffset = (height / 2) - myposy - (mouseY - windowHeight / 2) / zoomsmoothed
-  background('white');
+  background('#da0063');
 
 
 
   noStroke()
-  image(img, width / 2, height / 2, width + 4, height + 4);
+  // image(img, width / 2, height / 2, width + 4, height + 4);
   image(img, xoffset, yoffset, 4000, 4000);
 
 
@@ -822,7 +822,7 @@ function draw() {
         if (map[l][k] == 1) {
           strokeWeight(3)
 
-          const index = maps.indexOf(map);
+          // const index = maps.indexOf(map);
 
           // if (index==0) {
             fill('#da0063')
