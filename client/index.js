@@ -386,7 +386,7 @@ function setup() {
 
 
   createCanvas(window.innerWidth, window.innerHeight);
-  // frameRate(60)
+  frameRate(60)
   pixelDensity(1);
   noSmooth()
   document.addEventListener('contextmenu', event => event.preventDefault());
