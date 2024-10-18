@@ -304,9 +304,9 @@ function preload() {
   hamsteralbackleft = loadImage('hamsteral6.png');
   hamsteralbackright = loadImage('hamsteral4.png');
 
-  pmanfrontleft = loadImage('pron3.png');
-  pmanfrontright = loadImage('pron3.png');
-  pmanfront = loadImage('pron3.png');
+  pmanfrontleft = loadImage('pron4.png');
+  pmanfrontright = loadImage('pron4.png');
+  pmanfront = loadImage('pron4.png');
   pmanback = loadImage('pron3.png');
   pmanbackleft = loadImage('pron3.png');
   pmanbackright = loadImage('pron3.png');
