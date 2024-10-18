@@ -147,8 +147,9 @@ let skinslist = [
   { name: "cube", fullname: "Cube", primary: 0, secondary: 2, tertiary: 8, speed: 1.1, sub: ["", "freak"], currentsub:0 },
   { name: "cat", fullname: "Cat", primary: 4, secondary: 5, tertiary: 7, speed: 0.9, sub: ["", "hal"], currentsub:0 },
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
-  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 }
-  // { name: "pman", fullname: "P-Man", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: [""], currentsub:0 }
+  { name: "hamster", fullname: "Hamster", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 },
+  { name: "pman", fullname: "P-Man", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: [""], currentsub:0 },
+  { name: "woker", fullname: "Woker", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: [""], currentsub:0 }
 ]
 
 let delay = 999
@@ -309,6 +310,13 @@ function preload() {
   pmanback = loadImage('pron3.png');
   pmanbackleft = loadImage('pron3.png');
   pmanbackright = loadImage('pron3.png');
+
+  wokerfrontleft = loadImage('woker3.png');
+  wokerfrontright = loadImage('woker3.png');
+  wokerfront = loadImage('woker3.png');
+  wokerback = loadImage('woker4.png');
+  wokerbackleft = loadImage('woker4.png');
+  wokerbackright = loadImage('woker4.png');
 }
 
 function checkStuck() {
