@@ -131,7 +131,7 @@ let mapCountdown = 999
 
 let weapons =  [
   { name: "ak",       type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2.4,  ammo:30, maxammo:30, speed: 6, auto: true, spread:0.3, recoil:4, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 1.1, xoffset:10, yoffset:15},
-  { name: "uzi",      type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.75, ammo:25, maxammo:25, speed: 5, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
+  { name: "uzi",      type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.75, ammo:25, maxammo:25, speed: 6, auto: true, spread:0.15, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:-10, yoffset:13},
   { name: "glock",    type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 1.5,  ammo:17, maxammo:17, speed: 9, auto: false, spread:0, recoil:6, spriterecoil: 0.7, spritehorizrecoil: 0, bulletspd: 0.8, xoffset:0, yoffset:15},
   { name: "deagle",   type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 60,  reloadspeed: 2.2,  ammo:7, maxammo:7, speed: 13, auto: false, spread:0, recoil:18, spriterecoil: 1, spritehorizrecoil: 0, bulletspd: 1, xoffset:0, yoffset:15},
   { name: "sniper",   type: "gun",     hitscan:true,  laser:true,  hidebullet:false, simul:1, dropoff:1,   zoom:1, damage: 100, reloadspeed: 3.7,  ammo:5, maxammo:5, speed: 88, auto: false, spread:0, recoil:18, spriterecoil: 0.3, spritehorizrecoil: 2, bulletspd: 1.2 , xoffset:-30, yoffset:6},
@@ -187,6 +187,10 @@ let recoilx = 0
 let recoily = 0
 
 let currentgun = 0
+
+let xoffset=0
+let yoffset=0
+
 
 function preload() {
   shadow = loadImage('shadow.png')
@@ -547,8 +551,9 @@ function nadesplode(x,y) {
 function shoot() {
   if (weapons[currentgun].ammo > 0 && reloading == 0) {
     if (delay >= weapons[currentgun].speed) {
-      // if (delay>=weapons[currentgun].speed) {
       if (positions[id].dead == 0) {
+        // xdiff = (mouseX - width / 2)
+        // ydiff = (mouseY - height / 2)
         xdiff = (mouseX - width / 2)
         ydiff = (mouseY - height / 2)
 
@@ -696,8 +701,8 @@ function draw() {
   }
 
 
-  xoffset = (width / 2) - myposx - (mouseX - windowWidth / 2) / zoomsmoothed
-  yoffset = (height / 2) - myposy - (mouseY - windowHeight / 2) / zoomsmoothed
+  xoffset = (width / 2) - myposx - ((mouseX - windowWidth / 2) / zoomsmoothed)
+  yoffset = (height / 2) - myposy - ((mouseY - windowHeight / 2) / zoomsmoothed)
   background('#da0063');
 
 
@@ -848,8 +853,12 @@ function draw() {
     }
 
     push()
+
+
     translate(xoffset + myposx, yoffset + myposy)
-    rotate(Math.atan2(mouseY - (height / 2), mouseX - (width / 2)))
+
+
+    rotate(Math.atan2((mouseY - (height / 2)), mouseX - (width / 2)))
     translate(75, 0)
     suicide = 0
     if (mouseX - (width / 2) >= 0) {
