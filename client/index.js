@@ -141,7 +141,8 @@ let weapons =  [
   { name: "knife",    type: "knife",   hitscan:false, laser:false, hidebullet:true,  simul:1, dropoff:0.6, zoom:3, damage: 80,  reloadspeed: 0,    ammo:99999999999999, maxammo:99999999999999, speed: 30, auto: true, spread:0, recoil:0, spriterecoil: 0.2, spritehorizrecoil: -2, bulletspd: 1 , xoffset:10, yoffset:3},
   { name: "grenade",  type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7},
   { name: "c4",       type: "c4",      hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3, speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7},
-  { name: "skorpion", type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:20, maxammo:20, speed: 4, auto: true, spread:0.1, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:10, yoffset:15}
+  { name: "skorpion", type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:20, maxammo:20, speed: 4, auto: true, spread:0.1, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:10, yoffset:15},
+  { name: "rpg",  type: "rpg", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 4, ammo:1,  maxammo:1, speed: 0, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 1.2 , xoffset:25, yoffset:7},
 ]
 
 let skinslist = [
@@ -150,7 +151,7 @@ let skinslist = [
   { name: "bird", fullname: "Bird", primary: 1, secondary: 3, tertiary: 8, speed: 1.2, sub: [""], currentsub:0 },
   { name: "hamster", fullname: "Hamster", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: ["", "al"], currentsub:0 },
   { name: "pman", fullname: "P-Man", primary: 6, secondary: 10, tertiary: 7, speed: 1.1, sub: [""], currentsub:0 },
-  { name: "woker", fullname: "Woker", primary: 6, secondary: 10, tertiary: 9, speed: 1.1, sub: [""], currentsub:0 }
+  { name: "woker", fullname: "Woker", primary: 11, secondary: 10, tertiary: 9, speed: 1.1, sub: [""], currentsub:0 }
 ]
 
 let delay = 999
@@ -255,6 +256,10 @@ function preload() {
   benelli = loadImage('weapons/benelli.png')
   benelligone = loadImage('weapons/benelligone.png')
 
+  rpg = loadImage('weapons/rpg.png')
+  rpggone = loadImage('weapons/rpggone.png')
+  rocket = loadImage('weapons/rocket.png')
+
   aktile = loadImage('weapons/tiles/aktile.png')
   glocktile = loadImage('weapons/tiles/glocktile.png')
   snipertile = loadImage('weapons/tiles/snipertile.png')
@@ -266,6 +271,7 @@ function preload() {
   grenadetile = loadImage('weapons/tiles/grenadetile.png')
   c4tile = loadImage('weapons/tiles/c4tile.png')
   skorpiontile = loadImage('weapons/tiles/skorpiontile.png')
+  rpgtile = loadImage('weapons/tiles/rpgtile.png')
 
   catfrontleft = loadImage('catfront3.png');
   catfrontright = loadImage('catfront1.png');
@@ -461,7 +467,7 @@ function mousePressed() {
 
 
 function reload() {
-  if (weapons[currentgun].type == "gun") {
+  if (weapons[currentgun].type == "gun" || weapons[currentgun].type == "rpg") {
     if (reloading == 0) {
       if (weapons[currentgun].ammo < weapons[currentgun].maxammo) {
         reloading = 1
@@ -793,6 +799,13 @@ function draw() {
     if (b.hidebullet == false) {
       if (b.type == "grenade") {
         image(grenade, b.xpos + xoffset, b.ypos + yoffset)
+      }
+      else if (b.type == "rpg") {
+        push()
+        translate(b.xpos + xoffset, b.ypos + yoffset)
+        rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel))
+        image(rocket, 0, 0)
+        pop()
       }
       else if (b.type == "c4") {
         image(c4, b.xpos + xoffset, b.ypos + yoffset)
