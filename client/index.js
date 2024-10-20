@@ -1122,7 +1122,7 @@ function draw() {
       row = 0
     }
 
-    image(eval(skin + sub), width / 2, height / 2, eval(skin + sub + direction).width * 2, eval(skin + sub + direction).height * 2, col * 100, row * 100, 100, 100);
+    image(eval(skin + sub), width / 2, height / 2, eval(skin + sub).width * 2, eval(skin + sub).height * 2, col * 100, row * 100, 100, 100);
 
 
     if ((width / 2) + 150 < mouseX && (width / 2) + 250 > mouseX && (height / 2) - 50 < mouseY && mouseY < (height / 2) + 50 && !mouseIsPressed) {
