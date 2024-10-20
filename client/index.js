@@ -142,7 +142,7 @@ let weapons =  [
   { name: "grenade",  type: "grenade", hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3,  speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:10, yoffset:7},
   { name: "c4",       type: "c4",      hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 0,    ammo:3,  maxammo:3,  speed: 88, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.3 , xoffset:10, yoffset:7},
   { name: "skorpion", type: "gun",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.9, zoom:3, damage: 20,  reloadspeed: 2,    ammo:20, maxammo:20, speed: 4, auto: true, spread:0.1, recoil:1, spriterecoil: 0.2, spritehorizrecoil: 0, bulletspd: 0.8 , xoffset:10, yoffset:15},
-  { name: "rpg",      type: "rpg",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:0.98,zoom:3, damage: 20,  reloadspeed: 4,    ammo:1,  maxammo:1,  speed: 0, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 1.2 , xoffset:25, yoffset:7},
+  { name: "rpg",      type: "rpg",     hitscan:false, laser:false, hidebullet:false, simul:1, dropoff:1,zoom:3, damage: 20,  reloadspeed: 4,    ammo:1,  maxammo:1,  speed: 0, auto: false, spread:0, recoil:0, spriterecoil: 0, spritehorizrecoil: 0, bulletspd: 0.7 , xoffset:25, yoffset:7},
 ]
 
 let skinslist = [
@@ -734,7 +734,7 @@ function draw() {
           if ((b.xpos>=(i * 100) - 2000) && (b.xpos<=(i * 100) - 2000 +100) && ((j * 100) - 2000 <= b.ypos) && ((j * 100) -2000 +100 >= b.ypos) && b.bulletxvel != 0 ) {
             const index = localbullets.indexOf(b);
             if (index > -1) {
-              if (b.type == "grenade") {
+              if (b.type == "grenade" || b.type == "rpg") {
                 nadesplode(b.xpos, b.ypos)
               }
               localbullets.splice(index, 1);
@@ -744,7 +744,7 @@ function draw() {
           if ((b.ypos+b.bulletyvel*90>=(j * 100) - 2000) && (b.ypos+b.bulletyvel*90<=(j * 100) - 2000 +100) && ((i * 100) - 2000 <= b.xpos) && ((i * 100) -2000 +100 >= b.xpos) && b.bulletyvel != 0 ) {
             const index = localbullets.indexOf(b);
             if (index > -1) {
-              if (b.type == "grenade") {
+              if (b.type == "grenade" || b.type == "rpg") {
                 nadesplode(b.xpos, b.ypos)
               }
               localbullets.splice(index, 1);
@@ -823,6 +823,13 @@ function draw() {
       if (b.hidebullet == false) {
         if (b.type == "grenade") {
           image(grenade, b.xpos + xoffset, b.ypos + yoffset)
+        }
+        else if (b.type == "rpg") {
+          push()
+          translate(b.xpos + xoffset, b.ypos + yoffset)
+          rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel))
+          image(rocket, 0, 0)
+          pop()
         }
         else if (b.type == "c4") {
           image(c4, b.xpos + xoffset, b.ypos + yoffset)
