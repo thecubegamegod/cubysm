@@ -984,11 +984,30 @@ function draw() {
         // pop()
 
 
-        if ((positions[i].skin + positions[i].dir) != NaN) {
+        // if ((positions[i].skin + positions[i].dir) != NaN) {
+        //   if (positions[i].flash > 0) {
+        //     tint(218, 0, 99);
+        //   }
+        //   image(eval(positions[i].skin + positions[i].sub + positions[i].dir), positions[i].xvel + xoffset, positions[i].yvel + yoffset)
+        //   noTint()
+        //   if (dead == 0) {
+        //     if (positions[id].flash > 0) {
+        //       tint(218, 0, 99);
+        //     }
+        //     else {
+        //       noTint()
+        //     }
+        //   }
+        //   textSize(15)
+        //   text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 60)
+        //   textSize(13)
+        //   text("❤️".repeat(Math.round(positions[i].hp / 20)) + "💜".repeat(5 - (Math.round(positions[i].hp / 20))), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80)
+        // }
+        if ((positions[i].skin) != NaN) {
           if (positions[i].flash > 0) {
             tint(218, 0, 99);
           }
-          image(eval(positions[i].skin + positions[i].sub + positions[i].dir), positions[i].xvel + xoffset, positions[i].yvel + yoffset)
+          image(eval(positions[i].skin + positions[i].sub), positions[i].xvel + xoffset, positions[i].yvel + yoffset, 100, 100, positions[i].col * 100, positions[i].row * 100, 100, 100), positions[i].xvel + xoffset, positions[i].yvel + yoffset))
           noTint()
           if (dead == 0) {
             if (positions[id].flash > 0) {
@@ -1003,6 +1022,8 @@ function draw() {
           textSize(13)
           text("❤️".repeat(Math.round(positions[i].hp / 20)) + "💜".repeat(5 - (Math.round(positions[i].hp / 20))), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80)
         }
+
+
         fill('white')
 
       }
@@ -1245,7 +1266,7 @@ function mouseWheel(event) {
 }
 
 setInterval(function myFunction() {
-  socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, gundir: weaponrotation, flipgun: flipgun, suicide: suicide, currentgun: currentgun, skin: skin, sub:sub });
+  socket.volatile.emit("move", { name: username, xvel: myposx, yvel: myposy, id: id, dir: direction, col: col, row: row, gundir: weaponrotation, flipgun: flipgun, suicide: suicide, currentgun: currentgun, skin: skin, sub:sub });
   if (delay < weapons[currentgun].speed) {
     delay += 1
     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
