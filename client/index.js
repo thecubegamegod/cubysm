@@ -206,21 +206,6 @@ function preload() {
   img = loadImage('bg.png');
   bricks = loadImage('brick.png');
 
-  cubefrontright = loadImage('cubepixel1.png');
-  cuberight = loadImage('cubepixel9.png');
-  cubefrontleft = loadImage('cubepixel2.png');
-  cubefront = loadImage('cubepixel3.png');
-  cubeback = loadImage('cubepixel4.png');
-  cubebackleft = loadImage('cubepixel5.png');
-  cubebackright = loadImage('cubepixel6.png');
-
-
-  cubefreakfrontright = loadImage('cubefreak1.png');
-  cubefreakfrontleft = loadImage('cubefreak2.png');
-  cubefreakfront = loadImage('cubefreak3.png');
-  cubefreakback = loadImage('cubefreak4.png');
-  cubefreakbackleft = loadImage('cubefreak5.png');
-  cubefreakbackright = loadImage('cubefreak6.png');
 
   arrow = loadImage('arrow.png');
   arrowgone = loadImage('arrowempty.png');
@@ -276,68 +261,15 @@ function preload() {
   skorpiontile = loadImage('weapons/tiles/skorpiontile.png')
   rpgtile = loadImage('weapons/tiles/rpgtile.png')
 
-  catfrontleft = loadImage('catfront3.png');
-  catfrontright = loadImage('catfront1.png');
-  catfront = loadImage('catfront2.png');
-  catback = loadImage('catfront5.png');
-  catbackleft = loadImage('catfront4.png');
-  catbackright = loadImage('catfront6.png');
-
-  cathalfrontleft = loadImage('cathalfront3.png');
-  cathalfrontright = loadImage('cathalfront1.png');
-  cathalfront = loadImage('cathalfront2.png');
-  cathalback = loadImage('cathalfront5.png');
-  cathalbackleft = loadImage('cathalfront4.png');
-  cathalbackright = loadImage('cathalfront6.png');
-
-  cataugfrontleft = loadImage('cataug.png');
-  cataugfrontright = loadImage('cataug.png');
-  cataugfront = loadImage('cataug.png');
-  cataugback = loadImage('cataug.png');
-  cataugbackleft = loadImage('cataug.png');
-  cataugbackright = loadImage('cataug.png');
-
-  birdfrontleft = loadImage('bill6.png');
-  birdfrontright = loadImage('bill4.png');
-  birdfront = loadImage('bill3.png');
-  birdback = loadImage('bill2.png');
-  birdbackleft = loadImage('bill1.png');
-  birdbackright = loadImage('bill5.png');
-
-  hamsterfrontleft = loadImage('hamster1.png');
-  hamsterfrontright = loadImage('hamster3.png');
-  hamsterfront = loadImage('hamster2.png');
-  hamsterback = loadImage('hamster5.png');
-  hamsterbackleft = loadImage('hamster6.png');
-  hamsterbackright = loadImage('hamster4.png');
-
-  hamsteralfrontleft = loadImage('hamsteral1.png');
-  hamsteralfrontright = loadImage('hamsteral3.png');
-  hamsteralfront = loadImage('hamsteral2.png');
-  hamsteralback = loadImage('hamsteral5.png');
-  hamsteralbackleft = loadImage('hamsteral6.png');
-  hamsteralbackright = loadImage('hamsteral4.png');
-
-  pmanfrontleft = loadImage('pron4.png');
-  pmanfrontright = loadImage('pron4.png');
-  pmanfront = loadImage('pron4.png');
-  pmanback = loadImage('pron3.png');
-  pmanbackleft = loadImage('pron3.png');
-  pmanbackright = loadImage('pron3.png');
-
-  wokerfrontleft = loadImage('woker3.png');
-  wokerfrontright = loadImage('woker3.png');
-  wokerfront = loadImage('woker3.png');
-  wokerback = loadImage('woker4.png');
-  wokerbackleft = loadImage('woker4.png');
-  wokerbackright = loadImage('woker4.png');
-
-
   cube = loadImage('cube.png');
   cubefreak = loadImage('cubefreak.png');
   cat = loadImage('cat.png');
   cathal = loadImage('cat.png');
   bird = loadImage('bird.png');
+  hamster = loadImage('hamster.png');
+  woker = loadImage('woker.png');
+  pman = loadImage('pman.png');
+
 }
 
 function checkStuck() {
@@ -1007,7 +939,7 @@ function draw() {
           if (positions[i].flash > 0) {
             tint(218, 0, 99);
           }
-          image(eval(positions[i].skin + positions[i].sub), positions[i].xvel + xoffset, positions[i].yvel + yoffset, 100, 100, positions[i].col * 100, positions[i].row * 100, 100, 100), positions[i].xvel + xoffset, positions[i].yvel + yoffset))
+          image(eval(positions[i].skin + positions[i].sub), positions[i].xvel + xoffset, positions[i].yvel + yoffset, 100, 100, positions[i].col * 100, positions[i].row * 100, 100, 100)
           noTint()
           if (dead == 0) {
             if (positions[id].flash > 0) {
