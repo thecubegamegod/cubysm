@@ -169,6 +169,9 @@ let cubefront;
 let bulletimage;
 
 let direction = "front"
+let col = 0
+let row = 0
+
 
 let username = "fellow"
 
@@ -328,6 +331,13 @@ function preload() {
   wokerback = loadImage('woker4.png');
   wokerbackleft = loadImage('woker4.png');
   wokerbackright = loadImage('woker4.png');
+
+
+  cube = loadImage('cube.png');
+  cubefreak = loadImage('cubefreak.png');
+  cat = loadImage('cat.png');
+  cathal = loadImage('cat.png');
+  bird = loadImage('bird.png');
 }
 
 function checkStuck() {
@@ -1004,20 +1014,45 @@ function draw() {
           direction = "front"
           angle = Math.atan2(mouseY - (height / 2), mouseX - (width / 2))
 
-          if (angle > 1.963) { direction = "frontleft" }
-          else if (angle > 1.178) { direction = "front" }
-          else if (angle > 0) { direction = "frontright" }
-          else if (angle > -1.178) { direction = "backright" }
-          else if (angle > -1.963) { direction = "back" }
-          else { direction = "backleft" }
+          if (angle > 1.963) {
+            direction = "frontleft"
+            col = 0
+            row = 0
+          }
+          else if (angle > 1.178) {
+            direction = "front"
+            col = 1
+            row = 0
+          }
+          else if (angle > 0) {
+            direction = "frontright"
+            col = 2
+            row = 0
+          }
+          else if (angle > -1.178) {
+            direction = "backright"
+            col = 0
+            row = 1
+          }
+          else if (angle > -1.963) {
+            direction = "back"
+            col = 1
+            row = 1
+          }
+          else {
+            direction = "backleft"
+            col = 2
+            row = 1
+          }
           
           textSize(15)
           text(username + " | 🔥" + String(positions[id].streak), myposx + xoffset, myposy + yoffset - 60)
           textSize(13)
           text("❤️".repeat(Math.round(positions[id].hp / 20)) + "💜".repeat(5 - (Math.round(positions[id].hp / 20))), myposx + xoffset, myposy + yoffset - 80)
 
-          image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
-          image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
+          // image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
+
+          image(eval(skin + sub), xoffset + myposx, yoffset + myposy, 100, 100, col * 100, row * 100, 100, 100);
 
 
           if (currentgun == skinslist[skinnum].primary) {
@@ -1118,11 +1153,23 @@ function draw() {
     direction = "front"
     angle = mouseX - (width / 2)
 
-    if (angle > 100) { direction = "frontright" }
-    else if (angle < -100) { direction = "frontleft" }
-    else { direction = "front" }
+    if (angle > 100) {
+      direction = "frontright"
+      col = 2
+      row = 0
+    }
+    else if (angle < -100) {
+      direction = "frontleft"
+      col = 0
+      row = 0
+    }
+    else {
+      direction = "front"
+      col = 1
+      row = 0
+    }
 
-    image(eval(skin + sub + direction), width / 2, height / 2, eval(skin + sub + direction).width * 2, eval(skin + sub + direction).height * 2);
+    image(eval(skin + sub), width / 2, height / 2, eval(skin + sub + direction).width * 2, eval(skin + sub + direction).height * 2, col * 100, row * 100, 100, 100);
 
 
     if ((width / 2) + 150 < mouseX && (width / 2) + 250 > mouseX && (height / 2) - 50 < mouseY && mouseY < (height / 2) + 50 && !mouseIsPressed) {
