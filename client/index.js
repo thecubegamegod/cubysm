@@ -686,7 +686,7 @@ function changeTitle(newTitle) {
 
 function setup() {
 
-  if (window.location.hostname == "dev.cubism.co.uk") {
+  if (window.location.hostname == "dev.cubysm.co.uk") {
     skinslist = devskinslist
   }
 
