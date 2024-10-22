@@ -1837,10 +1837,10 @@ function draw() {
       height / 2,
       200,
       200,
-      col * 100,
-      row * 100,
-      100,
-      100,
+      col * eval(skin + sub).width/3,
+      row * eval(skin + sub).height/2,
+      eval(skin + sub).width/3,
+      eval(skin + sub).height/2
     );
 
     if (
