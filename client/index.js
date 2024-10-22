@@ -867,9 +867,10 @@ function preload() {
   cube = loadImage("cube.png");
   cubefreak = loadImage("cubefreak.png");
   cat = loadImage("cat.png");
-  cathal = loadImage("cat.png");
+  cathal = loadImage("cathal.png");
   bird = loadImage("bird.png");
   hamster = loadImage("hamster.png");
+  hamsteral = loadImage("hamsteral.png");
   woker = loadImage("woker.png");
   pman = loadImage("pman.png");
 }
