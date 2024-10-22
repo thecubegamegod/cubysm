@@ -1678,14 +1678,14 @@ function draw() {
 
           image(
             eval(skin + sub),
-            xoffset + myposx,
-            yoffset + myposy,
-            100,
-            100,
-            col * 100,
-            row * 100,
-            100,
-            100,
+            width / 2,
+            height / 2,
+            eval(skin + sub).width/3,
+            row * eval(skin + sub).height/2,
+            col * eval(skin + sub).width/3,
+            row * eval(skin + sub).height/2,
+            eval(skin + sub).width/3,
+            eval(skin + sub).height/2
           );
 
           if (currentgun == skinslist[skinnum].primary) {
