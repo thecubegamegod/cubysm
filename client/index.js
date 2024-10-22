@@ -1595,13 +1595,14 @@ function draw() {
             eval(positions[i].skin + positions[i].sub),
             positions[i].xvel + xoffset,
             positions[i].yvel + yoffset,
-            100,
-            100,
-            positions[i].col * 100,
-            positions[i].row * 100,
-            100,
-            100,
+            eval(positions[i].skin + positions[i].sub).width/3,
+            eval(positions[i].skin + positions[i].sub).height/2,
+            positions[i].col * eval(positions[i].skin + positions[i].sub).width/3,
+            positions[i].row * eval(positions[i].skin + positions[i].sub).height/2,
+            eval(skin + sub).width/3,
+            eval(skin + sub).height/2
           );
+
           noTint();
           if (dead == 0) {
             if (positions[id].flash > 0) {
