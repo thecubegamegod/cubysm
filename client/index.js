@@ -1831,12 +1831,13 @@ function draw() {
       row = 0;
     }
 
+
     image(
       eval(skin + sub),
       width / 2,
       height / 2,
-      200,
-      200,
+      eval(skin + sub).width/1.5,
+      row * eval(skin + sub).height,
       col * eval(skin + sub).width/3,
       row * eval(skin + sub).height/2,
       eval(skin + sub).width/3,
