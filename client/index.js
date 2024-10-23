@@ -663,7 +663,7 @@ let skinslist = [
     secondary: 2,
     tertiary: 8,
     speed: 1.1,
-    sub: ["", "freak"],
+    sub: ["", "freak", "hal"],
     currentsub: 0,
   },
   {
@@ -865,6 +865,7 @@ function preload() {
   rpgtile = loadImage("weapons/tiles/rpgtile.png");
 
   cube = loadImage("cube.png");
+  cubehal = loadImage("cubehal.png");
   cubefreak = loadImage("cubefreak.png");
   cat = loadImage("cat.png");
   cathal = loadImage("cathal.png");
