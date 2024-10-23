@@ -683,7 +683,7 @@ let skinslist = [
     secondary: 3,
     tertiary: 8,
     speed: 1.2,
-    sub: [""],
+    sub: ["", "hal"],
     currentsub: 0,
   },
   {
@@ -726,7 +726,7 @@ let devskinslist = [
     secondary: 3,
     tertiary: 8,
     speed: 1.2,
-    sub: [""],
+    sub: ["", "hal"],
     currentsub: 0,
   },
   {
@@ -869,6 +869,7 @@ function preload() {
   cat = loadImage("cat.png");
   cathal = loadImage("cathal.png");
   bird = loadImage("bird.png");
+  birdhal = loadImage("birdhal.png");
   hamster = loadImage("hamster.png");
   hamsteral = loadImage("hamsteral.png");
   woker = loadImage("woker.png");
@@ -1595,12 +1596,16 @@ function draw() {
             eval(positions[i].skin + positions[i].sub),
             positions[i].xvel + xoffset,
             positions[i].yvel + yoffset,
-            eval(positions[i].skin + positions[i].sub).width/3,
-            eval(positions[i].skin + positions[i].sub).height/2,
-            positions[i].col * eval(positions[i].skin + positions[i].sub).width/3,
-            positions[i].row * eval(positions[i].skin + positions[i].sub).height/2,
-            eval(skin + sub).width/3,
-            eval(skin + sub).height/2
+            eval(positions[i].skin + positions[i].sub).width / 3,
+            eval(positions[i].skin + positions[i].sub).height / 2,
+            (positions[i].col *
+              eval(positions[i].skin + positions[i].sub).width) /
+              3,
+            (positions[i].row *
+              eval(positions[i].skin + positions[i].sub).height) /
+              2,
+            eval(skin + sub).width / 3,
+            eval(skin + sub).height / 2,
           );
 
           noTint();
@@ -1681,12 +1686,12 @@ function draw() {
             eval(skin + sub),
             xoffset + myposx,
             yoffset + myposy,
-            eval(skin + sub).width/3,
-            eval(skin + sub).height/2,
-            col * eval(skin + sub).width/3,
-            row * eval(skin + sub).height/2,
-            eval(skin + sub).width/3,
-            eval(skin + sub).height/2
+            eval(skin + sub).width / 3,
+            eval(skin + sub).height / 2,
+            (col * eval(skin + sub).width) / 3,
+            (row * eval(skin + sub).height) / 2,
+            eval(skin + sub).width / 3,
+            eval(skin + sub).height / 2,
           );
 
           if (currentgun == skinslist[skinnum].primary) {
@@ -1832,17 +1837,16 @@ function draw() {
       row = 0;
     }
 
-
     image(
       eval(skin + sub),
       width / 2,
       height / 2,
-      eval(skin + sub).width/1.5,
+      eval(skin + sub).width / 1.5,
       eval(skin + sub).height,
-      col * eval(skin + sub).width/3,
-      row * eval(skin + sub).height/2,
-      eval(skin + sub).width/3,
-      eval(skin + sub).height/2
+      (col * eval(skin + sub).width) / 3,
+      (row * eval(skin + sub).height) / 2,
+      eval(skin + sub).width / 3,
+      eval(skin + sub).height / 2,
     );
 
     if (
