@@ -693,7 +693,7 @@ let skinslist = [
     secondary: 10,
     tertiary: 7,
     speed: 1.1,
-    sub: ["", "al"],
+    sub: ["al", "eth"],
     currentsub: 0,
   },
 ];
@@ -872,6 +872,7 @@ function preload() {
   birdhal = loadImage("birdhal.png");
   hamster = loadImage("hamster.png");
   hamsteral = loadImage("hamsteral.png");
+  hamstereth = loadImage("hamstereth.png");
   woker = loadImage("woker.png");
   pman = loadImage("pman.png");
 }
