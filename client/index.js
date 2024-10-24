@@ -1750,7 +1750,6 @@ function draw() {
           // text(fps.toFixed(0) + "FPS", 35, height - 10);
 
           if (reloading == 1) {
-            console.log(performance.now());
             let left =
               Math.round(
                 (weapons[currentgun].reloadspeed -
