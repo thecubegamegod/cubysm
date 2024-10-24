@@ -933,7 +933,7 @@ function changeTitle(newTitle) {
 
 function setup() {
   console.log(window.location.hostname);
-  if (window.location.hostname == "www.dev.cubysm.co.uk") {
+  if (window.location.hostname == "www.dev.cubysm.co.uk" || window.location.hostname == "5111xh8p-3000.uks1.devtunnels.ms") {
     skinslist = devskinslist;
   }
 
@@ -1992,27 +1992,27 @@ socket.on("changemap", function (y) {
   checkStuck();
 });
 
-setInterval(function myFunction() {
-  leaderboard = [];
-  max = 9999;
-  tempmax = 0;
-  for (m = 0; m <= max; m++) {
-    for (j = 0; j <= positions.length - 1; j++) {
-      if (positions[j].kills == m) {
-        if (positions[j].id == id) {
-          leaderboard.unshift(
-            "[ " + positions[j].name + " - " + positions[j].kills + " ]",
-          );
-        } else {
-          leaderboard.unshift(positions[j].name + " - " + positions[j].kills);
-        }
-      }
-      if (max != tempmax) {
-        if (positions[j].kills > tempmax) {
-          tempmax = positions[j].kills;
-        }
-      }
-    }
-    max = tempmax;
-  }
-}, 500);
+// setInterval(function myFunction() {
+//   leaderboard = [];
+//   max = 9999;
+//   tempmax = 0;
+//   for (m = 0; m <= max; m++) {
+//     for (j = 0; j <= positions.length - 1; j++) {
+//       if (positions[j].kills == m) {
+//         if (positions[j].id == id) {
+//           leaderboard.unshift(
+//             "[ " + positions[j].name + " - " + positions[j].kills + " ]",
+//           );
+//         } else {
+//           leaderboard.unshift(positions[j].name + " - " + positions[j].kills);
+//         }
+//       }
+//       if (max != tempmax) {
+//         if (positions[j].kills > tempmax) {
+//           tempmax = positions[j].kills;
+//         }
+//       }
+//     }
+//     max = tempmax;
+//   }
+// }, 500);
