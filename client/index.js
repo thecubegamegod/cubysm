@@ -716,7 +716,7 @@ let devskinslist = [
     secondary: 5,
     tertiary: 7,
     speed: 0.9,
-    sub: ["", "hal"],
+    sub: ["", "hal", "bean"],
     currentsub: 0,
   },
   {
@@ -869,6 +869,7 @@ function preload() {
   cubefreak = loadImage("cubefreak.png");
   cat = loadImage("cat.png");
   cathal = loadImage("cathal.png");
+  catbean = loadImage("catbean.png");
   bird = loadImage("bird.png");
   birdhal = loadImage("birdhal.png");
   hamster = loadImage("hamster.png");
