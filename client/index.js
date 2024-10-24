@@ -1607,8 +1607,8 @@ function draw() {
             (positions[i].row *
               eval(positions[i].skin + positions[i].sub).height) /
               2,
-            eval(skin + sub).width / 3,
-            eval(skin + sub).height / 2,
+            eval(positions[i].skin + positions[i].sub).width / 3,
+            eval(positions[i].skin + positions[i].sub).height / 2,
           );
 
           noTint();
