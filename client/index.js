@@ -1595,20 +1595,21 @@ function draw() {
           if (positions[i].flash > 0) {
             tint(218, 0, 99);
           }
+          let tempimg = eval(positions[i].skin + positions[i].sub)
           image(
-            eval(positions[i].skin + positions[i].sub),
+            tempimg,
             positions[i].xvel + xoffset,
             positions[i].yvel + yoffset,
-            eval(positions[i].skin + positions[i].sub).width / 3,
-            eval(positions[i].skin + positions[i].sub).height / 2,
+            tempimg.width / 3,
+            tempimg.height / 2,
             (positions[i].col *
-              eval(positions[i].skin + positions[i].sub).width) /
+              tempimg.width) /
               3,
             (positions[i].row *
-              eval(positions[i].skin + positions[i].sub).height) /
+              tempimg.height) /
               2,
-            eval(positions[i].skin + positions[i].sub).width / 3,
-            eval(positions[i].skin + positions[i].sub).height / 2,
+              tempimg.width / 3,
+              tempimg.height / 2,
           );
 
           noTint();
@@ -1684,61 +1685,67 @@ function draw() {
           );
 
           // image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
+          let tempimg = eval(skin + sub)
 
           image(
-            eval(skin + sub),
+            tempimg,
             xoffset + myposx,
             yoffset + myposy,
-            eval(skin + sub).width / 3,
-            eval(skin + sub).height / 2,
-            (col * eval(skin + sub).width) / 3,
-            (row * eval(skin + sub).height) / 2,
-            eval(skin + sub).width / 3,
-            eval(skin + sub).height / 2,
+            tempimg.width / 3,
+            tempimg.height / 2,
+            (col * tempimg.width) / 3,
+            (row * tempimg.height) / 2,
+            tempimg.width / 3,
+            tempimg.height / 2,
           );
+
+          tempimg = eval(weapons[skinslist[skinnum].primary].name)
 
           if (currentgun == skinslist[skinnum].primary) {
             image(
-              eval(weapons[skinslist[skinnum].primary].name),
+              tempimg,
               width - 150,
               height - 325,
-              eval(weapons[skinslist[skinnum].primary].name).width * 1.5,
-              eval(weapons[skinslist[skinnum].primary].name).height * 1.5,
+              tempimg.width * 1.5,
+              tempimg.height * 1.5,
             );
           } else {
             image(
-              eval(weapons[skinslist[skinnum].primary].name),
+              tempimg,
               width - 150,
               height - 325,
             );
           }
+          tempimg = eval(weapons[skinslist[skinnum].secondary].name)
           if (currentgun == skinslist[skinnum].secondary) {
             image(
-              eval(weapons[skinslist[skinnum].secondary].name),
+              tempimg,
               width - 150,
               height - 225,
-              eval(weapons[skinslist[skinnum].secondary].name).width * 1.5,
-              eval(weapons[skinslist[skinnum].secondary].name).height * 1.5,
+              tempimg.width * 1.5,
+              tempimg.height * 1.5,
             );
           } else {
             image(
-              eval(weapons[skinslist[skinnum].secondary].name),
+              tempimg,
               width - 150,
               height - 225,
             );
           }
 
+          tempimg = eval(weapons[skinslist[skinnum].tertiary].name)
+
           if (currentgun == skinslist[skinnum].tertiary) {
             image(
-              eval(weapons[skinslist[skinnum].tertiary].name),
+              tempimg,
               width - 150,
               height - 125,
-              eval(weapons[skinslist[skinnum].tertiary].name).width * 1.5,
-              eval(weapons[skinslist[skinnum].tertiary].name).height * 1.5,
+              tempimg.width * 1.5,
+              tempimg.height * 1.5,
             );
           } else {
             image(
-              eval(weapons[skinslist[skinnum].tertiary].name),
+              tempimg,
               width - 150,
               height - 125,
             );
@@ -1839,16 +1846,18 @@ function draw() {
       row = 0;
     }
 
+    tempimg = eval(skin + sub)
+
     image(
-      eval(skin + sub),
+      tempimg,
       width / 2,
       height / 2,
-      eval(skin + sub).width / 1.5,
-      eval(skin + sub).height,
-      (col * eval(skin + sub).width) / 3,
-      (row * eval(skin + sub).height) / 2,
-      eval(skin + sub).width / 3,
-      eval(skin + sub).height / 2,
+      tempimg.width / 1.5,
+      tempimg.height,
+      (col * tempimg.width) / 3,
+      (row * tempimg.height) / 2,
+      tempimg.width / 3,
+      tempimg.height / 2,
     );
 
     if (
