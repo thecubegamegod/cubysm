@@ -172,8 +172,6 @@ setInterval(function myFunction() {
     b = bullets[p];
 
     //MOVING AND COLLIDING BULLETS
-    b.ypos += (b.bulletyvel * 90) / 4;
-    b.xpos += (b.bulletxvel * 90) / 4;
 
     for (i = 0; i < pos.length; i++) {
       if (b.id != pos[i].id || b.type == "shrapnel") {
@@ -246,11 +244,10 @@ setInterval(function myFunction() {
           }
 
           if (
-            b.ypos + b.bulletyvel * 90 * 0.25 >= j * 100 - 2000 &&
-            b.ypos + b.bulletyvel * 90 * 0.25 <= j * 100 - 2000 + 100 &&
+            b.ypos >= j * 100 - 2000 &&
+            b.ypos <= j * 100 - 2000 + 100 &&
             i * 100 - 2000 <= b.xpos &&
-            i * 100 - 2000 + 100 >= b.xpos &&
-            b.bulletyvel != 0
+            i * 100 - 2000 + 100 >= b.xpos
           ) {
             const index = bullets.indexOf(b);
             if (index > -1) {
@@ -267,6 +264,8 @@ setInterval(function myFunction() {
         bullets.splice(index, 1);
       }
     }
+    b.ypos += (b.bulletyvel * 90) / 4;
+    b.xpos += (b.bulletxvel * 90) / 4;
   }
 }, 1000 / 240);
 
