@@ -1025,7 +1025,7 @@ function draw() {
     for (i = 0; i < 40; i++) {
       for (j = 0; j < 40; j++) {
         if (map[j][i] == 1) {
-          if (b.xpos + (b.bulletxvel * 90) / 4 >= i * 100 - 2000 && b.xpos + (b.bulletxvel * 90) / 4 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + (b.bulletyvel * 90) / 4 && j * 100 - 2000 + 100 >= b.ypos + (b.bulletyvel * 90) / 4) {
+          if (b.xpos + b.bulletxvel * 90 >= i * 100 - 2000 && b.xpos + b.bulletxvel * 90 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + b.bulletyvel * 90 && j * 100 - 2000 + 100 >= b.ypos + b.bulletyvel * 90) {
             const index = localbullets.indexOf(b);
             if (index > -1) {
               if (b.type == "grenade" || b.type == "rpg") {
