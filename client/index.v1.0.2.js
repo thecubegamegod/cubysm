@@ -7,6 +7,9 @@ let positions = [];
 let myposx = 0;
 let myposy = 0;
 
+let myobjold = {};
+let myobj = {};
+
 let xvel = 0;
 let yvel = 0;
 
@@ -648,6 +651,9 @@ function checkStuck() {
             stuckloop = true;
           }
         }
+        if (stuckloop == true) {
+          break;
+        }
       }
     }
     if (stuckloop == false) {
@@ -707,7 +713,7 @@ function setup() {
   euhsfx = loadSound("euh.mp3");
 
   createCanvas(window.innerWidth, window.innerHeight);
-  frameRate(60);
+  // frameRate(60);
   pixelDensity(1);
   noSmooth();
   document.addEventListener("contextmenu", (event) => event.preventDefault());
@@ -1502,13 +1508,76 @@ function mouseWheel(event) {
   }
 }
 
+// setInterval(function myFunction() {
+//   myobj = {
+//     name: username,
+//     xvel: myposx,
+//     yvel: myposy,
+//     id: id,
+//     col: col,
+//     row: row,
+//     gundir: weaponrotation,
+//     flipgun: flipgun,
+//     suicide: suicide,
+//     currentgun: currentgun,
+//     skin: skin,
+//     sub: sub,
+//   };
+
+//   if (myobj != myobjold) {
+//     socket.volatile.emit("move", {
+//       name: username,
+//       xvel: myposx,
+//       yvel: myposy,
+//       id: id,
+//       col: col,
+//       row: row,
+//       gundir: weaponrotation,
+//       flipgun: flipgun,
+//       suicide: suicide,
+//       currentgun: currentgun,
+//       skin: skin,
+//       sub: sub,
+//     });
+//   }
+//   if (delay < weapons[currentgun].speed) {
+//     delay += 1;
+//     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
+//       shoot();
+//     }
+//   }
+
+//   myobjold = {
+//     name: username,
+//     xvel: myposx,
+//     yvel: myposy,
+//     id: id,
+//     col: col,
+//     row: row,
+//     gundir: weaponrotation,
+//     flipgun: flipgun,
+//     suicide: suicide,
+//     currentgun: currentgun,
+//     skin: skin,
+//     sub: sub,
+//   };
+// }, 1000 / 60);
+
+setInterval(function myFunction() {
+  if (delay < weapons[currentgun].speed) {
+    delay += 1;
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
+      shoot();
+    }
+  }
+}, 1000 / 60);
+
 setInterval(function myFunction() {
   socket.volatile.emit("move", {
     name: username,
     xvel: myposx,
     yvel: myposy,
     id: id,
-    dir: direction,
     col: col,
     row: row,
     gundir: weaponrotation,
@@ -1518,13 +1587,7 @@ setInterval(function myFunction() {
     skin: skin,
     sub: sub,
   });
-  if (delay < weapons[currentgun].speed) {
-    delay += 1;
-    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
-      shoot();
-    }
-  }
-}, 1000 / 60);
+}, 200);
 
 socket.on("updatepositions", function (x) {
   if (id == 99) {

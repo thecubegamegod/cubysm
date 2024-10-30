@@ -130,7 +130,6 @@ io.on("connection", function (socket) {
         xvel: 10000,
         yvel: 10000,
         id: arg,
-        dir: "front",
         skin: "cat",
         sub: "hal",
         dead: 1,
