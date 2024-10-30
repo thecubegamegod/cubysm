@@ -1508,72 +1508,8 @@ function mouseWheel(event) {
   }
 }
 
-// setInterval(function myFunction() {
-//   myobj = {
-//     name: username,
-//     xvel: myposx,
-//     yvel: myposy,
-//     id: id,
-//     col: col,
-//     row: row,
-//     gundir: weaponrotation,
-//     flipgun: flipgun,
-//     suicide: suicide,
-//     currentgun: currentgun,
-//     skin: skin,
-//     sub: sub,
-//   };
-
-//   if (myobj != myobjold) {
-//     socket.volatile.emit("move", {
-//       name: username,
-//       xvel: myposx,
-//       yvel: myposy,
-//       id: id,
-//       col: col,
-//       row: row,
-//       gundir: weaponrotation,
-//       flipgun: flipgun,
-//       suicide: suicide,
-//       currentgun: currentgun,
-//       skin: skin,
-//       sub: sub,
-//     });
-//   }
-//   if (delay < weapons[currentgun].speed) {
-//     delay += 1;
-//     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
-//       shoot();
-//     }
-//   }
-
-//   myobjold = {
-//     name: username,
-//     xvel: myposx,
-//     yvel: myposy,
-//     id: id,
-//     col: col,
-//     row: row,
-//     gundir: weaponrotation,
-//     flipgun: flipgun,
-//     suicide: suicide,
-//     currentgun: currentgun,
-//     skin: skin,
-//     sub: sub,
-//   };
-// }, 1000 / 60);
-
 setInterval(function myFunction() {
-  if (delay < weapons[currentgun].speed) {
-    delay += 1;
-    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
-      shoot();
-    }
-  }
-}, 1000 / 60);
-
-setInterval(function myFunction() {
-  socket.volatile.emit("move", {
+  myobj = {
     name: username,
     xvel: myposx,
     yvel: myposy,
@@ -1586,8 +1522,46 @@ setInterval(function myFunction() {
     currentgun: currentgun,
     skin: skin,
     sub: sub,
-  });
-}, 200);
+  };
+
+  if (myobj != myobjold) {
+    socket.volatile.emit("move", {
+      name: username,
+      xvel: myposx,
+      yvel: myposy,
+      id: id,
+      col: col,
+      row: row,
+      gundir: weaponrotation,
+      flipgun: flipgun,
+      suicide: suicide,
+      currentgun: currentgun,
+      skin: skin,
+      sub: sub,
+    });
+  }
+  if (delay < weapons[currentgun].speed) {
+    delay += 1;
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
+      shoot();
+    }
+  }
+
+  myobjold = {
+    name: username,
+    xvel: myposx,
+    yvel: myposy,
+    id: id,
+    col: col,
+    row: row,
+    gundir: weaponrotation,
+    flipgun: flipgun,
+    suicide: suicide,
+    currentgun: currentgun,
+    skin: skin,
+    sub: sub,
+  };
+}, 1000 / 60);
 
 socket.on("updatepositions", function (x) {
   if (id == 99) {
