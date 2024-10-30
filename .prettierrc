@@ -1,1 +1,5 @@
-{}
+{
+    "printWidth": 99999900,
+    "objectCurlySpacing": true
+  }
+  

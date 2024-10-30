@@ -231,11 +231,10 @@ setInterval(function myFunction() {
           // console.log("player: "+myposx)
 
           if (
-            b.xpos + b.bulletxvel * 90 * 0.25 >= i * 100 - 2000 &&
-            b.xpos + b.bulletxvel * 90 * 0.25 <= i * 100 - 2000 + 100 &&
-            j * 100 - 2000 <= b.ypos &&
-            j * 100 - 2000 + 100 >= b.ypos &&
-            b.bulletxvel != 0
+            b.xpos + ((b.bulletxvel * 90) / 4) >= i * 100 - 2000 &&
+            b.xpos + ((b.bulletxvel * 90) / 4) <= i * 100 - 2000 + 100 &&
+            j * 100 - 2000 <= b.ypos + ((b.bulletyvel * 90) / 4) &&
+            j * 100 - 2000 + 100 >= b.ypos + ((b.bulletyvel * 90) / 4)
           ) {
             const index = bullets.indexOf(b);
             if (index > -1) {
@@ -243,17 +242,17 @@ setInterval(function myFunction() {
             }
           }
 
-          if (
-            b.ypos >= j * 100 - 2000 &&
-            b.ypos <= j * 100 - 2000 + 100 &&
-            i * 100 - 2000 <= b.xpos &&
-            i * 100 - 2000 + 100 >= b.xpos
-          ) {
-            const index = bullets.indexOf(b);
-            if (index > -1) {
-              bullets.splice(index, 1);
-            }
-          }
+          // if (
+          //   b.ypos + ((b.bulletyvel * 90) / 4) >= j * 100 - 2000 &&
+          //   b.ypos + ((b.bulletyvel * 90) / 4) <= j * 100 - 2000 + 100 &&
+          //   i * 100 - 2000 <= b.xpos + ((b.bulletxvel * 90) / 4) &&
+          //   i * 100 - 2000 + 100 >= b.xpos + ((b.bulletxvel * 90) / 4)
+          // ) {
+          //   const index = bullets.indexOf(b);
+          //   if (index > -1) {
+          //     bullets.splice(index, 1);
+          //   }
+          // }
         }
       }
     }
