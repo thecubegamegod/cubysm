@@ -1088,26 +1088,26 @@ function draw() {
     b.xpos += b.bulletxvel * 90;
   }
 
-  // for (let b of bullets) {
-  //   imageMode(CENTER);
-  //   if (b.id != id || b.id == id) {
-  //     if (b.hidebullet == false) {
-  //       if (b.type == "grenade") {
-  //         image(grenade, b.xpos + xoffset, b.ypos + yoffset);
-  //       } else if (b.type == "rpg") {
-  //         push();
-  //         translate(b.xpos + xoffset, b.ypos + yoffset);
-  //         rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
-  //         image(rocket, 0, 0);
-  //         pop();
-  //       } else if (b.type == "c4") {
-  //         image(c4, b.xpos + xoffset, b.ypos + yoffset);
-  //       } else {
-  //         image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
-  //       }
-  //     }
-  //   }
-  // }
+  for (let b of bullets) {
+    imageMode(CENTER);
+    if (b.id != id) {
+      if (b.hidebullet == false) {
+        if (b.type == "grenade") {
+          image(grenade, b.xpos + xoffset, b.ypos + yoffset);
+        } else if (b.type == "rpg") {
+          push();
+          translate(b.xpos + xoffset, b.ypos + yoffset);
+          rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
+          image(rocket, 0, 0);
+          pop();
+        } else if (b.type == "c4") {
+          image(c4, b.xpos + xoffset, b.ypos + yoffset);
+        } else {
+          image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
+        }
+      }
+    }
+  }
 
   if (dead == 0) {
     changeTitle("CUBYSM");
