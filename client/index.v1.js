@@ -1019,96 +1019,95 @@ function draw() {
   // image(img, width / 2, height / 2, width + 4, height + 4);
   image(img, xoffset, yoffset, 4000, 4000);
 
-  // for (let p = localbullets.length - 1; p >= 0; p--) {
-  //   b = localbullets[p];
+  for (let p = localbullets.length - 1; p >= 0; p--) {
+    b = localbullets[p];
 
-  //   for (i = 0; i < 40; i++) {
-  //     for (j = 0; j < 40; j++) {
-  //       if (map[j][i] == 1) {
-  //         if (b.xpos + (b.bulletxvel * 90) / 4 >= i * 100 - 2000 && b.xpos + (b.bulletxvel * 90) / 4 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + (b.bulletyvel * 90) / 4 && j * 100 - 2000 + 100 >= b.ypos + (b.bulletyvel * 90) / 4) {
-  //           const index = localbullets.indexOf(b);
-  //           if (index > -1) {
-  //             if (b.type == "grenade" || b.type == "rpg") {
-  //               nadesplode(b.xpos, b.ypos);
-  //             }
-  //             localbullets.splice(index, 1);
-  //           }
-  //         }
-
-  //       }
-  //     }
-  //   }
-
-  //   if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
-  //     const index = localbullets.indexOf(b);
-  //     localbullets.splice(index, 1);
-  //   }
-  //   b.bulletyvel *= b.dropoff;
-  //   b.bulletxvel *= b.dropoff;
-
-  //   if (b.type == "gun") {
-  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.1) {
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //   } else if (b.type == "shrapnel") {
-  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //   } else if (b.type == "grenade") {
-  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
-  //       nadesplode(b.xpos, b.ypos);
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //   } else if (b.type == "knife") {
-  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.3) {
-  //       const index = localbullets.indexOf(b);
-  //       localbullets.splice(index, 1);
-  //     }
-  //   }
-
-  //   if (b.hidebullet == false) {
-  //     if (b.type == "grenade") {
-  //       image(grenade, b.xpos + xoffset, b.ypos + yoffset);
-  //     } else if (b.type == "rpg") {
-  //       push();
-  //       translate(b.xpos + xoffset, b.ypos + yoffset);
-  //       rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
-  //       image(rocket, 0, 0);
-  //       pop();
-  //     } else if (b.type == "c4") {
-  //       image(c4, b.xpos + xoffset, b.ypos + yoffset);
-  //     } else {
-  //       image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
-  //     }
-  //   }
-
-  //   b.ypos += b.bulletyvel * 90;
-  //   b.xpos += b.bulletxvel * 90;
-  // }
-
-  for (let b of bullets) {
-    imageMode(CENTER);
-    if (b.id != id || b.id == id) {
-      if (b.hidebullet == false) {
-        if (b.type == "grenade") {
-          image(grenade, b.xpos + xoffset, b.ypos + yoffset);
-        } else if (b.type == "rpg") {
-          push();
-          translate(b.xpos + xoffset, b.ypos + yoffset);
-          rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
-          image(rocket, 0, 0);
-          pop();
-        } else if (b.type == "c4") {
-          image(c4, b.xpos + xoffset, b.ypos + yoffset);
-        } else {
-          image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
+    for (i = 0; i < 40; i++) {
+      for (j = 0; j < 40; j++) {
+        if (map[j][i] == 1) {
+          if (b.xpos + (b.bulletxvel * 90) / 4 >= i * 100 - 2000 && b.xpos + (b.bulletxvel * 90) / 4 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + (b.bulletyvel * 90) / 4 && j * 100 - 2000 + 100 >= b.ypos + (b.bulletyvel * 90) / 4) {
+            const index = localbullets.indexOf(b);
+            if (index > -1) {
+              if (b.type == "grenade" || b.type == "rpg") {
+                nadesplode(b.xpos, b.ypos);
+              }
+              localbullets.splice(index, 1);
+            }
+          }
         }
       }
     }
+
+    if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
+      const index = localbullets.indexOf(b);
+      localbullets.splice(index, 1);
+    }
+    b.bulletyvel *= b.dropoff;
+    b.bulletxvel *= b.dropoff;
+
+    if (b.type == "gun") {
+      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.1) {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    } else if (b.type == "shrapnel") {
+      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    } else if (b.type == "grenade") {
+      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
+        nadesplode(b.xpos, b.ypos);
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    } else if (b.type == "knife") {
+      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.3) {
+        const index = localbullets.indexOf(b);
+        localbullets.splice(index, 1);
+      }
+    }
+
+    if (b.hidebullet == false) {
+      if (b.type == "grenade") {
+        image(grenade, b.xpos + xoffset, b.ypos + yoffset);
+      } else if (b.type == "rpg") {
+        push();
+        translate(b.xpos + xoffset, b.ypos + yoffset);
+        rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
+        image(rocket, 0, 0);
+        pop();
+      } else if (b.type == "c4") {
+        image(c4, b.xpos + xoffset, b.ypos + yoffset);
+      } else {
+        image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
+      }
+    }
+
+    b.ypos += b.bulletyvel * 90;
+    b.xpos += b.bulletxvel * 90;
   }
+
+  // for (let b of bullets) {
+  //   imageMode(CENTER);
+  //   if (b.id != id || b.id == id) {
+  //     if (b.hidebullet == false) {
+  //       if (b.type == "grenade") {
+  //         image(grenade, b.xpos + xoffset, b.ypos + yoffset);
+  //       } else if (b.type == "rpg") {
+  //         push();
+  //         translate(b.xpos + xoffset, b.ypos + yoffset);
+  //         rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
+  //         image(rocket, 0, 0);
+  //         pop();
+  //       } else if (b.type == "c4") {
+  //         image(c4, b.xpos + xoffset, b.ypos + yoffset);
+  //       } else {
+  //         image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
+  //       }
+  //     }
+  //   }
+  // }
 
   if (dead == 0) {
     changeTitle("CUBYSM");
