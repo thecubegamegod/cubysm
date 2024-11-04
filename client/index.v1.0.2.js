@@ -1477,7 +1477,7 @@ function draw() {
   }
 
   image(cursor, mouseX, mouseY);
-  filter(GRAY);
+  // filter(GRAY);
   // filter(INVERT)
   // image(dark, 0, 0, 10000, 10000);
 }
