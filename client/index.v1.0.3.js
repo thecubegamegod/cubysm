@@ -27,6 +27,9 @@ let deathangle = 0;
 
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
+let mapNames = ["Arena", "Corridors"]
+let currentMapName = "Arena"
+
 let maps = [
   [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -685,6 +688,9 @@ function setup() {
   }
 
   map = maps[1];
+  currentMapName = mapNames[1];
+
+
   skinnum = Math.floor(Math.random() * skinslist.length);
   subnum = Math.floor(Math.random() * skinslist[skinnum].sub.length);
   currentgun = skinslist[skinnum].primary;
@@ -917,7 +923,8 @@ function shoot() {
       recoilx = -bulletxvel * weapons[currentgun].recoil;
       recoily = -bulletyvel * weapons[currentgun].recoil;
     }
-  } else {
+  }
+  else {
     reload();
   }
 }
@@ -1387,8 +1394,9 @@ function draw() {
           if (secs < 10) {
             secs = "0" + secs;
           }
-          text(mins + ":" + secs, width / 2, 40);
+          text(mins + ":" + secs, width / 2, 60);
           textSize(20);
+          text(currentMapName, width / 2, 30);
         }
       }
     }
@@ -1580,7 +1588,9 @@ socket.on("timeleft", function (y) {
 
 socket.on("changemap", function (y) {
   map = maps[y];
+  currentMapName = mapNames[y]
   checkStuck();
+  
 });
 
 setInterval(function myFunction() {

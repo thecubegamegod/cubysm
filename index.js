@@ -22,6 +22,7 @@ let currentMap = 0;
 
 let timesUpdated = 0;
 
+
 let maps = [
   [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -111,6 +112,7 @@ let maps = [
 ];
 
 map = maps[1];
+
 
 server.listen(port, function () {
   console.log("🟢 " + port);
