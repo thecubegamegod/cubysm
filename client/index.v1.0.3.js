@@ -27,8 +27,8 @@ let deathangle = 0;
 
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
-let mapNames = ["Arena", "Corridors"]
-let currentMapName = "Arena"
+let mapNames = ["Arena", "Chambers"];
+let currentMapName = "Arena";
 
 let maps = [
   [
@@ -690,7 +690,6 @@ function setup() {
   map = maps[1];
   currentMapName = mapNames[1];
 
-
   skinnum = Math.floor(Math.random() * skinslist.length);
   subnum = Math.floor(Math.random() * skinslist[skinnum].sub.length);
   currentgun = skinslist[skinnum].primary;
@@ -923,8 +922,7 @@ function shoot() {
       recoilx = -bulletxvel * weapons[currentgun].recoil;
       recoily = -bulletyvel * weapons[currentgun].recoil;
     }
-  }
-  else {
+  } else {
     reload();
   }
 }
@@ -1013,8 +1011,8 @@ function draw() {
     }
   }
 
-  myposx += ((xvel * skinslist[skinnum].speed)/frameRate())*60;
-  myposy += ((yvel * skinslist[skinnum].speed)/frameRate())*60;
+  myposx += ((xvel * skinslist[skinnum].speed) / frameRate()) * 60;
+  myposy += ((yvel * skinslist[skinnum].speed) / frameRate()) * 60;
   myposx = constrain(myposx, -2000, 2000);
   myposy = constrain(myposy, -2000, 2000);
 
@@ -1097,8 +1095,8 @@ function draw() {
       }
     }
 
-    b.ypos += ((b.bulletyvel * 90)/frameRate())*60; 
-    b.xpos += ((b.bulletxvel * 90)/frameRate())*60;
+    b.ypos += ((b.bulletyvel * 90) / frameRate()) * 60;
+    b.xpos += ((b.bulletxvel * 90) / frameRate()) * 60;
   }
 
   for (let b of bullets) {
@@ -1362,10 +1360,15 @@ function draw() {
             // textSize(20);
             // text(left + "s", xoffset + myposx, yoffset + myposy + 100);
 
-            push()
-            rectMode(CENTER)
-            rect(xoffset + myposx, yoffset + myposy + 75, (left/weapons[currentgun].reloadspeed)*30, 10)
-            pop()
+            push();
+            // rectMode(CENTER);
+
+            rect(xoffset + myposx - 45, yoffset + myposy + 75, (left / weapons[currentgun].reloadspeed) * 30, 10, 5, 5, 5, 5);
+            stroke("white");
+            strokeWeight(2);
+            noFill();
+            rect(xoffset + myposx - 45, yoffset + myposy + 75, 90, 10, 5, 5, 5, 5);
+            pop();
           }
 
           textSize(12);
@@ -1404,7 +1407,7 @@ function draw() {
 
   if (dead == 1) {
     changeTitle("CUBYSM 💀");
-    nameField.position(width/2 -50, height / 2 - 150);
+    nameField.position(width / 2 - 50, height / 2 - 150);
     if (nameField.value() != "") {
       username = nameField.value();
     } else {
@@ -1548,7 +1551,7 @@ setInterval(function myFunction() {
   }
   if (delay < weapons[currentgun].speed) {
     delay += 1;
-    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && weapons[currentgun].ammo>0) {
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && weapons[currentgun].ammo > 0) {
       shoot();
     }
   }
@@ -1588,9 +1591,8 @@ socket.on("timeleft", function (y) {
 
 socket.on("changemap", function (y) {
   map = maps[y];
-  currentMapName = mapNames[y]
+  currentMapName = mapNames[y];
   checkStuck();
-  
 });
 
 setInterval(function myFunction() {
@@ -1601,9 +1603,7 @@ setInterval(function myFunction() {
     for (j = 0; j <= positions.length - 1; j++) {
       if (positions[j].kills == m) {
         if (positions[j].id == id) {
-          leaderboard.unshift(
-            "[ " + positions[j].name + " - " + positions[j].kills + " ]",
-          );
+          leaderboard.unshift("[ " + positions[j].name + " - " + positions[j].kills + " ]");
         } else {
           leaderboard.unshift(positions[j].name + " - " + positions[j].kills);
         }
