@@ -1351,9 +1351,14 @@ function draw() {
           // text(fps.toFixed(0) + "FPS", 35, height - 10);
 
           if (reloading == 1) {
-            let left = Math.round((weapons[currentgun].reloadspeed - (performance.now() - startReload) / 1000) * 10) / 10;
-            textSize(20);
-            text(left + "s", xoffset + myposx, yoffset + myposy + 100);
+            let left = Math.round((weapons[currentgun].reloadspeed - (performance.now() - startReload) / 1000) * 30) / 10;
+            // textSize(20);
+            // text(left + "s", xoffset + myposx, yoffset + myposy + 100);
+
+            push()
+            rectMode(CENTER)
+            rect(xoffset + myposx, yoffset + myposy + 75, (left/weapons[currentgun].reloadspeed)*30, 10)
+            pop()
           }
 
           textSize(12);
@@ -1391,7 +1396,7 @@ function draw() {
 
   if (dead == 1) {
     changeTitle("CUBYSM 💀");
-    nameField.position(100 - 50, height / 2 - 125);
+    nameField.position(width/2 -50, height / 2 - 150);
     if (nameField.value() != "") {
       username = nameField.value();
     } else {
@@ -1535,7 +1540,7 @@ setInterval(function myFunction() {
   }
   if (delay < weapons[currentgun].speed) {
     delay += 1;
-    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false) {
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && weapons[currentgun].ammo>0) {
       shoot();
     }
   }
