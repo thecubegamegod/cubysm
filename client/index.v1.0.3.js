@@ -1355,6 +1355,11 @@ function draw() {
           // textSize(15)
           // text(fps.toFixed(0) + "FPS", 35, height - 10);
 
+          if (window.location.hostname == "www.dev.cubysm.co.uk" || window.location.hostname == "5111xh8p-3000.uks1.devtunnels.ms" || window.location.hostname == "legendary-space-couscous-97g5qwwxxp43w9w-3000.app.github.dev") {
+            textSize(30);
+            text("EARLY ACCESS", width / 2, height - 30);
+          }
+
           if (reloading == 1) {
             let left = Math.round((weapons[currentgun].reloadspeed - (performance.now() - startReload) / 1000) * 30) / 10;
             // textSize(20);
@@ -1363,7 +1368,7 @@ function draw() {
             push();
             // rectMode(CENTER);
 
-            rect(xoffset + myposx - 45, yoffset + myposy + 75, (left / weapons[currentgun].reloadspeed) * 30, 10, 5, 5, 5, 5);
+            rect(xoffset + myposx - 45, yoffset + myposy + 75, (3 - left / weapons[currentgun].reloadspeed) * 30, 10, 5, 5, 5, 5);
             stroke("white");
             strokeWeight(2);
             noFill();
