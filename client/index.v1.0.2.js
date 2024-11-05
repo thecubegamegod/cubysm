@@ -713,7 +713,7 @@ function setup() {
   euhsfx = loadSound("euh.mp3");
 
   createCanvas(window.innerWidth, window.innerHeight);
-  // frameRate(60);
+  frameRate(240);
   pixelDensity(1);
   noSmooth();
   document.addEventListener("contextmenu", (event) => event.preventDefault());
@@ -1006,8 +1006,8 @@ function draw() {
     }
   }
 
-  myposx += xvel * skinslist[skinnum].speed;
-  myposy += yvel * skinslist[skinnum].speed;
+  myposx += ((xvel * skinslist[skinnum].speed)/frameRate())*60;
+  myposy += ((yvel * skinslist[skinnum].speed)/frameRate())*60;
   myposx = constrain(myposx, -2000, 2000);
   myposy = constrain(myposy, -2000, 2000);
 
@@ -1090,8 +1090,8 @@ function draw() {
       }
     }
 
-    b.ypos += b.bulletyvel * 90;
-    b.xpos += b.bulletxvel * 90;
+    b.ypos += ((b.bulletyvel * 90)/frameRate())*60; 
+    b.xpos += ((b.bulletxvel * 90)/frameRate())*60;
   }
 
   for (let b of bullets) {
@@ -1290,31 +1290,24 @@ function draw() {
       if (i < len) {
         if (positions[id].dead == 0) {
           imageMode(CENTER);
-          direction = "front";
           angle = Math.atan2(mouseY - height / 2, mouseX - width / 2);
 
           if (angle > 1.963) {
-            direction = "frontleft";
             col = 0;
             row = 0;
           } else if (angle > 1.178) {
-            direction = "front";
             col = 1;
             row = 0;
           } else if (angle > 0) {
-            direction = "frontright";
             col = 2;
             row = 0;
           } else if (angle > -1.178) {
-            direction = "backright";
             col = 0;
             row = 1;
           } else if (angle > -1.963) {
-            direction = "back";
             col = 1;
             row = 1;
           } else {
-            direction = "backleft";
             col = 2;
             row = 1;
           }
@@ -1585,27 +1578,27 @@ socket.on("changemap", function (y) {
   checkStuck();
 });
 
-// setInterval(function myFunction() {
-//   leaderboard = [];
-//   max = 9999;
-//   tempmax = 0;
-//   for (m = 0; m <= max; m++) {
-//     for (j = 0; j <= positions.length - 1; j++) {
-//       if (positions[j].kills == m) {
-//         if (positions[j].id == id) {
-//           leaderboard.unshift(
-//             "[ " + positions[j].name + " - " + positions[j].kills + " ]",
-//           );
-//         } else {
-//           leaderboard.unshift(positions[j].name + " - " + positions[j].kills);
-//         }
-//       }
-//       if (max != tempmax) {
-//         if (positions[j].kills > tempmax) {
-//           tempmax = positions[j].kills;
-//         }
-//       }
-//     }
-//     max = tempmax;
-//   }
-// }, 500);
+setInterval(function myFunction() {
+  leaderboard = [];
+  max = 9999;
+  tempmax = 0;
+  for (m = 0; m <= max; m++) {
+    for (j = 0; j <= positions.length - 1; j++) {
+      if (positions[j].kills == m) {
+        if (positions[j].id == id) {
+          leaderboard.unshift(
+            "[ " + positions[j].name + " - " + positions[j].kills + " ]",
+          );
+        } else {
+          leaderboard.unshift(positions[j].name + " - " + positions[j].kills);
+        }
+      }
+      if (max != tempmax) {
+        if (positions[j].kills > tempmax) {
+          tempmax = positions[j].kills;
+        }
+      }
+    }
+    max = tempmax;
+  }
+}, 500);
