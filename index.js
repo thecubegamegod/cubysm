@@ -7,8 +7,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new socketio.Server(server, {
   cors: {
-    origin: "https://jacktaylorexe.itch.io/cubysm", // Adjust this to match your client URL
+    origin: ["https://html-classic.itch.zone", "https://jacktaylorexe.itch.io/cubysm"], // Allowed origins
     methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
   },
 });
 
