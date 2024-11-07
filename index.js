@@ -22,7 +22,6 @@ let currentMap = 0;
 
 let timesUpdated = 0;
 
-
 let maps = [
   [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -112,7 +111,6 @@ let maps = [
 ];
 
 map = maps[1];
-
 
 server.listen(port, function () {
   console.log("🟢 " + port);
@@ -265,7 +263,7 @@ setInterval(function myFunction() {
 setInterval(function myFunction() {
   for (i = 0; i < pos.length; i++) {
     if (pos[i].flash > 0) {
-      pos[i].flash -= 15;
+      pos[i].flash -= 5;
     }
   }
   for (let p = bullets.length - 1; p >= 0; p--) {

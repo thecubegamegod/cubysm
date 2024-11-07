@@ -1249,25 +1249,6 @@ function draw() {
         // }
         // pop()
 
-        // if ((positions[i].skin + positions[i].dir) != NaN) {
-        //   if (positions[i].flash > 0) {
-        //     tint(218, 0, 99);
-        //   }
-        //   image(eval(positions[i].skin + positions[i].sub + positions[i].dir), positions[i].xvel + xoffset, positions[i].yvel + yoffset)
-        //   noTint()
-        //   if (dead == 0) {
-        //     if (positions[id].flash > 0) {
-        //       tint(218, 0, 99);
-        //     }
-        //     else {
-        //       noTint()
-        //     }
-        //   }
-        //   textSize(15)
-        //   text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 60)
-        //   textSize(13)
-        //   text("❤️".repeat(Math.round(positions[i].hp / 20)) + "💜".repeat(5 - (Math.round(positions[i].hp / 20))), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80)
-        // }
         if (positions[i].skin != NaN) {
           if (positions[i].flash > 0) {
             tint(218, 0, 99);
@@ -1276,17 +1257,10 @@ function draw() {
           image(tempimg, positions[i].xvel + xoffset, positions[i].yvel + yoffset, tempimg.width / 3, tempimg.height / 2, (positions[i].col * tempimg.width) / 3, (positions[i].row * tempimg.height) / 2, tempimg.width / 3, tempimg.height / 2);
 
           noTint();
-          if (dead == 0) {
-            if (positions[id].flash > 0) {
-              tint(218, 0, 99);
-            } else {
-              noTint();
-            }
-          }
           textSize(15);
           text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 60);
           textSize(13);
-          text("❤️".repeat(Math.round(positions[i].hp / 20)) + "❌".repeat(5 - Math.round(positions[i].hp / 20)), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80);
+          text("❤️".repeat(Math.round(positions[i].hp / 20)) + "🤍".repeat(5 - Math.round(positions[i].hp / 20)), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80);
         }
 
         fill("white");
@@ -1320,7 +1294,7 @@ function draw() {
           textSize(15);
           text(username + " | 🔥" + String(positions[id].streak), myposx + xoffset, myposy + yoffset - 60);
           textSize(13);
-          text("❤️".repeat(Math.round(positions[id].hp / 20)) + "❌".repeat(5 - Math.round(positions[id].hp / 20)), myposx + xoffset, myposy + yoffset - 80);
+          text("❤️".repeat(Math.round(positions[id].hp / 20)) + "🤍".repeat(5 - Math.round(positions[id].hp / 20)), myposx + xoffset, myposy + yoffset - 80);
 
           // image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
           let tempimg = eval(skin + sub);
