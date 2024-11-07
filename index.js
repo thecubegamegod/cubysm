@@ -5,7 +5,12 @@ const port = 3000;
 
 const app = express();
 const server = http.createServer(app);
-const io = new socketio.Server(server);
+const io = new socketio.Server(server, {
+  cors: {
+    origin: "https://jacktaylorexe.itch.io/cubysm", // Adjust this to match your client URL
+    methods: ["GET", "POST"],
+  },
+});
 
 const fs = require("fs");
 
