@@ -682,7 +682,7 @@ function changeTitle(newTitle) {
 }
 
 function setup() {
-  textFont('Tahoma');
+  textFont("Tahoma");
   console.log(window.location.hostname);
   if (window.location.hostname == "www.dev.cubysm.co.uk" || window.location.hostname == "5111xh8p-3000.uks1.devtunnels.ms" || window.location.hostname == "legendary-space-couscous-97g5qwwxxp43w9w-3000.app.github.dev") {
     skinslist = devskinslist;
@@ -1498,7 +1498,7 @@ function mouseWheel(event) {
 }
 
 setInterval(function myFunction() {
-  myobj = {
+  socket.volatile.emit("move", {
     name: username,
     xvel: myposx,
     yvel: myposy,
@@ -1511,46 +1511,14 @@ setInterval(function myFunction() {
     currentgun: currentgun,
     skin: skin,
     sub: sub,
-  };
-
-  if (myobj != myobjold) {
-    socket.volatile.emit("move", {
-      name: username,
-      xvel: myposx,
-      yvel: myposy,
-      id: id,
-      col: col,
-      row: row,
-      gundir: weaponrotation,
-      flipgun: flipgun,
-      suicide: suicide,
-      currentgun: currentgun,
-      skin: skin,
-      sub: sub,
-    });
-  }
+  });
   if (delay < weapons[currentgun].speed) {
-    delay += 1;
+    delay += 2;
     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && weapons[currentgun].ammo > 0) {
       shoot();
     }
   }
-
-  myobjold = {
-    name: username,
-    xvel: myposx,
-    yvel: myposy,
-    id: id,
-    col: col,
-    row: row,
-    gundir: weaponrotation,
-    flipgun: flipgun,
-    suicide: suicide,
-    currentgun: currentgun,
-    skin: skin,
-    sub: sub,
-  };
-}, 1000 / 60);
+}, 1000 / 30);
 
 socket.on("updatepositions", function (x) {
   if (id == 99) {
