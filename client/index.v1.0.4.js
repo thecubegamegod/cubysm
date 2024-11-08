@@ -682,6 +682,7 @@ function changeTitle(newTitle) {
 }
 
 function setup() {
+  textFont('Tahoma');
   console.log(window.location.hostname);
   if (window.location.hostname == "www.dev.cubysm.co.uk" || window.location.hostname == "5111xh8p-3000.uks1.devtunnels.ms" || window.location.hostname == "legendary-space-couscous-97g5qwwxxp43w9w-3000.app.github.dev") {
     skinslist = devskinslist;
@@ -1260,7 +1261,7 @@ function draw() {
           textSize(15);
           text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 60);
           textSize(13);
-          text("❤️".repeat(Math.round(positions[i].hp / 20)) + "🤍".repeat(5 - Math.round(positions[i].hp / 20)), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80);
+          text("❤️".repeat(Math.round(positions[i].hp / 20)) + "💜".repeat(5 - Math.round(positions[i].hp / 20)), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 80);
         }
 
         fill("white");
@@ -1294,7 +1295,7 @@ function draw() {
           textSize(15);
           text(username + " | 🔥" + String(positions[id].streak), myposx + xoffset, myposy + yoffset - 60);
           textSize(13);
-          text("❤️".repeat(Math.round(positions[id].hp / 20)) + "🤍".repeat(5 - Math.round(positions[id].hp / 20)), myposx + xoffset, myposy + yoffset - 80);
+          text("❤️".repeat(Math.round(positions[id].hp / 20)) + "💜".repeat(5 - Math.round(positions[id].hp / 20)), myposx + xoffset, myposy + yoffset - 80);
 
           // image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
           let tempimg = eval(skin + sub);
