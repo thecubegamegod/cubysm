@@ -940,13 +940,13 @@ function draw() {
     }
   }
 
-  if (dead == 0) {
-    if (positions[id].flash > 0) {
-      tint(218, 0, 99);
-    } else {
-      noTint();
-    }
-  }
+  // if (dead == 0) {
+  //   if (positions[id].flash > 0) {
+  //     tint(218, 0, 99);
+  //   } else {
+  //     noTint();
+  //   }
+  // }
 
   xvel = 0;
   yvel = 0;
