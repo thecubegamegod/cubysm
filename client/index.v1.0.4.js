@@ -166,7 +166,7 @@ let weapons = [
     dropoff: 0.9,
     zoom: 3,
     damage: 20,
-    reloadspeed: 1.75,
+    reloadspeed: 3,
     ammo: 25,
     maxammo: 25,
     speed: 6,
@@ -189,7 +189,7 @@ let weapons = [
     dropoff: 0.9,
     zoom: 3,
     damage: 20,
-    reloadspeed: 1.5,
+    reloadspeed: 2.3,
     ammo: 17,
     maxammo: 17,
     speed: 9,
@@ -219,7 +219,7 @@ let weapons = [
     auto: false,
     spread: 0,
     recoil: 18,
-    spriterecoil: 1,
+    spriterecoil: 2,
     spritehorizrecoil: 0,
     bulletspd: 1.175,
     xoffset: 0,
@@ -281,7 +281,7 @@ let weapons = [
     dropoff: 0.85,
     zoom: 3,
     damage: 20,
-    reloadspeed: 2,
+    reloadspeed: 3,
     ammo: 6,
     maxammo: 6,
     speed: 13,
@@ -373,7 +373,7 @@ let weapons = [
     dropoff: 0.9,
     zoom: 3,
     damage: 20,
-    reloadspeed: 2,
+    reloadspeed: 2.7,
     ammo: 20,
     maxammo: 20,
     speed: 4,
@@ -667,7 +667,7 @@ function checkStuck() {
 
 function respawnMe() {
   delay = 999;
-  socket.emit("addme", id);
+  socket.emit("addme", {id:id, username:username, skin: skin, sub: sub});
   currentgun = skinslist[skinnum].primary;
   checkStuck();
   for (i = 0; i < weapons.length; i++) {
@@ -1499,7 +1499,6 @@ function mouseWheel(event) {
 
 setInterval(function myFunction() {
   socket.volatile.emit("move", {
-    name: username,
     xvel: myposx,
     yvel: myposy,
     id: id,
@@ -1509,16 +1508,14 @@ setInterval(function myFunction() {
     flipgun: flipgun,
     suicide: suicide,
     currentgun: currentgun,
-    skin: skin,
-    sub: sub,
   });
   if (delay < weapons[currentgun].speed) {
-    delay += 2;
+    delay += 1;
     if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && weapons[currentgun].ammo > 0) {
       shoot();
     }
   }
-}, 1000 / 30);
+}, 1000 / 60);
 
 socket.on("updatepositions", function (x) {
   if (id == 99) {
@@ -1545,7 +1542,7 @@ socket.on("changemap", function (y) {
 
 setInterval(function myFunction() {
   leaderboard = [];
-  max = 9999;
+  max = 99;
   tempmax = 0;
   for (m = 0; m <= max; m++) {
     for (j = 0; j <= positions.length - 1; j++) {
