@@ -124,20 +124,20 @@ server.listen(port, function () {
 
 io.on("connection", function (socket) {
   socket.on("addme", function (arg) {
-    if (pos.length - 1 < arg) {
+    if (pos.length - 1 < arg.id) {
       // xinit = Math.floor(Math.random() * (500 +500) ) -500;
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
       pos.push({
-        name: "fellow",
+        name: arg.username,
         hp: 100,
         streak: 0,
         kills: 0,
         deaths: 0,
         xvel: 10000,
         yvel: 10000,
-        id: arg,
-        skin: "cat",
-        sub: "hal",
+        id: arg.id,
+        skin: arg.skin,
+        sub: arg.sub,
         dead: 1,
         gundir: 0,
         flipgun: 0,
@@ -146,8 +146,11 @@ io.on("connection", function (socket) {
         socketid: socket.id,
       });
     } else {
-      pos[arg].dead = 0;
-      pos[arg].hp = 100;
+      pos[arg.id].name = arg.username;
+      pos[arg.id].dead = 0;
+      pos[arg.id].hp = 100;
+      pos[arg.id].skin = arg.skin
+      pos[arg.id].sub = arg.sub
     }
   });
   socket.on("killme", function (arg) {
