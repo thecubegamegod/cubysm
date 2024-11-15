@@ -29,7 +29,7 @@ let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx
 
 let mapNames = ["Arena", "Chambers"];
 
-let previousCurrentGun = 0
+let previousCurrentGun = 0;
 
 let currentMapName = "Arena";
 
@@ -670,7 +670,7 @@ function checkStuck() {
 
 function respawnMe() {
   delay = 999;
-  socket.emit("addme", {id:id, username:username, skin: skin, sub: sub, currentgun:currentgun});
+  socket.emit("addme", { id: id, username: username, skin: skin, sub: sub, currentgun: currentgun });
   currentgun = skinslist[skinnum].primary;
   checkStuck();
   for (i = 0; i < weapons.length; i++) {
@@ -1035,6 +1035,7 @@ function draw() {
 
   for (let p = localbullets.length - 1; p >= 0; p--) {
     b = localbullets[p];
+    if (!b) continue;
 
     for (i = 0; i < 40; i++) {
       for (j = 0; j < 40; j++) {
@@ -1294,10 +1295,10 @@ function draw() {
             row = 1;
           }
 
-          textSize(15);
-          text(username + " | 🔥" + String(positions[id].streak), myposx + xoffset, myposy + yoffset - 60);
-          textSize(13);
-          text("❤️".repeat(Math.round(positions[id].hp / 20)) + "💜".repeat(5 - Math.round(positions[id].hp / 20)), myposx + xoffset, myposy + yoffset - 80);
+          // textSize(15);
+          // text(username + " | 🔥" + String(positions[id].streak), myposx + xoffset, myposy + yoffset - 60);
+          // textSize(13);
+          // text("❤️".repeat(Math.round(positions[id].hp / 20)) + "💜".repeat(5 - Math.round(positions[id].hp / 20)), myposx + xoffset, myposy + yoffset - 80);
 
           // image(eval(skin + sub + direction), xoffset + myposx, yoffset + myposy);
           let tempimg = eval(skin + sub);
@@ -1501,7 +1502,7 @@ function mouseWheel(event) {
 
 setInterval(function myFunction() {
   if (previousCurrentGun != currentgun) {
-    socket.volatile.emit("gunChange", {currentgun:currentgun, id:id})
+    socket.volatile.emit("gunChange", { currentgun: currentgun, id: id });
   }
   socket.volatile.emit("move", {
     xvel: myposx,
@@ -1519,7 +1520,7 @@ setInterval(function myFunction() {
       shoot();
     }
   }
-  previousCurrentGun = currentgun
+  previousCurrentGun = currentgun;
 }, 1000 / 60);
 
 socket.on("updatepositions", function (x) {
