@@ -142,7 +142,7 @@ io.on("connection", function (socket) {
         gundir: 0,
         flipgun: 0,
         suicide: 0,
-        currentgun: 0,
+        currentgun: arg.currentgun,
         socketid: socket.id,
       });
     } else {
@@ -151,6 +151,7 @@ io.on("connection", function (socket) {
       pos[arg.id].hp = 100;
       pos[arg.id].skin = arg.skin
       pos[arg.id].sub = arg.sub
+      pos[arg.id].currentgun = arg.currentgun
     }
   });
   socket.on("killme", function (arg) {
@@ -164,6 +165,10 @@ io.on("connection", function (socket) {
 
   socket.on("gunsfx", function (x) {
     io.sockets.emit("playdatgunsfx", x);
+  });
+
+  socket.on("gunchange", function (x) {
+    pos[x.id].currentgun = x.currentgun
   });
 
   socket.on("move", function (arg) {

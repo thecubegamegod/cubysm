@@ -28,6 +28,9 @@ let deathangle = 0;
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
 let mapNames = ["Arena", "Chambers"];
+
+let previousCurrentGun = 0
+
 let currentMapName = "Arena";
 
 let maps = [
@@ -667,7 +670,7 @@ function checkStuck() {
 
 function respawnMe() {
   delay = 999;
-  socket.emit("addme", {id:id, username:username, skin: skin, sub: sub});
+  socket.emit("addme", {id:id, username:username, skin: skin, sub: sub, currentgun:currentgun});
   currentgun = skinslist[skinnum].primary;
   checkStuck();
   for (i = 0; i < weapons.length; i++) {
@@ -1498,6 +1501,9 @@ function mouseWheel(event) {
 }
 
 setInterval(function myFunction() {
+  if (previousCurrentGun != currentgun) {
+    socket.volatile.emit("gunChange", {currentgun:currentgun, id:id})
+  }
   socket.volatile.emit("move", {
     xvel: myposx,
     yvel: myposy,
@@ -1507,7 +1513,6 @@ setInterval(function myFunction() {
     gundir: weaponrotation,
     flipgun: flipgun,
     suicide: suicide,
-    currentgun: currentgun,
   });
   if (delay < weapons[currentgun].speed) {
     delay += 1;
@@ -1515,6 +1520,7 @@ setInterval(function myFunction() {
       shoot();
     }
   }
+  previousCurrentGun = currentgun
 }, 1000 / 60);
 
 socket.on("updatepositions", function (x) {
