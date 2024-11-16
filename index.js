@@ -32,9 +32,9 @@ let vip = -1;
 let timesUpdated = 0;
 
 let modes = [
-  { name: "Deathmatch", min: 0, len: 5 },
-  { name: "Hitman", min: 3, len: 2 },
-  { name: "VIP", min: 3, len: 5 },
+  { name: "Deathmatch", min: 0, time: 2 },
+  { name: "Hitman", min: 3, time: 2 },
+  { name: "VIP", min: 3, time: 5 },
 ];
 
 let maps = [
@@ -165,6 +165,7 @@ io.on("connection", function (socket) {
       pos[arg.id].skin = arg.skin;
       pos[arg.id].sub = arg.sub;
       pos[arg.id].currentgun = arg.currentgun;
+      io.to(socket.id).emit("changemap", [currentMap, mode]);
     }
   });
   socket.on("killme", function (arg) {
@@ -174,6 +175,19 @@ io.on("connection", function (socket) {
     pos[arg].deaths += 1;
     pos[arg].streak = 0;
     io.sockets.emit("playdatgunsfx", "euhsfx");
+    if (modes[mode].name == "VIP") {
+      if (pos[arg].vip == true) {
+        pos[arg].vip = false;
+        aliveplayers = [];
+        for (i = 0; i < pos.length; i++) {
+          if (pos[i].dead == 0) {
+            aliveplayers.push(pos[i]);
+          }
+        }
+        vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+        pos[vip].vip = true;
+      }
+    }
   });
 
   socket.on("gunsfx", function (x) {
@@ -221,9 +235,11 @@ setInterval(function myFunction() {
                 pos[b.id].points += 1;
               }
               if (modes[mode].name == "VIP") {
-                pos[b.id].vip = true;
-                pos[i].vip = false;
-                vip = b.id;
+                if (pos[i].vip == true) {
+                  pos[b.id].vip = true;
+                  pos[i].vip = false;
+                  vip = b.id;
+                }
               }
               pos[b.id].kills += 1;
 
@@ -341,29 +357,28 @@ setInterval(function myFunction() {
   if (mapCountdown > 0) {
     mapCountdown -= 1;
   } else {
-    aliveplayers = [];
-    for (i = 0; i < pos.length; i++) {
-      if (pos[i].dead == 0) {
-        aliveplayers.push(pos[i]);
-      }
-      pos[i].points = 0;
-    }
-    console.log(aliveplayers);
     if (currentMap == 0) {
       currentMap = 1;
     } else if (currentMap == 1) {
       currentMap = 0;
     }
     map = maps[currentMap];
-    mapCountdown = 300;
+    aliveplayers = [];
+    for (i = 0; i < pos.length; i++) {
+      if (pos[i].dead == 0) {
+        aliveplayers.push(pos[i]);
+      }
+      pos[i].points = 0;
+      pos[i].vip = false;
+    }
     if (aliveplayers.length > 2) {
       mode = 2;
       vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
-      console.log(vip);
       pos[vip].vip = true;
     } else {
       mode = 0;
     }
+    mapCountdown = modes[mode].time * 60;
     io.sockets.emit("changemap", [currentMap, mode]);
   }
   io.sockets.emit("timeleft", mapCountdown);

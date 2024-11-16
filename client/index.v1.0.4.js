@@ -28,7 +28,7 @@ let deathangle = 0;
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
 let mapNames = ["Arena", "Chambers"];
-let modeNames = ["Deathmatch", "Hitman", "VIP"];
+let modeNames = ["Deathmatch", "Hitman", "Crown Capture"];
 
 let previousCurrentGun = 0;
 
@@ -556,6 +556,8 @@ let title;
 let spawn;
 let cursorgone;
 
+let crown;
+
 let recoilx = 0;
 let recoily = 0;
 
@@ -566,6 +568,7 @@ let yoffset = 0;
 
 function preload() {
   shadow = loadImage("shadow.png");
+  crown = loadImage("crown.png");
   titlepic = loadImage("title.png");
   onekey = loadImage("1.png");
   twokey = loadImage("2.png");
@@ -1267,7 +1270,7 @@ function draw() {
           image(tempimg, positions[i].xvel + xoffset, positions[i].yvel + yoffset, tempimg.width / 3, tempimg.height / 2, (positions[i].col * tempimg.width) / 3, (positions[i].row * tempimg.height) / 2, tempimg.width / 3, tempimg.height / 2);
 
           if (positions[i].vip == true) {
-            image(tempimg, positions[i].xvel + xoffset, positions[i].yvel + yoffset + 100, tempimg.width / 3, tempimg.height / 2, (positions[i].col * tempimg.width) / 3, (positions[i].row * tempimg.height) / 2, tempimg.width / 3, tempimg.height / 2);
+            image(crown, positions[i].xvel + xoffset, positions[i].yvel + yoffset - 50);
           }
 
           noTint();
@@ -1314,6 +1317,10 @@ function draw() {
           let tempimg = eval(skin + sub);
 
           image(tempimg, xoffset + myposx, yoffset + myposy, tempimg.width / 3, tempimg.height / 2, (col * tempimg.width) / 3, (row * tempimg.height) / 2, tempimg.width / 3, tempimg.height / 2);
+
+          if (positions[id].vip == true) {
+            image(crown, xoffset + myposx, yoffset + myposy - 50);
+          }
 
           tempimg = eval(weapons[skinslist[skinnum].primary].name);
 
@@ -1364,7 +1371,7 @@ function draw() {
             pop();
           }
 
-          textSize(12);
+          textSize(15);
 
           for (p = 0; p <= 4; p++) {
             text(leaderboard[p], 50, p * 20 + 20);
@@ -1525,6 +1532,7 @@ setInterval(function myFunction() {
     gundir: weaponrotation,
     flipgun: flipgun,
     suicide: suicide,
+    currentgun: currentgun,
   });
   if (delay < weapons[currentgun].speed) {
     delay += 1;
