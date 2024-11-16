@@ -1047,7 +1047,9 @@ function draw() {
 
   noStroke();
   image(img, xoffset, yoffset, 4000, 4000);
-  image(point, xoffset + pointX, yoffset + pointY);
+  if (mode == 3) {
+    image(point, xoffset + pointX, yoffset + pointY);
+  }
 
   for (let p = localbullets.length - 1; p >= 0; p--) {
     b = localbullets[p];

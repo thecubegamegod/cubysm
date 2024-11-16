@@ -417,7 +417,7 @@ setInterval(function myFunction() {
       pos[i].points = 0;
       pos[i].vip = false;
     }
-    if (aliveplayers.length > 2) {
+    if (aliveplayers.length > 1) {
       let tempmode = mode;
       while (tempmode == mode) {
         tempmode = Math.floor(Math.random() * (4 - 1)) + 2;
