@@ -1045,6 +1045,8 @@ function draw() {
   yoffset = height / 2 - myposy - (mouseY - windowHeight / 2) / zoomsmoothed;
   background("#da0063");
 
+  image(point, xoffset + pointX, yoffset + pointY);
+
   noStroke();
   image(img, xoffset, yoffset, 4000, 4000);
 
@@ -1149,9 +1151,6 @@ function draw() {
     // nameField.position(-300, 100)
     image(shadow, xoffset + myposx, yoffset + myposy - 2);
     nameField.position(-300, 100);
-
-    imageMode(CENTER);
-    image(point, xoffset + pointX, yoffset + pointY);
 
     for (k = 0; k < 40; k++) {
       for (l = 0; l < 40; l++) {
