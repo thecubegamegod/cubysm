@@ -28,10 +28,12 @@ let deathangle = 0;
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
 let mapNames = ["Arena", "Chambers"];
+let modeNames = ["Deathmatch", "Hitman", "VIP"];
 
 let previousCurrentGun = 0;
 
 let currentMapName = "Arena";
+let currentModeName = "Deathmatch";
 
 let maps = [
   [
@@ -414,6 +416,8 @@ let weapons = [
   },
 ];
 
+let weaponsbackup = weapons;
+
 let skinslist = [
   {
     name: "cube",
@@ -693,6 +697,8 @@ function setup() {
 
   map = maps[1];
   currentMapName = mapNames[1];
+  mode = 0;
+  currentModeName = modeNames[0];
 
   skinnum = Math.floor(Math.random() * skinslist.length);
   subnum = Math.floor(Math.random() * skinslist[skinnum].sub.length);
@@ -1260,6 +1266,10 @@ function draw() {
           let tempimg = eval(positions[i].skin + positions[i].sub);
           image(tempimg, positions[i].xvel + xoffset, positions[i].yvel + yoffset, tempimg.width / 3, tempimg.height / 2, (positions[i].col * tempimg.width) / 3, (positions[i].row * tempimg.height) / 2, tempimg.width / 3, tempimg.height / 2);
 
+          if (positions[i].vip == true) {
+            image(tempimg, positions[i].xvel + xoffset, positions[i].yvel + yoffset + 100, tempimg.width / 3, tempimg.height / 2, (positions[i].col * tempimg.width) / 3, (positions[i].row * tempimg.height) / 2, tempimg.width / 3, tempimg.height / 2);
+          }
+
           noTint();
           textSize(15);
           text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 60);
@@ -1380,9 +1390,11 @@ function draw() {
           if (secs < 10) {
             secs = "0" + secs;
           }
-          text(mins + ":" + secs, width / 2, 60);
+          text(mins + ":" + secs, width / 2, 90);
           textSize(20);
-          text(currentMapName, width / 2, 30);
+          text(currentMapName, width / 2, 58);
+          textSize(30);
+          text(currentModeName, width / 2, 35);
         }
       }
     }
@@ -1541,9 +1553,11 @@ socket.on("timeleft", function (y) {
 });
 
 socket.on("changemap", function (y) {
-  map = maps[y];
-  currentMapName = mapNames[y];
+  map = maps[y[0]];
+  currentMapName = mapNames[y[0]];
   checkStuck();
+  mode = [y[1]];
+  currentModeName = modeNames[y[1]];
 });
 
 setInterval(function myFunction() {
@@ -1552,16 +1566,16 @@ setInterval(function myFunction() {
   tempmax = 0;
   for (m = 0; m <= max; m++) {
     for (j = 0; j <= positions.length - 1; j++) {
-      if (positions[j].kills == m) {
+      if (positions[j].points == m) {
         if (positions[j].id == id) {
-          leaderboard.unshift("[ " + positions[j].name + " - " + positions[j].kills + " ]");
+          leaderboard.unshift("[ " + positions[j].name + " - " + positions[j].points + " ]");
         } else {
-          leaderboard.unshift(positions[j].name + " - " + positions[j].kills);
+          leaderboard.unshift(positions[j].name + " - " + positions[j].points);
         }
       }
       if (max != tempmax) {
-        if (positions[j].kills > tempmax) {
-          tempmax = positions[j].kills;
+        if (positions[j].points > tempmax) {
+          tempmax = positions[j].points;
         }
       }
     }
