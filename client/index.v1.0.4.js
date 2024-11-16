@@ -459,7 +459,7 @@ let skinslist = [
     secondary: 10,
     tertiary: 7,
     speed: 1.1,
-    sub: ["al", "eth"],
+    sub: ["", "eth"],
     currentsub: 0,
   },
 ];
@@ -502,7 +502,7 @@ let devskinslist = [
     secondary: 10,
     tertiary: 7,
     speed: 1.1,
-    sub: ["al", "eth"],
+    sub: ["", "eth"],
     currentsub: 0,
   },
   {
