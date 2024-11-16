@@ -1045,10 +1045,9 @@ function draw() {
   yoffset = height / 2 - myposy - (mouseY - windowHeight / 2) / zoomsmoothed;
   background("#da0063");
 
-  image(point, xoffset + pointX, yoffset + pointY);
-
   noStroke();
   image(img, xoffset, yoffset, 4000, 4000);
+  image(point, xoffset + pointX, yoffset + pointY);
 
   for (let p = localbullets.length - 1; p >= 0; p--) {
     b = localbullets[p];
