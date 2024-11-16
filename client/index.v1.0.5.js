@@ -645,7 +645,6 @@ function preload() {
   bird = loadImage("bird.png");
   birdhal = loadImage("birdhal.png");
   hamster = loadImage("hamster.png");
-  hamsteral = loadImage("hamsteral.png");
   hamstereth = loadImage("hamstereth.png");
   woker = loadImage("woker.png");
   pman = loadImage("pman.png");
