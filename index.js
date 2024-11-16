@@ -35,7 +35,7 @@ let pointY = 0;
 let timesUpdated = 0;
 
 let modes = [
-  { name: "Deathmatch", min: 0, time: 2 },
+  { name: "Deathmatch", min: 0, time: 0.25 },
   { name: "Hitman", min: 3, time: 2 },
   { name: "VIP", min: 3, time: 5 },
   { name: "Point", min: 3, time: 5 },

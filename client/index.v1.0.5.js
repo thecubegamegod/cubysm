@@ -1362,6 +1362,13 @@ function draw() {
           // textSize(15)
           // text(fps.toFixed(0) + "FPS", 35, height - 10);
 
+          textSize(20);
+          if (true) {
+            text(results[0], width / 2, height / 2 - 280);
+            text(results[1], width / 2, height / 2 - 250);
+            text(results[2], width / 2, height / 2 - 220);
+          }
+
           if (window.location.hostname == "www.dev.cubysm.co.uk" || window.location.hostname == "5111xh8p-3000.uks1.devtunnels.ms" || window.location.hostname == "legendary-space-couscous-97g5qwwxxp43w9w-3000.app.github.dev") {
             textSize(30);
             text("EARLY ACCESS", width / 2, height - 30);
@@ -1504,6 +1511,7 @@ function draw() {
   text(results[2], width / 2, height / 2 - 360);
 
   image(cursor, mouseX, mouseY);
+
   // filter(GRAY);
   // filter(INVERT)
   // image(dark, 0, 0, 10000, 10000);
@@ -1581,11 +1589,12 @@ socket.on("timeleft", function (y) {
   mapCountdown = y;
 });
 
-socket.on("results", function (results) {
-  results = results;
-  setTimeout(function myFunction(){
-    results = ["","",""]
-  }, 5000);
+socket.on("results", function (y) {
+  results = y;
+  setTimeout(function myFunction() {
+    results = ["", "", ""];
+  }, 8000);
+});
 
 socket.on("changemap", function (y) {
   map = maps[y[0]];
