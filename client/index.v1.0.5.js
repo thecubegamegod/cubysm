@@ -1,3 +1,5 @@
+const { text } = require("express");
+
 const socket = io();
 
 let id = 99;
@@ -28,7 +30,7 @@ let deathangle = 0;
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
 let mapNames = ["Arena", "Chambers"];
-let modeNames = ["Deathmatch", "Hitman", "Crown Capture"];
+let modeNames = ["Deathmatch", "Hitman", "Crown Capture", "Zone"];
 
 let previousCurrentGun = 0;
 
@@ -134,6 +136,8 @@ let skin = "cube";
 let sub = "";
 let subnum = 0;
 let skinnum = 0;
+
+let results = [];
 
 let mapCountdown = 999;
 
@@ -459,7 +463,7 @@ let skinslist = [
     secondary: 10,
     tertiary: 7,
     speed: 1.1,
-    sub: ["al", "eth"],
+    sub: ["", "eth"],
     currentsub: 0,
   },
 ];
@@ -502,7 +506,7 @@ let devskinslist = [
     secondary: 10,
     tertiary: 7,
     speed: 1.1,
-    sub: ["al", "eth"],
+    sub: ["", "eth"],
     currentsub: 0,
   },
   {
@@ -579,7 +583,7 @@ function preload() {
   spawnpic = loadImage("spawn.png");
   img = loadImage("bg.png");
   bricks = loadImage("brick.png");
-  point = loadImage("point.png");
+  point = loadImage("zone.png");
 
   arrow = loadImage("arrow.png");
   arrowgone = loadImage("arrowempty.png");
@@ -645,7 +649,6 @@ function preload() {
   bird = loadImage("bird.png");
   birdhal = loadImage("birdhal.png");
   hamster = loadImage("hamster.png");
-  hamsteral = loadImage("hamsteral.png");
   hamstereth = loadImage("hamstereth.png");
   woker = loadImage("woker.png");
   pman = loadImage("pman.png");
@@ -1047,6 +1050,9 @@ function draw() {
 
   noStroke();
   image(img, xoffset, yoffset, 4000, 4000);
+  if (mode == 3) {
+    image(point, xoffset + pointX, yoffset + pointY);
+  }
 
   for (let p = localbullets.length - 1; p >= 0; p--) {
     b = localbullets[p];
@@ -1493,6 +1499,10 @@ function draw() {
     image(eval(weapons[skinslist[skinnum].tertiary].name + "tile"), width / 2 + 208, height - 125);
   }
 
+  if (mapCountdown) text(results[0], width / 2, height / 2 - 400);
+  text(results[1], width / 2, height / 2 - 380);
+  text(results[2], width / 2, height / 2 - 360);
+
   image(cursor, mouseX, mouseY);
   // filter(GRAY);
   // filter(INVERT)
@@ -1570,6 +1580,12 @@ socket.on("pointLocationSet", function (location) {
 socket.on("timeleft", function (y) {
   mapCountdown = y;
 });
+
+socket.on("results", function (results) {
+  results = results;
+  setTimeout(function myFunction(){
+    results = ["","",""]
+  }, 5000);
 
 socket.on("changemap", function (y) {
   map = maps[y[0]];

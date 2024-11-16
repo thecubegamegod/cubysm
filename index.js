@@ -131,9 +131,71 @@ let maps = [
 
 map = maps[1];
 
+let first = "fella";
+let second = "fella";
+let third = "fella";
+
 server.listen(port, function () {
   console.log("🟢 " + port);
 });
+
+function newMap() {
+  let leaderboard = [];
+  max = 99;
+  tempmax = 0;
+  for (m = 0; m <= max; m++) {
+    for (j = 0; j <= pos.length - 1; j++) {
+      if (pos[j].points == m) {
+        leaderboard.unshift(pos[j].name + " - " + pos[j].points);
+      }
+      if (max != tempmax) {
+        if (pos[j].points > tempmax) {
+          tempmax = pos[j].points;
+        }
+      }
+    }
+    max = tempmax;
+  }
+  first = "🥇 " + leaderboard[0];
+  second = "🥈 " + leaderboard[1];
+  third = "🥉 " + leaderboard[2];
+  io.sockets.emit("results", [first, second, third]);
+
+  if (currentMap == 0) {
+    currentMap = 1;
+  } else if (currentMap == 1) {
+    currentMap = 0;
+  }
+  map = maps[currentMap];
+  aliveplayers = [];
+  for (i = 0; i < pos.length; i++) {
+    if (pos[i].dead == 0) {
+      aliveplayers.push(pos[i]);
+    }
+    pos[i].points = 0;
+    pos[i].vip = false;
+  }
+  if (aliveplayers.length > 1) {
+    let tempmode = mode;
+    while (tempmode == mode) {
+      tempmode = Math.floor(Math.random() * (4 - 1)) + 2;
+      if (tempmode == 4) {
+        tempmode = 1;
+      }
+    }
+    mode = tempmode;
+  } else {
+    mode = 0;
+  }
+  if (mode == 2) {
+    vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+    pos[vip].vip = true;
+  } else if (mode == 3) {
+    checkPointStuck();
+  }
+  mapCountdown = modes[mode].time * 60;
+  io.sockets.emit("changemap", [currentMap, mode]);
+}
 
 function checkPointStuck() {
   let stuck = true;
@@ -191,6 +253,9 @@ io.on("connection", function (socket) {
         currentgun: arg.currentgun,
         socketid: socket.id,
       });
+      if (mode == 3) {
+        io.to(socket.id).emit("pointLocationSet", [pointX, pointY]);
+      }
       io.to(socket.id).emit("changemap", [currentMap, mode]);
     } else {
       pos[arg.id].name = arg.username;
@@ -200,6 +265,9 @@ io.on("connection", function (socket) {
       pos[arg.id].sub = arg.sub;
       pos[arg.id].currentgun = arg.currentgun;
       io.to(socket.id).emit("changemap", [currentMap, mode]);
+      if (mode == 3) {
+        io.to(socket.id).emit("pointLocationSet", [pointX, pointY]);
+      }
     }
   });
   socket.on("killme", function (arg) {
@@ -394,39 +462,23 @@ setInterval(function myFunction() {
 }, 1000 / 60);
 
 setInterval(function myFunction() {
-  if (modes[mode].name == "VIP") {
-    pos[vip].points++;
-  }
   if (mapCountdown > 0) {
     mapCountdown -= 1;
   } else {
-    if (currentMap == 0) {
-      currentMap = 1;
-    } else if (currentMap == 1) {
-      currentMap = 0;
-    }
-    map = maps[currentMap];
-    aliveplayers = [];
+    newMap();
+  }
+  if (mode == 3) {
     for (i = 0; i < pos.length; i++) {
       if (pos[i].dead == 0) {
-        aliveplayers.push(pos[i]);
+        let dist = Math.sqrt((pointX - pos[i].xvel) * (pointX - pos[i].xvel) + (pointY - pos[i].yvel) * (pointY - pos[i].yvel));
+        if (dist < 250) {
+          pos[i].points++;
+        }
       }
-      pos[i].points = 0;
-      pos[i].vip = false;
     }
-    if (aliveplayers.length > 2) {
-      mode = 3;
-    } else {
-      mode = 0;
-    }
-    if (mode == 2) {
-      vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
-      pos[vip].vip = true;
-    } else if (mode == 3) {
-      checkPointStuck();
-    }
-    mapCountdown = modes[mode].time * 60;
-    io.sockets.emit("changemap", [currentMap, mode]);
+  }
+  if (modes[mode].name == "VIP") {
+    pos[vip].points++;
   }
   io.sockets.emit("timeleft", mapCountdown);
 }, 1000);
