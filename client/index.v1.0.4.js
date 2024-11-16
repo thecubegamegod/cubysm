@@ -579,7 +579,7 @@ function preload() {
   spawnpic = loadImage("spawn.png");
   img = loadImage("bg.png");
   bricks = loadImage("brick.png");
-  point = loadImage("point.png");
+  point = loadImage("zone.png");
 
   arrow = loadImage("arrow.png");
   arrowgone = loadImage("arrowempty.png");
@@ -1149,6 +1149,8 @@ function draw() {
     // nameField.position(-300, 100)
     image(shadow, xoffset + myposx, yoffset + myposy - 2);
     nameField.position(-300, 100);
+
+    image(point, xoffset + pointX, yoffset + pointY);
 
     for (k = 0; k < 40; k++) {
       for (l = 0; l < 40; l++) {
