@@ -23,10 +23,19 @@ let pos = [];
 
 let bullets = [];
 
-let mapCountdown = 300;
+let mapCountdown = 15;
 let currentMap = 0;
+let mode = 0;
+
+let vip = -1;
 
 let timesUpdated = 0;
+
+let modes = [
+  { name: "Deathmatch", min: 0, time: 2 },
+  { name: "Hitman", min: 3, time: 2 },
+  { name: "VIP", min: 3, time: 5 },
+];
 
 let maps = [
   [
@@ -129,9 +138,12 @@ io.on("connection", function (socket) {
       // yinit = Math.floor(Math.random() * (500 +500) ) -500;
       pos.push({
         name: arg.username,
+        time: Date.now(),
         hp: 100,
+        vip: false,
         streak: 0,
         kills: 0,
+        points: 0,
         deaths: 0,
         xvel: 10000,
         yvel: 10000,
@@ -145,13 +157,15 @@ io.on("connection", function (socket) {
         currentgun: arg.currentgun,
         socketid: socket.id,
       });
+      io.to(socket.id).emit("changemap", [currentMap, mode]);
     } else {
       pos[arg.id].name = arg.username;
       pos[arg.id].dead = 0;
       pos[arg.id].hp = 100;
-      pos[arg.id].skin = arg.skin
-      pos[arg.id].sub = arg.sub
-      pos[arg.id].currentgun = arg.currentgun
+      pos[arg.id].skin = arg.skin;
+      pos[arg.id].sub = arg.sub;
+      pos[arg.id].currentgun = arg.currentgun;
+      io.to(socket.id).emit("changemap", [currentMap, mode]);
     }
   });
   socket.on("killme", function (arg) {
@@ -161,6 +175,19 @@ io.on("connection", function (socket) {
     pos[arg].deaths += 1;
     pos[arg].streak = 0;
     io.sockets.emit("playdatgunsfx", "euhsfx");
+    if (modes[mode].name == "VIP") {
+      if (pos[arg].vip == true) {
+        pos[arg].vip = false;
+        aliveplayers = [];
+        for (i = 0; i < pos.length; i++) {
+          if (pos[i].dead == 0) {
+            aliveplayers.push(pos[i]);
+          }
+        }
+        vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+        pos[vip].vip = true;
+      }
+    }
   });
 
   socket.on("gunsfx", function (x) {
@@ -168,7 +195,7 @@ io.on("connection", function (socket) {
   });
 
   socket.on("gunchange", function (x) {
-    pos[x.id].currentgun = x.currentgun
+    pos[x.id].currentgun = x.currentgun;
   });
 
   socket.on("move", function (arg) {
@@ -176,6 +203,7 @@ io.on("connection", function (socket) {
       for (let key in arg) {
         pos[arg.id][key] = arg[key];
       }
+      pos[arg.id].time = Date.now();
     }
   });
   socket.on("bullet", function (arg) {
@@ -203,6 +231,16 @@ setInterval(function myFunction() {
             if (pos[i].dead == 0) {
               io.sockets.emit("playdatgunsfx", "euhsfx");
               pos[b.id].streak += 1;
+              if (modes[mode].name == "Deathmatch") {
+                pos[b.id].points += 1;
+              }
+              if (modes[mode].name == "VIP") {
+                if (pos[i].vip == true) {
+                  pos[b.id].vip = true;
+                  pos[i].vip = false;
+                  vip = b.id;
+                }
+              }
               pos[b.id].kills += 1;
 
               if (pos[b.id].hp + 20 <= 100) {
@@ -313,6 +351,9 @@ setInterval(function myFunction() {
 }, 1000 / 60);
 
 setInterval(function myFunction() {
+  if (modes[mode].name == "VIP") {
+    pos[vip].points++;
+  }
   if (mapCountdown > 0) {
     mapCountdown -= 1;
   } else {
@@ -322,11 +363,37 @@ setInterval(function myFunction() {
       currentMap = 0;
     }
     map = maps[currentMap];
-    mapCountdown = 300;
-    io.sockets.emit("changemap", currentMap);
+    aliveplayers = [];
+    for (i = 0; i < pos.length; i++) {
+      if (pos[i].dead == 0) {
+        aliveplayers.push(pos[i]);
+      }
+      pos[i].points = 0;
+      pos[i].vip = false;
+    }
+    if (aliveplayers.length > 2) {
+      mode = 2;
+      vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+      pos[vip].vip = true;
+    } else {
+      mode = 0;
+    }
+    mapCountdown = modes[mode].time * 60;
+    io.sockets.emit("changemap", [currentMap, mode]);
   }
   io.sockets.emit("timeleft", mapCountdown);
 }, 1000);
+
+// setInterval(function myFunction() {
+//   for (i = 0; i < pos.length; i++) {
+//     if (pos[i].time < Date.now() - 5000) {
+//       const index = pos.indexOf(pos[i]);
+//       if (index > -1) {
+//         pos.splice(index, 1);
+//       }
+//     }
+//   }
+// }, 10000);
 
 // HEALTH REGEN
 // setInterval(function myFunction(){
