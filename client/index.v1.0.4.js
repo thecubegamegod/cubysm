@@ -28,7 +28,7 @@ let deathangle = 0;
 let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
 
 let mapNames = ["Arena", "Chambers"];
-let modeNames = ["Deathmatch", "Hitman", "Crown Capture"];
+let modeNames = ["Deathmatch", "Hitman", "Crown Capture", "Zone"];
 
 let previousCurrentGun = 0;
 
@@ -1150,6 +1150,7 @@ function draw() {
     image(shadow, xoffset + myposx, yoffset + myposy - 2);
     nameField.position(-300, 100);
 
+    imageMode(CENTER);
     image(point, xoffset + pointX, yoffset + pointY);
 
     for (k = 0; k < 40; k++) {

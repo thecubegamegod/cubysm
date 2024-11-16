@@ -191,6 +191,9 @@ io.on("connection", function (socket) {
         currentgun: arg.currentgun,
         socketid: socket.id,
       });
+      if (mode == 3) {
+        io.to(socket.id).emit("pointLocationSet", [pointX, pointY]);
+      }
       io.to(socket.id).emit("changemap", [currentMap, mode]);
     } else {
       pos[arg.id].name = arg.username;
@@ -200,6 +203,9 @@ io.on("connection", function (socket) {
       pos[arg.id].sub = arg.sub;
       pos[arg.id].currentgun = arg.currentgun;
       io.to(socket.id).emit("changemap", [currentMap, mode]);
+      if (mode == 3) {
+        io.to(socket.id).emit("pointLocationSet", [pointX, pointY]);
+      }
     }
   });
   socket.on("killme", function (arg) {
@@ -394,9 +400,6 @@ setInterval(function myFunction() {
 }, 1000 / 60);
 
 setInterval(function myFunction() {
-  if (modes[mode].name == "VIP") {
-    pos[vip].points++;
-  }
   if (mapCountdown > 0) {
     mapCountdown -= 1;
   } else {
@@ -415,7 +418,7 @@ setInterval(function myFunction() {
       pos[i].vip = false;
     }
     if (aliveplayers.length > 2) {
-      mode = 3;
+      mode = Math.floor(Math.random() * (3 - 1)) + 2;
     } else {
       mode = 0;
     }
@@ -427,6 +430,17 @@ setInterval(function myFunction() {
     }
     mapCountdown = modes[mode].time * 60;
     io.sockets.emit("changemap", [currentMap, mode]);
+  }
+  if (mode == 3) {
+    for (i = 0; i < pos.length; i++) {
+      let dist = Math.sqrt((pointX - pos[i].xvel) * (pointX - pos[i].xvel) + (pointY - pos[i].yvel) * (pointY - pos[i].yvel));
+      if (dist < 250) {
+        pos[i].points++;
+      }
+    }
+  }
+  if (modes[mode].name == "VIP") {
+    pos[vip].points++;
   }
   io.sockets.emit("timeleft", mapCountdown);
 }, 1000);
