@@ -35,6 +35,9 @@ let previousCurrentGun = 0;
 let currentMapName = "Arena";
 let currentModeName = "Deathmatch";
 
+let pointX = 0;
+let pointY = 0;
+
 let maps = [
   [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -556,6 +559,7 @@ let title;
 let spawn;
 let cursorgone;
 
+let point;
 let crown;
 
 let recoilx = 0;
@@ -575,6 +579,7 @@ function preload() {
   spawnpic = loadImage("spawn.png");
   img = loadImage("bg.png");
   bricks = loadImage("brick.png");
+  point = loadImage("point.png");
 
   arrow = loadImage("arrow.png");
   arrowgone = loadImage("arrowempty.png");
@@ -815,6 +820,7 @@ function keyPressed() {
         const index = localbullets.indexOf(localbullets[i]);
         if (index > -1) {
           nadesplode(localbullets[i].xpos, localbullets[i].ypos);
+          socket.emit("removec4", id);
           localbullets.splice(index, 1);
         }
       }
@@ -1554,6 +1560,11 @@ socket.on("updatepositions", function (x) {
 
 socket.on("playdatgunsfx", function (y) {
   eval(y).play();
+});
+
+socket.on("pointLocationSet", function (location) {
+  pointX = location[0];
+  pointY = location[1];
 });
 
 socket.on("timeleft", function (y) {

@@ -29,12 +29,16 @@ let mode = 0;
 
 let vip = -1;
 
+let pointX = 0;
+let pointY = 0;
+
 let timesUpdated = 0;
 
 let modes = [
   { name: "Deathmatch", min: 0, time: 2 },
   { name: "Hitman", min: 3, time: 2 },
   { name: "VIP", min: 3, time: 5 },
+  { name: "Point", min: 3, time: 5 },
 ];
 
 let maps = [
@@ -131,6 +135,36 @@ server.listen(port, function () {
   console.log("🟢 " + port);
 });
 
+function checkPointStuck() {
+  let stuck = true;
+  let stuckloop = false;
+  while (stuck == true) {
+    stuckloop = false;
+    pointX = Math.floor(Math.random() * (2000 + 2000)) + -2000;
+    pointY = Math.floor(Math.random() * (2000 + 2000)) + -2000;
+    for (i = 0; i < 40; i++) {
+      for (j = 0; j < 40; j++) {
+        if (map[j][i] == 1) {
+          if (pointX >= i * 100 - 2000 && pointX <= i * 100 - 2000 + 100 && j * 100 - 2000 <= pointY && j * 100 - 2000 + 100 >= pointY) {
+            stuckloop = true;
+          }
+
+          if (pointY >= j * 100 - 2000 && pointY <= j * 100 - 2000 + 100 && i * 100 - 2000 <= pointX && i * 100 - 2000 + 100 >= pointX) {
+            stuckloop = true;
+          }
+        }
+        if (stuckloop == true) {
+          break;
+        }
+      }
+    }
+    if (stuckloop == false) {
+      stuck = false;
+    }
+  }
+  io.sockets.emit("pointLocationSet", [pointX, pointY]);
+}
+
 io.on("connection", function (socket) {
   socket.on("addme", function (arg) {
     if (pos.length - 1 < arg.id) {
@@ -192,6 +226,15 @@ io.on("connection", function (socket) {
 
   socket.on("gunsfx", function (x) {
     io.sockets.emit("playdatgunsfx", x);
+  });
+
+  socket.on("removec4", function (x) {
+    for (i = 0; i < bullets.length; i++) {
+      console.log(bullets[i].id, x, bullets[i].type);
+      if (bullets[i].id == x && bullets[i].type == "c4") {
+        bullets.splice(i, 1);
+      }
+    }
   });
 
   socket.on("gunchange", function (x) {
@@ -372,11 +415,15 @@ setInterval(function myFunction() {
       pos[i].vip = false;
     }
     if (aliveplayers.length > 2) {
-      mode = 2;
-      vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
-      pos[vip].vip = true;
+      mode = 3;
     } else {
       mode = 0;
+    }
+    if (mode == 2) {
+      vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+      pos[vip].vip = true;
+    } else if (mode == 3) {
+      checkPointStuck();
     }
     mapCountdown = modes[mode].time * 60;
     io.sockets.emit("changemap", [currentMap, mode]);
