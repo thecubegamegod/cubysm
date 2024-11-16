@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "express": "^4.21.1",
-    "socket.io": "^4.8.0"
+    "node": "^18.20.5",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "prettier": "3.3.3"

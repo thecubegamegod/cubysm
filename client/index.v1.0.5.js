@@ -1,3 +1,5 @@
+const { text } = require("express");
+
 const socket = io();
 
 let id = 99;
@@ -134,6 +136,8 @@ let skin = "cube";
 let sub = "";
 let subnum = 0;
 let skinnum = 0;
+
+let results = [];
 
 let mapCountdown = 999;
 
@@ -1495,6 +1499,10 @@ function draw() {
     image(eval(weapons[skinslist[skinnum].tertiary].name + "tile"), width / 2 + 208, height - 125);
   }
 
+  if (mapCountdown) text(results[0], width / 2, height / 2 - 400);
+  text(results[1], width / 2, height / 2 - 380);
+  text(results[2], width / 2, height / 2 - 360);
+
   image(cursor, mouseX, mouseY);
   // filter(GRAY);
   // filter(INVERT)
@@ -1572,6 +1580,12 @@ socket.on("pointLocationSet", function (location) {
 socket.on("timeleft", function (y) {
   mapCountdown = y;
 });
+
+socket.on("results", function (results) {
+  results = results;
+  setTimeout(function myFunction(){
+    results = ["","",""]
+  }, 5000);
 
 socket.on("changemap", function (y) {
   map = maps[y[0]];
