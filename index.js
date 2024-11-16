@@ -418,7 +418,14 @@ setInterval(function myFunction() {
       pos[i].vip = false;
     }
     if (aliveplayers.length > 2) {
-      mode = Math.floor(Math.random() * (3 - 1)) + 2;
+      let tempmode = mode;
+      while (tempmode == mode) {
+        tempmode = Math.floor(Math.random() * (4 - 1)) + 2;
+        if (tempmode == 4) {
+          tempmode = 1;
+        }
+      }
+      mode = tempmode;
     } else {
       mode = 0;
     }
@@ -433,9 +440,11 @@ setInterval(function myFunction() {
   }
   if (mode == 3) {
     for (i = 0; i < pos.length; i++) {
-      let dist = Math.sqrt((pointX - pos[i].xvel) * (pointX - pos[i].xvel) + (pointY - pos[i].yvel) * (pointY - pos[i].yvel));
-      if (dist < 250) {
-        pos[i].points++;
+      if (pos[i].dead == 0) {
+        let dist = Math.sqrt((pointX - pos[i].xvel) * (pointX - pos[i].xvel) + (pointY - pos[i].yvel) * (pointY - pos[i].yvel));
+        if (dist < 250) {
+          pos[i].points++;
+        }
       }
     }
   }
