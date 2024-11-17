@@ -341,7 +341,7 @@ io.on("connection", function (socket) {
             aliveplayers.push(pos[i]);
           }
         }
-        vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+        vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1 - 1)) + 0].id;
         pos[vip].vip = true;
       }
     }

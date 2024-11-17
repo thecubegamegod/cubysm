@@ -771,8 +771,10 @@ function setup() {
   skorpionsfx = loadSound("skorpion.mp3");
   rpgsfx = loadSound("rpg.mp3");
 
-  hitsfx = loadSound("YAY.wav");
-  diesfx = loadSound("die.wav");
+  hitsfx = loadSound("Kill.mp3");
+  diesfx = loadSound("Death Short.mp3");
+  mainsfx = loadSound("Main.mp3");
+  endroundsfx = loadSound("End Round.mp3");
 
   nahsfx = loadSound("nah.mp3");
   ahsfx = loadSound("ah.mp3");
@@ -1019,6 +1021,7 @@ function draw() {
     if (keyIsDown(32) === true) {
       firstspawn = 0;
       respawnMe();
+      // mainsfx.play();
     }
   } else {
     if (keyIsDown(68) === true) {
@@ -1614,6 +1617,9 @@ socket.on("updatepositions", function (x) {
 
 socket.on("playdatgunsfx", function (y) {
   eval(y).play();
+  if (y == "diesfx") {
+    mainsfx.stop();
+  }
 });
 
 socket.on("pointLocationSet", function (location) {
@@ -1638,6 +1644,9 @@ socket.on("changemap", function (y) {
   checkStuck();
   mode = [y[1]];
   currentModeName = modeNames[y[1]];
+  if (mode == 4) {
+    endroundsfx.play();
+  }
 });
 
 setInterval(function myFunction() {
