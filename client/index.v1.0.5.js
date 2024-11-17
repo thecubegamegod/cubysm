@@ -578,6 +578,8 @@ let delay = 999;
 let zoomsmoothed = 3;
 let smoothfactor = 1;
 
+let tobestopped = [];
+
 let bullets = [];
 let localbullets = [];
 
@@ -782,6 +784,8 @@ function setup() {
   owsfx = loadSound("ow.mp3");
   euhsfx = loadSound("euh.mp3");
 
+  tobestopped = [endroundsfx, mainsfx, diesfx];
+
   createCanvas(window.innerWidth, window.innerHeight);
   frameRate(240);
   pixelDensity(1);
@@ -799,6 +803,14 @@ function setup() {
 socket.on("updatebullets", function (x) {
   bullets = x;
 });
+
+function stopAllSounds() {
+  for (let s of tobestopped) {
+    if (s.isPlaying()) {
+      s.stop();
+    }
+  }
+}
 
 function mousePressed() {
   if (positions[id].dead == 0) {
@@ -1616,10 +1628,10 @@ socket.on("updatepositions", function (x) {
 });
 
 socket.on("playdatgunsfx", function (y) {
-  eval(y).play();
   if (y == "diesfx") {
-    mainsfx.stop();
+    stopAllSounds();
   }
+  eval(y).play();
 });
 
 socket.on("pointLocationSet", function (location) {
@@ -1644,7 +1656,8 @@ socket.on("changemap", function (y) {
   checkStuck();
   mode = [y[1]];
   currentModeName = modeNames[y[1]];
-  if (mode == 4) {
+  if (mode == 4 && positions[id].dead == 0) {
+    stopAllSounds();
     endroundsfx.play();
   }
 });
