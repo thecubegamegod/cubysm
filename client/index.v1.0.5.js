@@ -22,12 +22,13 @@ let leaderboard = [];
 let firstspawn = 1;
 
 let prevkills = 0;
+let prevzone = 0;
 
 let flash = 0;
 
 let deathangle = 0;
 
-let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
+let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx, zonesfx;
 
 let mapNames = ["Arena", "Chambers", "Results"];
 let modeNames = ["Deathmatch", "Hitman", "Crown Capture", "Zone Zenith", "Results"];
@@ -777,6 +778,7 @@ function setup() {
   diesfx = loadSound("Death Short.mp3");
   mainsfx = loadSound("Main.mp3");
   endroundsfx = loadSound("End Round.mp3");
+  zonesfx = loadSound("zone.mp3");
 
   nahsfx = loadSound("nah.mp3");
   ahsfx = loadSound("ah.mp3");
@@ -1103,6 +1105,7 @@ function draw() {
 
   xoffset = width / 2 - myposx - (mouseX - windowWidth / 2) / zoomsmoothed;
   yoffset = height / 2 - myposy - (mouseY - windowHeight / 2) / zoomsmoothed;
+
   background("#da0063");
 
   noStroke();
@@ -1295,6 +1298,12 @@ function draw() {
 
     if (prevkills < positions[id].kills) {
       hitsfx.play();
+    }
+    if (mode == 3) {
+      if (prevzone < positions[id].points) {
+        zonesfx.play();
+      }
+      prevzone = positions[id].points;
     }
     prevkills = positions[id].kills;
   }
