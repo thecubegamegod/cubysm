@@ -1,4 +1,4 @@
-const { text } = require("express");
+// const { text } = require("express");
 
 const socket = io();
 
@@ -22,20 +22,21 @@ let leaderboard = [];
 let firstspawn = 1;
 
 let prevkills = 0;
+let prevzone = 0;
 
 let flash = 0;
 
 let deathangle = 0;
 
-let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx;
+let aksfx, glocksfx, deaglesfx, snipersfx, hitsfx, uzisfx, knifesfx, shrapnelsfx, grenadesfx, skorpionsfx, rpgsfx, zonesfx;
 
-let mapNames = ["Arena", "Chambers"];
-let modeNames = ["Deathmatch", "Hitman", "Crown Capture", "Zone"];
+let mapNames = ["Arena", "Chambers", "Results"];
+let modeNames = ["Deathmatch", "Hitman", "Crown Capture", "Zone Zenith", "Results"];
 
 let previousCurrentGun = 0;
 
-let currentMapName = "Arena";
-let currentModeName = "Deathmatch";
+let currentMapName = "";
+let currentModeName = "";
 
 let pointX = 0;
 let pointY = 0;
@@ -124,6 +125,48 @@ let maps = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
 ];
@@ -536,6 +579,8 @@ let delay = 999;
 let zoomsmoothed = 3;
 let smoothfactor = 1;
 
+let tobestopped = [];
+
 let bullets = [];
 let localbullets = [];
 
@@ -729,14 +774,19 @@ function setup() {
   skorpionsfx = loadSound("skorpion.mp3");
   rpgsfx = loadSound("rpg.mp3");
 
-  hitsfx = loadSound("YAY.wav");
-  diesfx = loadSound("die.wav");
+  hitsfx = loadSound("Kill.mp3");
+  diesfx = loadSound("Death Short.mp3");
+  mainsfx = loadSound("Main.mp3");
+  endroundsfx = loadSound("End Round.mp3");
+  zonesfx = loadSound("zone.mp3");
 
   nahsfx = loadSound("nah.mp3");
   ahsfx = loadSound("ah.mp3");
   yeowchsfx = loadSound("yeowch.mp3");
   owsfx = loadSound("ow.mp3");
   euhsfx = loadSound("euh.mp3");
+
+  tobestopped = [endroundsfx, mainsfx, diesfx];
 
   createCanvas(window.innerWidth, window.innerHeight);
   frameRate(240);
@@ -755,6 +805,14 @@ function setup() {
 socket.on("updatebullets", function (x) {
   bullets = x;
 });
+
+function stopAllSounds() {
+  for (let s of tobestopped) {
+    if (s.isPlaying()) {
+      s.stop();
+    }
+  }
+}
 
 function mousePressed() {
   if (positions[id].dead == 0) {
@@ -977,6 +1035,7 @@ function draw() {
     if (keyIsDown(32) === true) {
       firstspawn = 0;
       respawnMe();
+      // mainsfx.play();
     }
   } else {
     if (keyIsDown(68) === true) {
@@ -1046,6 +1105,7 @@ function draw() {
 
   xoffset = width / 2 - myposx - (mouseX - windowWidth / 2) / zoomsmoothed;
   yoffset = height / 2 - myposy - (mouseY - windowHeight / 2) / zoomsmoothed;
+
   background("#da0063");
 
   noStroke();
@@ -1146,7 +1206,6 @@ function draw() {
   }
 
   if (dead == 0) {
-    changeTitle("CUBYSM");
     // if (positions[id].flash == 1) {
     //   setTimeout(function myFunction(){
     //     socket.volatile.emit("noflash", { id: id});
@@ -1239,6 +1298,12 @@ function draw() {
 
     if (prevkills < positions[id].kills) {
       hitsfx.play();
+    }
+    if (mode == 3) {
+      if (prevzone < positions[id].points) {
+        zonesfx.play();
+      }
+      prevzone = positions[id].points;
     }
     prevkills = positions[id].kills;
   }
@@ -1362,6 +1427,13 @@ function draw() {
           // textSize(15)
           // text(fps.toFixed(0) + "FPS", 35, height - 10);
 
+          textSize(20);
+          if (mode == 4) {
+            text(results[0], width / 2, height / 2 - 280);
+            text(results[1], width / 2, height / 2 - 250);
+            text(results[2], width / 2, height / 2 - 220);
+          }
+
           if (window.location.hostname == "www.dev.cubysm.co.uk" || window.location.hostname == "5111xh8p-3000.uks1.devtunnels.ms" || window.location.hostname == "legendary-space-couscous-97g5qwwxxp43w9w-3000.app.github.dev") {
             textSize(30);
             text("EARLY ACCESS", width / 2, height - 30);
@@ -1420,7 +1492,6 @@ function draw() {
   }
 
   if (dead == 1) {
-    changeTitle("CUBYSM 💀");
     nameField.position(width / 2 - 50, height / 2 - 150);
     if (nameField.value() != "") {
       username = nameField.value();
@@ -1499,11 +1570,8 @@ function draw() {
     image(eval(weapons[skinslist[skinnum].tertiary].name + "tile"), width / 2 + 208, height - 125);
   }
 
-  if (mapCountdown) text(results[0], width / 2, height / 2 - 400);
-  text(results[1], width / 2, height / 2 - 380);
-  text(results[2], width / 2, height / 2 - 360);
-
   image(cursor, mouseX, mouseY);
+
   // filter(GRAY);
   // filter(INVERT)
   // image(dark, 0, 0, 10000, 10000);
@@ -1569,6 +1637,9 @@ socket.on("updatepositions", function (x) {
 });
 
 socket.on("playdatgunsfx", function (y) {
+  if (y == "diesfx") {
+    stopAllSounds();
+  }
   eval(y).play();
 });
 
@@ -1581,11 +1652,12 @@ socket.on("timeleft", function (y) {
   mapCountdown = y;
 });
 
-socket.on("results", function (results) {
-  results = results;
-  setTimeout(function myFunction(){
-    results = ["","",""]
-  }, 5000);
+socket.on("results", function (y) {
+  results = y;
+  // setTimeout(function myFunction() {
+  //   results = ["", "", ""];
+  // }, 8000);
+});
 
 socket.on("changemap", function (y) {
   map = maps[y[0]];
@@ -1593,9 +1665,17 @@ socket.on("changemap", function (y) {
   checkStuck();
   mode = [y[1]];
   currentModeName = modeNames[y[1]];
+  if (mode == 4 && positions[id].dead == 0) {
+    stopAllSounds();
+    endroundsfx.play();
+  }
 });
 
 setInterval(function myFunction() {
+  if (currentModeName && currentMapName) {
+    changeTitle("CUBYSM | " + currentModeName + " | " + currentMapName);
+  }
+
   leaderboard = [];
   max = 99;
   tempmax = 0;
