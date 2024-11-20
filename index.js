@@ -238,7 +238,7 @@ function newMap() {
       }
       mode = tempmode;
     } else {
-      mode = 0;
+      mode = 2;
     }
     if (mode == 2) {
       vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
@@ -334,15 +334,18 @@ io.on("connection", function (socket) {
     io.sockets.emit("playdatgunsfx", "euhsfx");
     if (modes[mode].name == "VIP") {
       if (pos[arg].vip == true) {
-        pos[arg].vip = false;
         aliveplayers = [];
         for (i = 0; i < pos.length; i++) {
           if (pos[i].dead == 0) {
             aliveplayers.push(pos[i]);
           }
         }
-        vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1 - 1)) + 0].id;
-        pos[vip].vip = true;
+        if (aliveplayers.length != 0 ) {
+          pos[arg].vip = false;
+          vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1 - 1)) + 0].id;
+          pos[vip].vip = true;
+        }
+        else {}
       }
     }
   });

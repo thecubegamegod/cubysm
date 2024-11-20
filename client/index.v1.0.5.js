@@ -1105,6 +1105,10 @@ function draw() {
 
   xoffset = width / 2 - myposx - (mouseX - windowWidth / 2) / zoomsmoothed;
   yoffset = height / 2 - myposy - (mouseY - windowHeight / 2) / zoomsmoothed;
+  if (dead == 1) {
+    xoffset = width / 2 - (mouseX - windowWidth / 2) / zoomsmoothed;
+    yoffset = height / 2 - (mouseY - windowHeight / 2) / zoomsmoothed;
+  }
 
   background("#da0063");
 
@@ -1500,7 +1504,7 @@ function draw() {
     }
     noTint();
     fill("white");
-    image(death, 0, 0, 10000, 10000);
+    // image(death, 0, 0, 10000, 10000);
     textAlign(CENTER);
 
     textSize(25);
