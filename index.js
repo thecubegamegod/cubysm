@@ -228,18 +228,16 @@ function newMap() {
       pos[i].points = 0;
       pos[i].vip = false;
     }
-    if (aliveplayers.length > 1) {
-      let tempmode = mode;
-      while (tempmode == mode) {
-        tempmode = Math.floor(Math.random() * (3 - 1)) + 2;
-        if (tempmode == 4) {
-          tempmode = 1;
-        }
+    
+    let tempmode = mode;
+    while (tempmode == mode) {
+      tempmode = Math.floor(Math.random() * (3 - 1)) + 2;
+      if (tempmode == 4) {
+        tempmode = 1;
       }
-      mode = tempmode;
-    } else {
-      mode = 3;
     }
+    mode = tempmode;
+
     if (mode == 2) {
       vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
       pos[vip].vip = true;
