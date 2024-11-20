@@ -239,8 +239,10 @@ function newMap() {
     mode = tempmode;
 
     if (mode == 2) {
-      vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
-      pos[vip].vip = true;
+      if (aliveplayers.length!=0) {
+        vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
+        pos[vip].vip = true;
+      }
     } else if (mode == 3) {
       checkPointStuck();
     }
