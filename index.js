@@ -238,7 +238,7 @@ function newMap() {
       }
       mode = tempmode;
     } else {
-      mode = 2;
+      mode = 3;
     }
     if (mode == 2) {
       vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
