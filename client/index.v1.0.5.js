@@ -820,6 +820,7 @@ function mousePressed() {
       shoot();
     }
   } else {
+    // CHARACTER AND SKIN SELECTION BUTTONS
     if (width / 2 + 150 < mouseX && width / 2 + 250 > mouseX && height / 2 - 50 < mouseY && mouseY < height / 2 + 50) {
       if (skinnum < skinslist.length - 1) {
         skinnum += 1;
@@ -874,7 +875,8 @@ function reload() {
 
 function keyPressed() {
   key = key.toLowerCase();
-
+  
+  // DETONATE C4
   if (key === "t" && weapons[currentgun].type == "c4") {
     for (let i = localbullets.length - 1; i >= 0; i--) {
       if (localbullets[i].type == "c4") {
@@ -905,6 +907,7 @@ function keyPressed() {
     //   }
     // }
   }
+  // GUN SWITCHING
   if (keyCode == 49) {
     currentgun = skinslist[skinnum].primary;
     clearTimeout(reloadtimerid);
@@ -1038,6 +1041,7 @@ function draw() {
       // mainsfx.play();
     }
   } else {
+    // PLAYER MOVEMENT
     if (keyIsDown(68) === true) {
       xvel += 10;
     }
@@ -1051,17 +1055,19 @@ function draw() {
       yvel += 10;
     }
   }
-
+  // NORMALISE DIAGONAL MOVEMENT
   if (Math.abs(xvel) != 0 && Math.abs(yvel) != 0) {
     xvel *= 0.707;
     yvel *= 0.707;
   }
 
+  // PLAYER KNOCKBACK
   xvel += recoilx;
   recoilx = 0;
   yvel += recoily;
   recoily = 0;
 
+  // PLAYER-WALL COLLISIONS
   for (i = 0; i < 40; i++) {
     for (j = 0; j < 40; j++) {
       if (map[j][i] == 1) {
@@ -1092,17 +1098,21 @@ function draw() {
     }
   }
 
+  // MOVE PLAYER
   myposx += ((xvel * skinslist[skinnum].speed) / frameRate()) * 60;
   myposy += ((yvel * skinslist[skinnum].speed) / frameRate()) * 60;
+  // LIMIT PLAYER TO MAP BOUNDS
   myposx = constrain(myposx, -2000, 2000);
   myposy = constrain(myposy, -2000, 2000);
 
+  // SMOOTH ZOOM TRANSITIONS BETWEEN GUNS
   if (zoomsmoothed > weapons[currentgun].zoom) {
     zoomsmoothed -= 0.5;
   } else if (zoomsmoothed < weapons[currentgun].zoom) {
     zoomsmoothed += 0.5;
   }
 
+  // CALCULATE OFFSET OF PLAYER TO MAP ORIGIN TO DRAW EVERYTHING
   xoffset = width / 2 - myposx - (mouseX - windowWidth / 2) / zoomsmoothed;
   yoffset = height / 2 - myposy - (mouseY - windowHeight / 2) / zoomsmoothed;
   if (dead == 1) {
@@ -1117,7 +1127,8 @@ function draw() {
   if (mode == 3) {
     image(point, xoffset + pointX, yoffset + pointY);
   }
-
+  
+  // DISPLAY CLIENT'S OWN BULLETS
   for (let p = localbullets.length - 1; p >= 0; p--) {
     b = localbullets[p];
     if (!b) continue;
@@ -1125,6 +1136,7 @@ function draw() {
     for (i = 0; i < 40; i++) {
       for (j = 0; j < 40; j++) {
         if (map[j][i] == 1) {
+          // BULLET-WALL COLLISIONS
           if (b.xpos + b.bulletxvel * 90 >= i * 100 - 2000 && b.xpos + b.bulletxvel * 90 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + b.bulletyvel * 90 && j * 100 - 2000 + 100 >= b.ypos + b.bulletyvel * 90) {
             const index = localbullets.indexOf(b);
             if (index > -1) {
@@ -1137,11 +1149,12 @@ function draw() {
         }
       }
     }
-
+    // BULLET MAP BOUNDS COLLISIONS
     if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
       const index = localbullets.indexOf(b);
       localbullets.splice(index, 1);
     }
+    // DECREASE BULLET SPEED OVER TIME
     b.bulletyvel *= b.dropoff;
     b.bulletxvel *= b.dropoff;
 
@@ -1167,7 +1180,7 @@ function draw() {
         localbullets.splice(index, 1);
       }
     }
-
+    // DRAW BULLETS AND PROJECTILES
     if (b.hidebullet == false) {
       if (b.type == "grenade") {
         image(grenade, b.xpos + xoffset, b.ypos + yoffset);
@@ -1183,11 +1196,11 @@ function draw() {
         image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
       }
     }
-
+    // MOVE BULLETS
     b.ypos += ((b.bulletyvel * 90) / frameRate()) * 60;
     b.xpos += ((b.bulletxvel * 90) / frameRate()) * 60;
   }
-
+  //  DRAW OTHER PLAYERS' BULLETS
   for (let b of bullets) {
     imageMode(CENTER);
     if (b.id != id) {
@@ -1208,7 +1221,6 @@ function draw() {
       }
     }
   }
-
   if (dead == 0) {
     // if (positions[id].flash == 1) {
     //   setTimeout(function myFunction(){
@@ -1218,7 +1230,7 @@ function draw() {
     // nameField.position(-300, 100)
     image(shadow, xoffset + myposx, yoffset + myposy - 2);
     nameField.position(-300, 100);
-
+    // DRAW WALLS
     for (k = 0; k < 40; k++) {
       for (l = 0; l < 40; l++) {
         if (map[l][k] == 1) {
@@ -1259,10 +1271,11 @@ function draw() {
       suicide = 1;
       scale(-1, 1);
     }
-
+    
     if (reloading == 0) {
       if (delay >= weapons[currentgun].speed && weapons[currentgun].ammo > 0) {
         if (weapons[currentgun].laser == true) {
+          // DRAW SNIPER LASER
           strokeWeight(4);
           stroke("#da0063");
           line(0, 0, -5000, 0);
@@ -1271,6 +1284,7 @@ function draw() {
           line(0, 0, -5000, 0);
           strokeWeight(0);
         }
+        //  DRAW WEAPONS
         image(eval(weapons[currentgun].name), weapons[currentgun].xoffset, weapons[currentgun].yoffset);
       } else {
         translate((weapons[currentgun].spritehorizrecoil / delay) * 30, 0);
@@ -1293,6 +1307,7 @@ function draw() {
     push();
     textAlign(RIGHT);
     textSize(25);
+    // DRAW STATISTICS
     text("🔥 " + positions[id].streak, width - 25, 50);
     text("⚔️ " + positions[id].kills, width - 25, 80);
     text("💀 " + positions[id].deaths, width - 25, 110);
@@ -1354,6 +1369,8 @@ function draw() {
             image(crown, positions[i].xvel + xoffset, positions[i].yvel + yoffset - 50);
           }
 
+          // PLAYER HEALTH ABOVE SPRITES
+
           noTint();
           textSize(15);
           text(positions[i].name + " | 🔥" + String(positions[i].streak), positions[i].xvel + xoffset, positions[i].yvel + yoffset - 60);
@@ -1368,6 +1385,8 @@ function draw() {
         if (positions[id].dead == 0) {
           imageMode(CENTER);
           angle = Math.atan2(mouseY - height / 2, mouseX - width / 2);
+
+          
 
           if (angle > 1.963) {
             col = 0;
