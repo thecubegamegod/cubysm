@@ -471,13 +471,14 @@ setInterval(function myFunction() {
         }
       }
     }
-
+    // REMOVE BULLETS OUT OF BOUNDS
     if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
       const index = bullets.indexOf(b);
       if (index > -1) {
         bullets.splice(index, 1);
       }
     }
+    // MOVE BULLETS
     b.ypos += (b.bulletyvel * 90) / 4;
     b.xpos += (b.bulletxvel * 90) / 4;
   }
@@ -527,6 +528,7 @@ setInterval(function myFunction() {
   } else {
     newMap();
   }
+  // GIVE POINTS TO PLAYERS IN THE ZONE
   if (mode == 3) {
     for (i = 0; i < pos.length; i++) {
       if (pos[i].dead == 0) {
