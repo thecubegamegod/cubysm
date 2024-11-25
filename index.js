@@ -182,6 +182,7 @@ let first = "fella";
 let second = "fella";
 let third = "fella";
 
+// TEST LOG WHEN SERVER IS UP
 server.listen(port, function () {
   console.log("🟢 " + port);
 });
@@ -237,7 +238,7 @@ function newMap() {
       }
     }
     mode = tempmode;
-
+    // ASSIGN CROWN HOLDER FOR ROUND START
     if (mode == 2) {
       if (aliveplayers.length!=0) {
         vip = aliveplayers[Math.floor(Math.random() * (aliveplayers.length - 1)) + 0].id;
@@ -252,6 +253,7 @@ function newMap() {
   io.sockets.emit("changemap", [currentMap, mode]);
 }
 
+// GIVE THE ZONE A LOCATION NOT IN A WALL
 function checkPointStuck() {
   let stuck = true;
   let stuckloop = false;
