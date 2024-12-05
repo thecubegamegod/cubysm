@@ -19,6 +19,7 @@ let reloading = 0;
 
 let leaderboard = [];
 
+
 let firstspawn = 1;
 
 let prevkills = 0;
@@ -788,9 +789,22 @@ function setup() {
 
   tobestopped = [endroundsfx, mainsfx, diesfx];
 
-  createCanvas(window.innerWidth, window.innerHeight);
-  frameRate(240);
-  pixelDensity(1);
+  // let canvas = createCanvas(window.innerWidth, window.innerHeight);
+
+
+  let canvas = createCanvas(windowWidth, windowHeight);
+  // let dpr = window.devicePixelRatio || 1;  // Get the device pixel ratio
+  // canvas.style('width', `${windowWidth}px`);
+  // canvas.style('height', `${windowHeight}px`);
+  // scale(dpr);  // Scale the drawing operations
+
+
+
+  // let dpr = window.devicePixelRatio || 1;
+
+
+  frameRate(999);
+  // pixelDensity(1);
   noSmooth();
   document.addEventListener("contextmenu", (event) => event.preventDefault());
 
@@ -1127,83 +1141,82 @@ function draw() {
   if (mode == 3) {
     image(point, xoffset + pointX, yoffset + pointY);
   }
-  
-  // DISPLAY CLIENT'S OWN BULLETS
-  for (let p = localbullets.length - 1; p >= 0; p--) {
-    b = localbullets[p];
-    if (!b) continue;
 
-    for (i = 0; i < 40; i++) {
-      for (j = 0; j < 40; j++) {
-        if (map[j][i] == 1) {
-          // BULLET-WALL COLLISIONS
-          if (b.xpos + b.bulletxvel * 90 >= i * 100 - 2000 && b.xpos + b.bulletxvel * 90 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + b.bulletyvel * 90 && j * 100 - 2000 + 100 >= b.ypos + b.bulletyvel * 90) {
-            const index = localbullets.indexOf(b);
-            if (index > -1) {
-              if (b.type == "grenade" || b.type == "rpg") {
-                nadesplode(b.xpos, b.ypos);
-              }
-              localbullets.splice(index, 1);
-            }
-          }
-        }
-      }
-    }
-    // BULLET MAP BOUNDS COLLISIONS
-    if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
-      const index = localbullets.indexOf(b);
-      localbullets.splice(index, 1);
-    }
-    // DECREASE BULLET SPEED OVER TIME
-    b.bulletyvel *= b.dropoff;
-    b.bulletxvel *= b.dropoff;
+  // for (let p = localbullets.length - 1; p >= 0; p--) {
+  //   b = localbullets[p];
+  //   if (!b) continue;
 
-    if (b.type == "gun") {
-      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.1) {
-        const index = localbullets.indexOf(b);
-        localbullets.splice(index, 1);
-      }
-    } else if (b.type == "shrapnel") {
-      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
-        const index = localbullets.indexOf(b);
-        localbullets.splice(index, 1);
-      }
-    } else if (b.type == "grenade") {
-      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
-        nadesplode(b.xpos, b.ypos);
-        const index = localbullets.indexOf(b);
-        localbullets.splice(index, 1);
-      }
-    } else if (b.type == "knife") {
-      if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.3) {
-        const index = localbullets.indexOf(b);
-        localbullets.splice(index, 1);
-      }
-    }
-    // DRAW BULLETS AND PROJECTILES
-    if (b.hidebullet == false) {
-      if (b.type == "grenade") {
-        image(grenade, b.xpos + xoffset, b.ypos + yoffset);
-      } else if (b.type == "rpg") {
-        push();
-        translate(b.xpos + xoffset, b.ypos + yoffset);
-        rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
-        image(rocket, 0, 0);
-        pop();
-      } else if (b.type == "c4") {
-        image(c4, b.xpos + xoffset, b.ypos + yoffset);
-      } else {
-        image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
-      }
-    }
-    // MOVE BULLETS
-    b.ypos += ((b.bulletyvel * 90) / frameRate()) * 60;
-    b.xpos += ((b.bulletxvel * 90) / frameRate()) * 60;
-  }
-  //  DRAW OTHER PLAYERS' BULLETS
+  //   for (i = 0; i < 40; i++) {
+  //     for (j = 0; j < 40; j++) {
+  //       if (map[j][i] == 1) {
+  //         if (b.xpos + b.bulletxvel * 90 >= i * 100 - 2000 && b.xpos + b.bulletxvel * 90 <= i * 100 - 2000 + 100 && j * 100 - 2000 <= b.ypos + b.bulletyvel * 90 && j * 100 - 2000 + 100 >= b.ypos + b.bulletyvel * 90) {
+  //           const index = localbullets.indexOf(b);
+  //           if (index > -1) {
+  //             if (b.type == "grenade" || b.type == "rpg") {
+  //               nadesplode(b.xpos, b.ypos);
+  //             }
+  //             localbullets.splice(index, 1);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   if (b.xpos < -2000 || b.xpos > 2000 || b.ypos < -2000 || b.ypos > 2000) {
+  //     const index = localbullets.indexOf(b);
+  //     localbullets.splice(index, 1);
+  //   }
+
+  //   b.bulletyvel *= b.dropoff;
+  //   b.bulletxvel *= b.dropoff;
+
+  //   if (b.type == "gun") {
+  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.1) {
+  //       const index = localbullets.indexOf(b);
+  //       localbullets.splice(index, 1);
+  //     }
+  //   } else if (b.type == "shrapnel") {
+  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
+  //       const index = localbullets.indexOf(b);
+  //       localbullets.splice(index, 1);
+  //     }
+  //   } else if (b.type == "grenade") {
+  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.01) {
+  //       nadesplode(b.xpos, b.ypos);
+  //       const index = localbullets.indexOf(b);
+  //       localbullets.splice(index, 1);
+  //     }
+  //   } else if (b.type == "knife") {
+  //     if (Math.abs(b.bulletxvel) + Math.abs(b.bulletyvel) <= 0.3) {
+  //       const index = localbullets.indexOf(b);
+  //       localbullets.splice(index, 1);
+  //     }
+  //   }
+
+  //   if (b.hidebullet == false) {
+  //     if (b.type == "grenade") {
+  //       image(grenade, b.xpos + xoffset, b.ypos + yoffset);
+  //     } else if (b.type == "rpg") {
+  //       push();
+  //       translate(b.xpos + xoffset, b.ypos + yoffset);
+  //       rotate(1.5708 - Math.atan2(b.bulletxvel, b.bulletyvel));
+  //       image(rocket, 0, 0);
+  //       pop();
+  //     } else if (b.type == "c4") {
+  //       image(c4, b.xpos + xoffset, b.ypos + yoffset);
+  //     }
+  //     else {
+  //       image(bulletimage, b.xpos + xoffset, b.ypos + yoffset);
+  //     }
+  //   }
+
+  //   b.ypos += (b.bulletyvel * 90) / (frameRate()/60)
+  //   b.xpos += (b.bulletxvel * 90) / (frameRate()/60)
+  // }
+
   for (let b of bullets) {
     imageMode(CENTER);
-    if (b.id != id) {
+    if (b.id != id || b.id == id) {
       if (b.hidebullet == false) {
         if (b.type == "grenade") {
           image(grenade, b.xpos + xoffset, b.ypos + yoffset);
