@@ -505,6 +505,8 @@ let skinslist = [
   },
 ];
 
+Object.freeze(weapons)
+
 let devskinslist = [
   {
     name: "cube",
