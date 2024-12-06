@@ -506,7 +506,7 @@ let skinslist = [
 ];
 
 for (i = 0; i< weapons.length; i++) {
-  Object.freeze(i)
+  Object.freeze(weapons[i])
 }
 
 let devskinslist = [
