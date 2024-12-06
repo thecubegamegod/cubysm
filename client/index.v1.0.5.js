@@ -188,7 +188,12 @@ let mapCountdown = 999;
 // to get speed do 3600/RPM
 // to get bvel do muzzle vel / 400
 
-let weapons = [
+
+let ammo = [
+  30, 25, 17, 7, 5, 12, 6, 99999999999999, 3, 3, 20, 1
+]
+
+const weapons = [
   {
     name: "ak",
     type: "gun",
@@ -200,7 +205,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 2.4,
-    ammo: 30,
     maxammo: 30,
     speed: 6,
     auto: true,
@@ -223,7 +227,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 3,
-    ammo: 25,
     maxammo: 25,
     speed: 6,
     auto: true,
@@ -246,7 +249,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 2.3,
-    ammo: 17,
     maxammo: 17,
     speed: 9,
     auto: false,
@@ -269,7 +271,6 @@ let weapons = [
     zoom: 3,
     damage: 60,
     reloadspeed: 2.2,
-    ammo: 7,
     maxammo: 7,
     speed: 13,
     auto: false,
@@ -292,7 +293,6 @@ let weapons = [
     zoom: 1,
     damage: 100,
     reloadspeed: 3.7,
-    ammo: 5,
     maxammo: 5,
     speed: 88,
     auto: false,
@@ -315,7 +315,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 1,
-    ammo: 12,
     maxammo: 2,
     speed: 24,
     auto: false,
@@ -338,7 +337,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 3,
-    ammo: 6,
     maxammo: 6,
     speed: 13,
     auto: false,
@@ -361,7 +359,6 @@ let weapons = [
     zoom: 3,
     damage: 80,
     reloadspeed: 0,
-    ammo: 99999999999999,
     maxammo: 99999999999999,
     speed: 30,
     auto: true,
@@ -384,7 +381,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 0,
-    ammo: 3,
     maxammo: 3,
     speed: 88,
     auto: false,
@@ -407,7 +403,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 0,
-    ammo: 3,
     maxammo: 3,
     speed: 88,
     auto: false,
@@ -430,7 +425,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 2.7,
-    ammo: 20,
     maxammo: 20,
     speed: 4,
     auto: true,
@@ -453,7 +447,6 @@ let weapons = [
     zoom: 3,
     damage: 20,
     reloadspeed: 4,
-    ammo: 1,
     maxammo: 1,
     speed: 0,
     auto: false,
@@ -735,7 +728,7 @@ function respawnMe() {
   currentgun = skinslist[skinnum].primary;
   checkStuck();
   for (i = 0; i < weapons.length; i++) {
-    weapons[i].ammo = weapons[i].maxammo;
+    ammo[i] = weapons[i].maxammo;
   }
 }
 
@@ -870,15 +863,15 @@ function mousePressed() {
 function reload() {
   if (weapons[currentgun].type == "gun" || weapons[currentgun].type == "rpg") {
     if (reloading == 0) {
-      if (weapons[currentgun].ammo < weapons[currentgun].maxammo) {
+      if (ammo[currentgun] < weapons[currentgun].maxammo) {
         reloading = 1;
         startReload = performance.now();
         reloadtimerid = setTimeout(function myFunction() {
-          // if (weapons[currentgun].ammo==0) {
-          weapons[currentgun].ammo = weapons[currentgun].maxammo;
+          // if (ammo[currentgun]==0) {
+          ammo[currentgun] = weapons[currentgun].maxammo;
           // }
           // else {
-          //   weapons[currentgun].ammo = weapons[currentgun].maxammo + 1
+          //   ammo[currentgun] = weapons[currentgun].maxammo + 1
           // }
           reloading = 0;
         }, weapons[currentgun].reloadspeed * 1000);
@@ -965,7 +958,7 @@ function nadesplode(x, y) {
 }
 
 function shoot() {
-  if (weapons[currentgun].ammo > 0 && reloading == 0) {
+  if (ammo[currentgun] > 0 && reloading == 0) {
     if (delay >= weapons[currentgun].speed) {
       if (positions[id].dead == 0) {
         // xdiff = (mouseX - width / 2)
@@ -1006,7 +999,7 @@ function shoot() {
             localbullets.push(newBullet);
           }
         }
-        weapons[currentgun].ammo -= 1;
+        ammo[currentgun] -= 1;
         delay = 0;
         socket.emit("gunsfx", weapons[currentgun].name + "sfx");
         if (weapons[currentgun].auto == 0) {
@@ -1286,7 +1279,7 @@ function draw() {
     }
     
     if (reloading == 0) {
-      if (delay >= weapons[currentgun].speed && weapons[currentgun].ammo > 0) {
+      if (delay >= weapons[currentgun].speed && ammo[currentgun] > 0) {
         if (weapons[currentgun].laser == true) {
           // DRAW SNIPER LASER
           strokeWeight(4);
@@ -1503,10 +1496,10 @@ function draw() {
             textSize(20);
             text("/∞", width - 50, height - 25);
           } else {
-            if (weapons[currentgun].ammo >= 10) {
-              text(weapons[currentgun].ammo, width - 90, height - 25);
+            if (ammo[currentgun] >= 10) {
+              text(ammo[currentgun], width - 90, height - 25);
             } else {
-              text("  " + weapons[currentgun].ammo, width - 90, height - 25);
+              text("  " + ammo[currentgun], width - 90, height - 25);
             }
             textSize(20);
             text("/" + weapons[currentgun].maxammo, width - 50, height - 25);
@@ -1656,7 +1649,7 @@ setInterval(function myFunction() {
   });
   if (delay < weapons[currentgun].speed) {
     delay += 1;
-    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && weapons[currentgun].ammo > 0) {
+    if (weapons[currentgun].auto == true && mouseIsPressed && mouseButton == LEFT && reloading == false && ammo[currentgun] > 0) {
       shoot();
     }
   }
